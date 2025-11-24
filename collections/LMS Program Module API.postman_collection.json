@@ -1,0 +1,1594 @@
+{
+	"info": {
+		"_postman_id": "1cc06e64-2130-4dd9-8290-1211beb72b34",
+		"name": "LMS Program Module API",
+		"description": "Comprehensive test collection for LMS Program Module APIs including all CRUD operations and validation tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "50244332",
+		"_collection_link": "https://saloniranka0303-4395223.postman.co/workspace/Saloni's-Workspace~c508e76f-3bd3-423c-8be0-4fb6ac1551a7/collection/50244332-1cc06e64-2130-4dd9-8290-1211beb72b34?action=share&source=collection_link&creator=50244332"
+	},
+	"item": [
+		{
+			"name": "Positive Tests",
+			"item": [
+				{
+					"name": "Get All Programs",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response is an array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.be.an('array');",
+									"});",
+									"",
+									"pm.test(\"Each program contains required fields\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    jsonData.forEach(function(program) {",
+									"        pm.expect(program).to.have.property('programId');",
+									"        pm.expect(program).to.have.property('programName');",
+									"        pm.expect(program).to.have.property('programDescription');",
+									"        pm.expect(program).to.have.property('programStatus');",
+									"        pm.expect(program).to.have.property('creationTime');",
+									"        pm.expect(program).to.have.property('lastModTime');",
+									"    });",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/allPrograms",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"allPrograms"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Program by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response contains program details\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(program).to.have.property('programId');",
+									"    pm.expect(program).to.have.property('programName');",
+									"    pm.expect(program).to.have.property('programDescription');",
+									"    pm.expect(program).to.have.property('programStatus');",
+									"    pm.expect(program).to.have.property('creationTime');",
+									"    pm.expect(program).to.have.property('lastModTime');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/programs/71",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"programs",
+								"71"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Programs With Users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response is an array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.be.an('array');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/allProgramsWithUsers",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"allProgramsWithUsers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Program - Valid Data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Response contains created program\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('programId');",
+									"    pm.expect(jsonData).to.have.property('programName');",
+									"    pm.expect(jsonData).to.have.property('programDescription');",
+									"    pm.expect(jsonData).to.have.property('programStatus');",
+									"    pm.expect(jsonData).to.have.property('creationTime');",
+									"    pm.expect(jsonData).to.have.property('lastModTime');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"programName\": \"Playwright-Bootcamp\",\n  \"programStatus\": \"Active\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/saveprogram",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"saveprogram"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Program by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response contains updated program\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('programId');",
+									"    pm.expect(jsonData).to.have.property('programName');",
+									"    pm.expect(jsonData).to.have.property('programDescription');",
+									"    pm.expect(jsonData).to.have.property('programStatus');",
+									"    pm.expect(jsonData).to.have.property('creationTime');",
+									"    pm.expect(jsonData).to.have.property('lastModTime');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"programName\": \"Playwright-Bootcamp\",\n  \"programStatus\": \"Inactive\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/putprogram/85",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"putprogram",
+								"85"
+							]
+						},
+						"description": "Update program by program ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Program by Name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response contains updated program\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('programId');",
+									"    pm.expect(jsonData).to.have.property('programName');",
+									"    pm.expect(jsonData).to.have.property('programDescription');",
+									"    pm.expect(jsonData).to.have.property('programStatus');",
+									"    pm.expect(jsonData).to.have.property('creationTime');",
+									"    pm.expect(jsonData).to.have.property('lastModTime');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"programName\": \"Java-Expert\",\n  \"programDescription\": \"Expert Java Training\",\n  \"programStatus\": \"Active\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/program/Java-Bootcamp",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"program",
+								"Java-Bootcamp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Program by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response contains deletion confirmation\", function () {",
+									"    pm.expect(pm.response.text()).to.include('deleted Successfully');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/deletebyprogid/72",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"deletebyprogid",
+								"72"
+							]
+						},
+						"description": "Delete program by program ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Program by Name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response contains deletion confirmation\", function () {",
+									"    pm.expect(pm.response.text()).to.include('deleted Successfully');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/deletebyprogname/OracleEngineer",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"deletebyprogname",
+								"OracleEngineer"
+							]
+						},
+						"description": "Delete program by program name"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Negative Tests",
+			"item": [
+				{
+					"name": "Get Program - Invalid ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"const response = pm.response.json();",
+									"pm.test(\"Response has required fields\", function () {",
+									"    pm.expect(response).to.have.property('message');",
+									"    pm.expect(response).to.have.property('success');",
+									"});",
+									"",
+									"pm.test(\"Error message matches expected format\", function () {",
+									"    pm.expect(response.message).to.match(/not found/i);",
+									"});",
+									"",
+									"pm.test(\"Success field is false for invalid Program ID\", function () {",
+									"    pm.expect(response.success).to.be.false;",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/programs/999",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"programs",
+								"999"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Program - Negative or Zero ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"const response = pm.response.json();",
+									"pm.test(\"Response has required fields\", function () {",
+									"    pm.expect(response).to.have.property('message');",
+									"    pm.expect(response).to.have.property('success');",
+									"});",
+									"",
+									"pm.test(\"Success field is false for invalid Program ID-Negative or Zero\", function () {",
+									"    pm.expect(response.success).to.be.false;",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/programs/0",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"programs",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Program - Duplicate Name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Error message indicates duplicate or already exists\", function () {",
+									"    const message = pm.response.json().message.toLowerCase();",
+									"    pm.expect(message).to.include('already exists');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"programName\": \"Java-Bootcamp\",\n  \"programDescription\": \"Duplicate Program\",\n  \"programStatus\": \"Active\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/saveprogram",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"saveprogram"
+							]
+						},
+						"description": "Create program with duplicate name"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Program - Omit the field Program Name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Error message indicates mandatory field\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.include(\"mandatory\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"programDescription\": \"Test Description\",\n  \"programStatus\": \"Active\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/saveprogram",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"saveprogram"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Program - Name Too Short",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Error message indicates length requirement\", function () {",
+									"    pm.expect(pm.response.text()).to.include('min length 4');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"programName\": \"abc\",\n  \"programDescription\": \"Test Description\",\n  \"programStatus\": \"Active\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/saveprogram",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"saveprogram"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Program - Name Too Long",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Error message indicates length requirement\", function () {",
+									"    pm.expect(pm.response.text()).to.include('max length 25');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"programName\": \"ThisIsAVeryLongProgramNameExceedingTwentyFiveCharacters\",\n  \"programDescription\": \"Test Description\",\n  \"programStatus\": \"Active\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/saveprogram",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"saveprogram"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Program - Name with Special Characters",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Error message indicates invalid characters\", function () {",
+									"    pm.expect(pm.response.text()).to.include('letters and sometimes hyphens');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"programName\": \"Test@123\",\n  \"programDescription\": \"Test Description\",\n  \"programStatus\": \"Active\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/saveprogram",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"saveprogram"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Program - Name with Numbers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Error message indicates invalid characters\", function () {",
+									"    pm.expect(pm.response.text()).to.include('letters and sometimes hyphens');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"programName\": \"Test123\",\n  \"programDescription\": \"Test Description\",\n  \"programStatus\": \"Active\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/saveprogram",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"saveprogram"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Program - Name with Spaces",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Error message indicates invalid characters\", function () {",
+									"    pm.expect(pm.response.text()).to.include('letters and sometimes hyphens');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"programName\": \"Test Program\",\n  \"programDescription\": \"Test Description\",\n  \"programStatus\": \"Active\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/saveprogram",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"saveprogram"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Program - Description Too Short",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Error message indicates description length\", function () {",
+									"    pm.expect(pm.response.text()).to.include('min length 4');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"programName\": \"TestProgram\",\n  \"programDescription\": \"abc\",\n  \"programStatus\": \"Active\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/saveprogram",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"saveprogram"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Program - Description Too Long",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Error message indicates description length\", function () {",
+									"    pm.expect(pm.response.text()).to.include('max length 25');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"programName\": \"TestProgram\",\n  \"programDescription\": \"ThisIsAVeryLongDescriptionExceedingTwentyFiveCharactersLimit\",\n  \"programStatus\": \"Active\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/saveprogram",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"saveprogram"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Program - Description with Invalid Chars",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Error message indicates invalid characters\", function () {",
+									"    pm.expect(pm.response.text()).to.include('must begin with letter');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"programName\": \"TestProgram\",\n  \"programDescription\": \"Test@Description&\",\n  \"programStatus\": \"Active\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/saveprogram",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"saveprogram"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Program - Description Starts with Number",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Error message indicates must begin with letter\", function () {",
+									"    pm.expect(pm.response.text()).to.include('must begin with letter');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"programName\": \"TestProgram\",\n  \"programDescription\": \"123Test\",\n  \"programStatus\": \"Active\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/saveprogram",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"saveprogram"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Program - Invalid Status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"const response = pm.response.json();",
+									"pm.test(\"Error message indicates invalid status\", function () {",
+									"    pm.expect(response.message).to.include(\"Invalid Status\");",
+									"    pm.expect(response.message).to.include(\"must be Active or Inactive\");",
+									"});",
+									"",
+									"pm.test(\"Error message is exact match\", function () {",
+									"    pm.expect(response.message).to.eql(\"Invalid Status: must be Active or Inactive\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"programName\": \"TestProgram\",\n  \"programDescription\": \"Test Description\",\n  \"programStatus\": \"INVALID\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/saveprogram",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"saveprogram"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Program - Blank Status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"const response = pm.response.json();",
+									"pm.test(\"Error message indicates invalid status\", function () {",
+									"    pm.expect(response.message).to.include(\"Invalid Status\");",
+									"    pm.expect(response.message).to.include(\"must be Active or Inactive\");",
+									"});",
+									"",
+									"pm.test(\"Error message is exact match\", function () {",
+									"    pm.expect(response.message).to.eql(\"Invalid Status: must be Active or Inactive\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"programName\": \"TestProgram\",\n  \"programDescription\": \"Test Description\",\n  \"programStatus\": \"\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/saveprogram",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"saveprogram"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Program - Non-existent ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"const response = pm.response.json();",
+									"pm.test(\"Response has required fields\", function () {",
+									"    pm.expect(response).to.have.property('message');",
+									"    pm.expect(response).to.have.property('success');",
+									"});",
+									"",
+									"pm.test(\"Error message matches expected format\", function () {",
+									"    pm.expect(response.message).to.match(/not found/i);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Success field is false for invalid Program ID\", function () {",
+									"    pm.expect(response.success).to.be.false;",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"programName\": \"UpdatedProgram\",\n  \"programDescription\": \"Updated Description\",\n  \"programStatus\": \"Active\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/putprogram/99",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"putprogram",
+								"99"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Program - Invalid ID Format",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"const response = pm.response.json();",
+									"pm.test(\"Response has required fields\", function () {",
+									"    pm.expect(response).to.have.property('message');",
+									"    pm.expect(response).to.have.property('success');",
+									"});",
+									"",
+									"pm.test(\"Success field is false for invalid Program ID-Negative or Zero\", function () {",
+									"    pm.expect(response.success).to.be.false;",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"programName\": \"UpdatedProgram\",\n  \"programDescription\": \"Updated Description\",\n  \"programStatus\": \"Active\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/putprogram/-1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"putprogram",
+								"-1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Program - Non-existent Name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"const response = pm.response.json();",
+									"",
+									"pm.test(\"Response has required structure\", function () {",
+									"    pm.expect(response).to.be.an('object');",
+									"    pm.expect(response).to.have.property('message');",
+									"    pm.expect(response).to.have.property('success');",
+									"});",
+									"",
+									"pm.test(\"Error message contains core text\", function () {",
+									"    pm.expect(response.message).to.be.a('string');",
+									"    pm.expect(response.message).to.include(\"no such program\");",
+									"});",
+									"",
+									"pm.test(\"Success flag is false\", function () {",
+									"    pm.expect(response.success).to.be.false;",
+									"    pm.expect(response.success).to.be.a('boolean');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"programName\": \"UpdatedProgram\",\n  \"programDescription\": \"Updated Description\",\n  \"programStatus\": \"Active\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/program/NonExistentProgram",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"program",
+								"NonExistentProgram"
+							]
+						},
+						"description": "Update program by non-existent name"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Program - Non-existent ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"const response = pm.response.json();",
+									"",
+									"pm.test(\"Response has required structure\", function () {",
+									"    pm.expect(response).to.be.an('object');",
+									"    pm.expect(response).to.have.property('message');",
+									"    pm.expect(response).to.have.property('success');",
+									"});",
+									"",
+									"pm.test(\"Error message contains core text\", function () {",
+									"    pm.expect(response.message).to.be.a('string');",
+									"    pm.expect(response.message).to.include(\"No active program with the program Id\");",
+									"});",
+									"",
+									"pm.test(\"Success flag is false\", function () {",
+									"    pm.expect(response.success).to.be.false;",
+									"    pm.expect(response.success).to.be.a('boolean');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/deletebyprogid/999",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"deletebyprogid",
+								"999"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Program - Negative or Zero ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"const response = pm.response.json();",
+									"",
+									"pm.test(\"Response has required fields\", function () {",
+									"    pm.expect(response).to.have.property('message');",
+									"    pm.expect(response).to.have.property('success');",
+									"});",
+									"",
+									"pm.test(\"Success flag is false\", function () {",
+									"    pm.expect(response.success).to.be.false;",
+									"    pm.expect(response.success).to.be.a('boolean');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/deletebyprogid/-1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"deletebyprogid",
+								"-1"
+							]
+						},
+						"description": "Delete program with negative ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Program - Non-existent Name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"const response = pm.response.json();",
+									"",
+									"pm.test(\"Response has required structure\", function () {",
+									"    pm.expect(response).to.be.an('object');",
+									"    pm.expect(response).to.have.property('message');",
+									"    pm.expect(response).to.have.property('success');",
+									"});",
+									"",
+									"pm.test(\"Error message contains core text\", function () {",
+									"    pm.expect(response.message).to.be.a('string');",
+									"    pm.expect(response.message).to.include(\"Active Program with the program name NonExistent Not found\");",
+									"});",
+									"",
+									"pm.test(\"Success flag is false\", function () {",
+									"    pm.expect(response.success).to.be.false;",
+									"    pm.expect(response.success).to.be.a('boolean');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/deletebyprogname/NonExistent",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"deletebyprogname",
+								"NonExistent"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8080"
+		},
+		{
+			"key": "auth_token",
+			"value": ""
+		},
+		{
+			"key": "program_id",
+			"value": ""
+		},
+		{
+			"key": "program_name",
+			"value": ""
+		}
+	]
+}
