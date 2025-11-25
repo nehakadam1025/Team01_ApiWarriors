@@ -1,9 +1,10 @@
 {
 	"info": {
-		"_postman_id": "39783260-0385-41c2-b147-b47f1841b8bf",
+		"_postman_id": "ab821b8d-7e34-4d08-a2dc-abaf165b84c7",
 		"name": "LMS User Login Controller API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "1792334"
+		"_exporter_id": "50023977",
+		"_collection_link": "https://padmajak-suryawanshi-4740333.postman.co/workspace/APIHackathon2025~40dd4d3b-bb3b-44dc-ad96-b3070ee0869a/collection/50023977-ab821b8d-7e34-4d08-a2dc-abaf165b84c7?action=share&source=collection_link&creator=50023977"
 	},
 	"item": [
 		{
@@ -159,6 +160,50 @@
 							],
 							"path": [
 								"resetPassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/logoutlms",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"logoutlms"
 							]
 						}
 					},
