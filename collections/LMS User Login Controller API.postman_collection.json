@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "ab821b8d-7e34-4d08-a2dc-abaf165b84c7",
+		"_postman_id": "5d9538f3-9e68-4d59-91dd-dffd46d230cd",
 		"name": "LMS User Login Controller API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "50023977",
-		"_collection_link": "https://padmajak-suryawanshi-4740333.postman.co/workspace/APIHackathon2025~40dd4d3b-bb3b-44dc-ad96-b3070ee0869a/collection/50023977-ab821b8d-7e34-4d08-a2dc-abaf165b84c7?action=share&source=collection_link&creator=50023977"
+		"_collection_link": "https://padmajak-suryawanshi-4740333.postman.co/workspace/APIHackathon2025~40dd4d3b-bb3b-44dc-ad96-b3070ee0869a/collection/50023977-5d9538f3-9e68-4d59-91dd-dffd46d230cd?action=share&source=collection_link&creator=50023977"
 	},
 	"item": [
 		{
@@ -30,19 +30,34 @@
 									"    pm.expect(responseJson).to.have.property('type');\r",
 									"    pm.expect(responseJson).to.have.property('userId');\r",
 									"});\r",
-									""
+									"// Save JWT token to environment\r",
+									"if (pm.response.code === 200) {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    if (jsonData.token) {\r",
+									"        pm.environment.set(\"authToken\", jsonData.token);\r",
+									"        pm.collectionVariables.set(\"authToken\", jsonData.token);\r",
+									"        console.log(\"Token saved: \" + jsonData.token);\r",
+									"    }\r",
+									"}"
 								],
 								"type": "text/javascript",
-								"packages": {}
+								"packages": {},
+								"requests": {}
 							}
 						}
 					],
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"userLoginEmailId\":\"{{username}}\",\r\n    \"password\":\"{{password}}\"\r\n}",
+							"raw": "{\r\n  \"userLoginEmailId\": \"team1@gmail.com\",\r\n  \"password\": \"ApiHackathon@2025\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -84,13 +99,20 @@
 									""
 								],
 								"type": "text/javascript",
-								"packages": {}
+								"packages": {},
+								"requests": {}
 							}
 						}
 					],
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"userLoginEmailId\":\"{{username}}\"\r\n}",
@@ -137,16 +159,23 @@
 									""
 								],
 								"type": "text/javascript",
-								"packages": {}
+								"packages": {},
+								"requests": {}
 							}
 						}
 					],
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"userLoginEmailId\":\"{{username}}\",\r\n    \"password\":\"{{password}}11\"\r\n}",
+							"raw": "{\r\n  \"userLoginEmailId\": \"team1@gmail.com\",\r\n  \"password\": \"ApiHackathon@2025\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -187,7 +216,13 @@
 					},
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "",
@@ -227,13 +262,21 @@
 									""
 								],
 								"type": "text/javascript",
-								"packages": {}
+								"packages": {},
+								"requests": {}
 							}
 						}
 					],
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"userLoginEmailId\":\"{{username}}\",\r\n    \"password\":\"\"\r\n}",
@@ -518,13 +561,20 @@
 									""
 								],
 								"type": "text/javascript",
-								"packages": {}
+								"packages": {},
+								"requests": {}
 							}
 						}
 					],
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"userLoginEmailId\":\"{{username}}\",\r\n    \"password\":\"\"\r\n}",
@@ -559,13 +609,20 @@
 									""
 								],
 								"type": "text/javascript",
-								"packages": {}
+								"packages": {},
+								"requests": {}
 							}
 						}
 					],
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"userLoginEmailId\":\"\",\r\n    \"password\":\"{{password}}\"\r\n}",
@@ -600,13 +657,20 @@
 									""
 								],
 								"type": "text/javascript",
-								"packages": {}
+								"packages": {},
+								"requests": {}
 							}
 						}
 					],
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"userLoginEmailId\":\"{{username}}\",\r\n    \"password\":\"123\"\r\n}",
@@ -641,13 +705,20 @@
 									""
 								],
 								"type": "text/javascript",
-								"packages": {}
+								"packages": {},
+								"requests": {}
 							}
 						}
 					],
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "",
@@ -670,6 +741,12 @@
 					"response": []
 				}
 			]
+		}
+	],
+	"variable": [
+		{
+			"key": "authToken",
+			"value": ""
 		}
 	]
 }

@@ -17,22 +17,36 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status is 200\", function () {",
-									"  pm.response.to.have.status(200);",
+									"pm.test(\"Status Code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
 									"});",
 									"",
-									"pm.test(\"Response is JSON array\", function () {",
-									"  pm.expect(pm.response.json()).to.be.an('array');",
+									"pm.test(\"Response is an array\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an('array');",
 									"});",
 									"",
-									"pm.test(\"First user has userId and userFirstName\", function () {",
-									"  let res = pm.response.json();",
-									"  if (res.length > 0) {",
-									"    pm.expect(res[0]).to.have.property(\"userId\");",
-									"    pm.expect(res[0]).to.have.property(\"userFirstName\");",
-									"  } else {",
-									"    pm.skip(\"Response array is empty; nothing to assert in elements\");",
-									"  }",
+									"pm.test(\"Validate fields for first user in response\", function () {",
+									"    let response = pm.response.json();",
+									"",
+									"    if (response.length > 0) {",
+									"        let user = response[0];",
+									"",
+									"        pm.expect(user).to.have.property(\"userId\").that.is.a(\"string\");",
+									"        pm.expect(user).to.have.property(\"userFirstName\").that.is.a(\"string\");",
+									"        pm.expect(user).to.have.property(\"userMiddleName\");          // optional if null allowed",
+									"        pm.expect(user).to.have.property(\"userLastName\").that.is.a(\"string\");",
+									"        pm.expect(user).to.have.property(\"userLoginEmail\");          // optional if null allowed",
+									"        pm.expect(user).to.have.property(\"userLocation\").that.is.a(\"string\");",
+									"        pm.expect(user).to.have.property(\"userTimeZone\").that.is.a(\"string\");",
+									"        pm.expect(user).to.have.property(\"userLinkedinUrl\").that.is.a(\"string\");",
+									"        pm.expect(user).to.have.property(\"userVisaStatus\").that.is.a(\"string\");",
+									"        ",
+									"        pm.expect(user).to.have.property(\"userEduUg\").that.is.a(\"string\");",
+									"        pm.expect(user).to.have.property(\"userEduPg\").that.is.a(\"string\");",
+									"        pm.expect(user).to.have.property(\"userComments\");",
+									"    } else {",
+									"        pm.skip(\"Response array is empty, skipping field validation.\");",
+									"    }",
 									"});",
 									""
 								],
@@ -59,18 +73,85 @@
 					"response": []
 				},
 				{
-					"name": "POST-LOGIN",
+					"name": "Get Users By roleID",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"let response = pm.response.json();",
-									"pm.collectionVariables.set(\"token\", response.token);",
-									"console.log(\"Saved token:\", response.token);",
+									"// Validate status code",
+									"pm.test(\"Status code is 200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
 									"",
-									"pm.test(\"Status code is 200\", function () {",
-									"  pm.response.to.have.status(200);",
+									"// Validate response is an array",
+									"pm.test(\"Response is an array\", function () {",
+									"    let jsonResponse = pm.response.json();",
+									"    pm.expect(jsonResponse).to.be.an(\"array\");",
+									"});",
+									"",
+									"// Validate fields for first user in response",
+									"pm.test(\"Validate user object properties\", function () {",
+									"    let response = pm.response.json();",
+									"",
+									"    if (response.length > 0) {",
+									"        let user = response[0];",
+									"        ",
+									"        pm.expect(user).to.have.property(\"userId\").that.is.a(\"string\");",
+									"        pm.expect(user).to.have.property(\"userFirstName\").that.is.a(\"string\");",
+									"        pm.expect(user).to.have.property(\"userMiddleName\");  // Could be null",
+									"        pm.expect(user).to.have.property(\"userLastName\").that.is.a(\"string\");",
+									"        ",
+									"        pm.expect(user).to.have.property(\"userLoginEmail\");  // Could be null",
+									"        //pm.expect(user).to.have.property(\"userPhoneNumber\").that.is.a(\"number\");",
+									"        ",
+									"        pm.expect(user).to.have.property(\"userLocation\").that.is.a(\"string\");",
+									"        pm.expect(user).to.have.property(\"userTimeZone\").that.is.a(\"string\");",
+									"        pm.expect(user).to.have.property(\"userLinkedinUrl\").that.is.a(\"string\");",
+									"        pm.expect(user).to.have.property(\"userVisaStatus\").that.is.a(\"string\");",
+									"        ",
+									"        pm.expect(user).to.have.property(\"userEduUg\").that.is.a(\"string\");",
+									"        pm.expect(user).to.have.property(\"userEduPg\").that.is.a(\"string\");",
+									"        pm.expect(user).to.have.property(\"userComments\");",
+									"    } else {",
+									"        pm.skip(\"Empty response array – No users available to validate.\");",
+									"    }",
+									"});",
+									"",
+									"// Validate Email format if available",
+									"pm.test(\"Validate email format if present\", function () {",
+									"    let user = pm.response.json()[0];",
+									"",
+									"    if (user.userLoginEmail) {",
+									"        pm.expect(user.userLoginEmail).to.match(",
+									"            /^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$/ // Basic email regex",
+									"        );",
+									"    } else {",
+									"        pm.skip(\"Email is null or not provided\");",
+									"    }",
+									"});",
+									"",
+									"// Validate LinkedIn URL format",
+									"pm.test(\"Validate LinkedIn URL format\", function () {",
+									"    let user = pm.response.json()[0];",
+									"",
+									"    if (user.userLinkedinUrl) {",
+									"        pm.expect(user.userLinkedinUrl).to.match(",
+									"            /^https?:\\/\\/(www\\.)?linkedin\\.com\\/.+/",
+									"        );",
+									"    } else {",
+									"        pm.skip(\"LinkedIn URL is null or not provided\");",
+									"    }",
+									"});",
+									"",
+									"// Validate phone number has at least 10 digits",
+									"pm.test(\"Validate phone number (minimum 10 digits)\", function () {",
+									"    let user = pm.response.json()[0];",
+									"    if (user.userPhoneNumber) {",
+									"        pm.expect(user.userPhoneNumber.toString().length).to.be.at.least(10);",
+									"    } else {",
+									"        pm.skip(\"Phone number not provided\");",
+									"    }",
 									"});",
 									""
 								],
@@ -79,38 +160,6 @@
 							}
 						}
 					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{authToken}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"userLoginEmailId\": \"team1@gmail.com\",\n  \"password\": \"ApiHackathon@2025\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/login",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"login"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Users By roleID",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -130,6 +179,90 @@
 				},
 				{
 					"name": "Gets Users by roleId V2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validate status code",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"// Parse response",
+									"let res = pm.response.json();",
+									"",
+									"// Validate that response is an object",
+									"pm.test(\"Response is an object\", function () {",
+									"    pm.expect(res).to.be.an(\"object\");",
+									"});",
+									"",
+									"// Validate 'facets' exists",
+									"pm.test(\"'facets' object validation\", function () {",
+									"    pm.expect(res).to.have.property(\"facets\");",
+									"    pm.expect(res.facets).to.be.an(\"object\");",
+									"});",
+									"",
+									"// Validate 'facetedFields' array",
+									"pm.test(\"'facetedFields' array validation\", function () {",
+									"    pm.expect(res.facets).to.have.property(\"facetedFields\").that.is.an(\"array\");",
+									"});",
+									"",
+									"// Check first facetedField structure",
+									"pm.test(\"Validate structure inside 'facetedFields'\", function () {",
+									"    if (res.facets.facetedFields.length > 0) {",
+									"        let field = res.facets.facetedFields[0];",
+									"        pm.expect(field).to.have.property(\"displayName\");",
+									"        pm.expect(field.displayName).to.be.a(\"string\");",
+									"        pm.expect(field).to.have.property(\"filterValues\").that.is.an(\"array\");",
+									"",
+									"        // Validate 'filterValues' structure",
+									"        if (field.filterValues.length > 0) {",
+									"            let filter = field.filterValues[0];",
+									"            pm.expect(filter).to.have.property(\"count\").that.is.a(\"number\");",
+									"            pm.expect(filter).to.have.property(\"name\").that.is.a(\"string\");",
+									"        } else {",
+									"            pm.skip(\"No filter values available to validate\");",
+									"        }",
+									"    } else {",
+									"        pm.skip(\"No faceted fields available to validate\");",
+									"    }",
+									"});",
+									"",
+									"// Validate 'users' array",
+									"pm.test(\"'users' array exists\", function () {",
+									"    pm.expect(res).to.have.property(\"users\").that.is.an(\"array\");",
+									"});",
+									"",
+									"// Validate user object fields",
+									"pm.test(\"Validate user object structure\", function () {",
+									"    if (res.users.length > 0) {",
+									"        let user = res.users[0];",
+									"",
+									"        pm.expect(user).to.have.property(\"userId\").that.is.a(\"string\");",
+									"        pm.expect(user).to.have.property(\"userFirstName\").that.is.a(\"string\");",
+									"        pm.expect(user).to.have.property(\"userLastName\").that.is.a(\"string\");",
+									"       // pm.expect(user).to.have.property(\"userPhoneNumber\").that.is.a(\"number\");",
+									"        pm.expect(user).to.have.property(\"userLocation\").that.is.a(\"string\");",
+									"        pm.expect(user).to.have.property(\"userTimeZone\").that.is.a(\"string\");",
+									"        pm.expect(user).to.have.property(\"userLinkedinUrl\").that.is.a(\"string\");",
+									"        pm.expect(user).to.have.property(\"userVisaStatus\").that.is.a(\"string\");",
+									"        pm.expect(user).to.have.property(\"userEduUg\").that.is.a(\"string\");",
+									"        pm.expect(user).to.have.property(\"userEduPg\").that.is.a(\"string\");",
+									"        pm.expect(user).to.have.property(\"userComments\");",
+									"        pm.expect(user).to.have.property(\"userMiddleName\");",
+									"        pm.expect(user).to.have.property(\"userLoginEmail\");",
+									"    } else {",
+									"        pm.skip(\"No users available to validate\");",
+									"    }",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -167,18 +300,57 @@
 				},
 				{
 					"name": "Get User Details by Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validate status code",
+									"pm.test(\"Status code is 200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"// Parse response",
+									"let res = pm.response.json();",
+									"",
+									"// Check response is an array",
+									"pm.test(\"Response is an array\", function () {",
+									"    pm.expect(res).to.be.an(\"array\");",
+									"});",
+									"",
+									"// Validate structure of first object",
+									"pm.test(\"Validate response object structure\", function () {",
+									"    if (res.length > 0) {",
+									"        let record = res[0];",
+									"",
+									"        pm.expect(record).to.have.property(\"programName\").that.is.a(\"string\");",
+									"        pm.expect(record).to.have.property(\"batchName\").that.is.a(\"string\");",
+									"        pm.expect(record).to.have.property(\"userFirstName\").that.is.a(\"string\");",
+									"        pm.expect(record).to.have.property(\"userLastName\").that.is.a(\"string\");",
+									"        pm.expect(record).to.have.property(\"userLoginEmail\").that.is.a(\"string\");",
+									"    } else {",
+									"        pm.skip(\"No records found in response to validate.\");",
+									"    }",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/users/details/U01",
+							"raw": "{{baseUrl}}/users/details/U08",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"users",
 								"details",
-								"U01"
+								"U08"
 							]
 						}
 					},
@@ -186,9 +358,243 @@
 				},
 				{
 					"name": "Update User By ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validate Status Code",
+									"pm.test(\"Status code is 200 - Success\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"// Parse response",
+									"let res = pm.response.json();",
+									"",
+									"",
+									"// Validate mandatory fields exist in response",
+									"[\"userFirstName\", \"userLastName\", \"userPhoneNumber\", \"userVisaStatus\", \"userTimeZone\"].forEach(field => {",
+									"    pm.test(`Response should contain ${field}`, function () {",
+									"        pm.expect(res).to.have.property(field);",
+									"        pm.expect(res[field]).to.not.be.null;",
+									"        pm.expect(res[field]).to.not.eql(\"\");",
+									"    });",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
-						"method": "GET",
-						"header": []
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"userComments\": \"na\",\n\"userEduPg\": \"ME\",\n\"userEduUg\": \"BE\",\n\"userFirstName\": \"Shreya\",\n\"userId\": \"String\",\n\"userLastName\": \"Ghoshal\",\n\"userMiddleName\": \"Singh\",\n\"userLinkedinUrl\": \"https://www.linkedin.com/in/shreyaghoshal4/\",\n\"userLocation\": \"Dallas\",\n\"userLoginEmail\": \"Robert.Louis@gmail.com\" ,\n\"userPhoneNumber\": \"+91 3214568899\",\n\"userTimeZone\": \"CST\",\n\"userVisaStatus\": \"H4-EAD\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/U05",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"U05"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User RoleID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validate Status Code",
+									"pm.test(\"Status code is 200 - Success\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"// Parse response",
+									"let res = pm.response.text();  // Response is a text message",
+									"",
+									"// Check success message",
+									"pm.test(\"Response message is correct\", function () {",
+									"   pm.expect(res).to.have.string(\"Role Id Updated\");",
+									"",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"userRoleList\": [\n{\n\"roleId\": \"R01\",\n\"userRoleStatus\": \"Active\"\n}\n]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/roleId/U08",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"roleId",
+								"U08"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Assign Update User Role Program Batch Status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validate Status Code",
+									"pm.test(\"Status Code is 200 - Success\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"// Validate response message (text response)",
+									"let responseText = pm.response.text();",
+									"",
+									"pm.test(\"Correct success message received\", function () {",
+									"    // Replace VARIABLES.USER_ID if you set userId using variable",
+									"    pm.expect(responseText).to.include(\"has been successfully assigned\");",
+									"});",
+									"",
+									"// Validate JSON format only if API returns JSON response",
+									"pm.test(\"Valid JSON structure (if applicable)\", function () {",
+									"    try {",
+									"        JSON.parse(responseText);",
+									"        console.log(\"Response is JSON\");",
+									"    } catch (error) {",
+									"        console.log(\"Response not JSON, may be plain text\");",
+									"    }",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"programId\": 1,\n\"roleId\": \"R01\",\n\"userId\": \"U02\",\n\"userRoleProgramBatches\": [\n{\n\"batchId\":1,\n\"userRoleProgramBatchStatus\":\n\"Active\"\n}\n]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/roleProgramBatchStatus/U02",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"roleProgramBatchStatus",
+								"U02"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User Login Status",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"loginStatus\": \"Active\",\n\"roleIds\": [\n\"R01\"\n],\n\"status\": \"Active\",\n\"userLoginEmail\": \"xyzabc@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/userLogin/U03",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"userLogin",
+								"U03"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 - User inactive successfully\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"let responseText = pm.response.text();",
+									"",
+									"// If API returns plain text",
+									"pm.test(\"Success message should mention user inactive\", function () {",
+									"    pm.expect(responseText.toLowerCase()).to.include(\"deleted\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/U101",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"U101"
+							]
+						}
 					},
 					"response": []
 				}
@@ -268,6 +674,391 @@
 								"users",
 								"details",
 								"U99"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User By Id-Invalid",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validate Status Code",
+									"pm.test(\"Status code is 400 - Bad Request\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"// Parse response",
+									"let res = pm.response.json();",
+									"",
+									"// Validate success = false",
+									"pm.test(\"Success flag should be false\", function () {",
+									"    pm.expect(res.success).to.eql(false);",
+									"});",
+									"",
+									"// Check error message",
+									"pm.test(\"Error message must be provided\", function () {",
+									"    pm.expect(res).to.have.property(\"message\");",
+									"    pm.expect(res.message).to.not.be.empty;",
+									"});",
+									"",
+									"// Optional: Validate which field is missing",
+									"pm.test(\"Error message should mention missing field\", function () {",
+									"    pm.expect(res.message.toLowerCase()).to.include(\"mandatory\");",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"userComments\": \"na\",\n\"userEduPg\": \"ME\",\n\"userEduUg\": \"BE\",\n\"userId\": \"String\",\n\"userLastName\": \"Ghoshal\",\n\"userMiddleName\": \"Singh\",\n\"userLinkedinUrl\": \"https://www.linkedin.com/in/shreyaghoshal4/\",\n\"userPhoneNumber\": \"+91 3214567890\",\n\"userTimeZone\": \"CST\",\n\"userVisaStatus\": \"H4-EAD\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/U05",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"U05"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User RoleID-Invalid UserID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validate status code",
+									"pm.test(\"Status code is 404 - Invalid User ID\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"let res = pm.response.json(); // Assuming JSON response",
+									"",
+									"pm.test(\"Success flag should be false\", function () {",
+									"    pm.expect(res.success).to.eql(false);",
+									"});",
+									"",
+									"// Check message for invalid user",
+									"pm.test(\"Error message should mention User not found\", function () {",
+									"    pm.expect(res.message.toLowerCase()).to.include(\"not found\");",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"userRoleList\": [\n{\n\"roleId\": \"R02\",\n\"userRoleStatus\": \"Active\"\n}\n]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/roleId/U999",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"roleId",
+								"U999"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User RoleId-Role Already Exists",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validate status code",
+									"pm.test(\"Status code is 404 - Role Already Exists\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"let res = pm.response.json();",
+									"",
+									"pm.test(\"Success flag should be false\", function () {",
+									"    pm.expect(res.success).to.eql(false);",
+									"});",
+									"",
+									"// Check message",
+									"pm.test(\"Error message should mention role already exists\", function () {",
+									"    pm.expect(res.message.toLowerCase()).to.include(\"already exists\");",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"userRoleList\": [\n{\n\"roleId\": \"R01\",\n\"userRoleStatus\": \"Active\"\n}\n]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/roleId/U08",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"roleId",
+								"U08"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Assign Update User Role Program Batch Status-InValid UserID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status Code is 404 - Invalid User ID\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"let jsonResponse = pm.response.json();",
+									"",
+									"pm.test(\"Success flag should be false\", function () {",
+									"    pm.expect(jsonResponse.success).to.eql(false);",
+									"});",
+									"",
+									"pm.test(\"Error message should mention invalid user\", function () {",
+									"    pm.expect(jsonResponse.message.toLowerCase()).to.include(\"not found\");",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"programId\": 1,\n\"roleId\": \"R01\",\n\"userId\": \"U99\",\n\"userRoleProgramBatches\": [\n{\n\"batchId\":1,\n\"userRoleProgramBatchStatus\":\n\"Active\"\n}\n]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/roleProgramBatchStatus/U99",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"roleProgramBatchStatus",
+								"U99"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Assign Update User Role Program Batch Status-MissingField",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status Code is 400 - Bad Request\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"let res = pm.response.json();",
+									"",
+									"pm.test(\"Error message exists\", function () {",
+									"    pm.expect(res.message).to.exist;",
+									"    pm.expect(res.message.length).to.be.greaterThan(0);",
+									"});",
+									"",
+									"pm.test(\"Success flag should be false\", function () {",
+									"    pm.expect(res.success).to.eql(false);",
+									"});",
+									"",
+									"// Example additional validation if backend provides missingField details",
+									"if (res.missingFields) {",
+									"    pm.test(\"Missing field details should be provided\", function () {",
+									"        pm.expect(res.missingFields).to.be.an(\"array\");",
+									"    });",
+									"}",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"programId\": 1,\n\"roleId\": \"R01\",\n\"userId\": \"U99\",\n\"userRoleProgramBatches\": [\n{\n\"userRoleProgramBatchStatus\":\n\"Active\"\n}\n]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/roleProgramBatchStatus/U02",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"roleProgramBatchStatus",
+								"U02"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User Login Status-InValid",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"loginStatus\": \"Active\",\n\"roleIds\": [\n\"R01\"\n],\n\"status\": \"Active\",\n\"userLoginEmail\": \"xyzabc@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/userLogin/U999",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"userLogin",
+								"U999"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User Login Status-Missing",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"loginStatus\": \"Active\",\n\"roleIds\": [\n\"R01\"\n],\n\"userLoginEmail\": \"xyzabc@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/userLogin/U999",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"userLogin",
+								"U999"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User-Invalid",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404 - Invalid user ID\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"let res = pm.response.json();",
+									"",
+									"pm.test(\"Error message should indicate user not found\", function () {",
+									"    pm.expect(res.message.toLowerCase()).to.include(\"not found\");",
+									"});",
+									"",
+									"pm.test(\"Success flag should be false\", function () {",
+									"    pm.expect(res.success).to.eql(false);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/U999",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"U999"
 							]
 						}
 					},
