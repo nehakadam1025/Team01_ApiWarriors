@@ -1,47 +1,42 @@
 {
 	"info": {
-		"_postman_id": "1cc06e64-2130-4dd9-8290-1211beb72b34",
-		"name": "LMS Program Module API",
-		"description": "Comprehensive test collection for LMS Program Module APIs including all CRUD operations and validation tests",
+		"_postman_id": "518becb3-8814-4f03-91ad-60360e542fdd",
+		"name": "LMS Program Batch Module",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "50244332",
-		"_collection_link": "https://saloniranka0303-4395223.postman.co/workspace/Saloni's-Workspace~c508e76f-3bd3-423c-8be0-4fb6ac1551a7/collection/50244332-1cc06e64-2130-4dd9-8290-1211beb72b34?action=share&source=collection_link&creator=50244332"
+		"_exporter_id": "50024072",
+		"_collection_link": "https://nehak2025-2536606.postman.co/workspace/Neha's-Workspace~bd961bac-afb6-4a46-85fb-ee5e6c14829e/collection/50024072-518becb3-8814-4f03-91ad-60360e542fdd?action=share&source=collection_link&creator=50024072"
 	},
 	"item": [
 		{
 			"name": "Positive Tests",
 			"item": [
 				{
-					"name": "Get All Programs",
+					"name": "Get All Batches",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"",
-									"pm.test(\"Response is an array\", function () {",
-									"    var jsonData = pm.response.json();",
-									"    pm.expect(jsonData).to.be.an('array');",
-									"});",
-									"",
-									"pm.test(\"Each program contains required fields\", function () {",
-									"    var jsonData = pm.response.json();",
-									"    jsonData.forEach(function(program) {",
-									"        pm.expect(program).to.have.property('programId');",
-									"        pm.expect(program).to.have.property('programName');",
-									"        pm.expect(program).to.have.property('programDescription');",
-									"        pm.expect(program).to.have.property('programStatus');",
-									"        pm.expect(program).to.have.property('creationTime');",
-									"        pm.expect(program).to.have.property('lastModTime');",
-									"    });",
-									"});"
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"const response = pm.response.json();\r",
+									"\r",
+									"// Test for response body structure\r",
+									"pm.test(\"Response is an array\", function () {\r",
+									"    pm.expect(response).to.be.an('array');\r",
+									"});\r",
+									"\r",
+									"// Loop through each batch and check properties\r",
+									"response.forEach(batch => {\r",
+									"    pm.test(`Batch ID ${batch.batchId} has required fields`, function () {\r",
+									"        pm.expect(batch).to.have.all.keys('batchId', 'batchName', 'batchDescription', 'batchStatus', 'batchNoOfClasses', 'programId', 'programName');\r",
+									"    });\r",
+									"});\r",
+									""
 								],
 								"type": "text/javascript",
-								"packages": {},
-								"requests": {}
+								"packages": {}
 							}
 						}
 					],
@@ -55,41 +50,43 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/allPrograms",
+							"raw": "{{baseUrl}}/batches",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
-								"allPrograms"
+								"batches"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Get Program by ID",
+					"name": "Get Batch by BatchID",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"",
-									"pm.test(\"Response contains program details\", function () {",
-									"    var jsonData = pm.response.json();",
-									"    pm.expect(jsonData).to.have.property('programId');",
-									"    pm.expect(jsonData).to.have.property('programName');",
-									"    pm.expect(jsonData).to.have.property('programDescription');",
-									"    pm.expect(jsonData).to.have.property('programStatus');",
-									"    pm.expect(jsonData).to.have.property('creationTime');",
-									"    pm.expect(jsonData).to.have.property('lastModTime');",
-									"});"
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response contains required batch fields\", function () {\r",
+									"    const jsonData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(jsonData).to.have.property(\"batchId\");\r",
+									"    pm.expect(jsonData).to.have.property(\"batchName\");\r",
+									"    pm.expect(jsonData).to.have.property(\"batchDescription\");\r",
+									"    pm.expect(jsonData).to.have.property(\"batchNoOfClasses\");\r",
+									"    pm.expect(jsonData).to.have.property(\"batchStatus\");\r",
+									"    pm.expect(jsonData).to.have.property(\"programId\");\r",
+									"    pm.expect(jsonData).to.have.property(\"programName\");\r",
+									"});\r",
+									""
 								],
 								"type": "text/javascript",
-								"packages": {},
-								"requests": {}
+								"packages": {}
 							}
 						}
 					],
@@ -103,77 +100,157 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/programs/3",
+							"raw": "{{baseUrl}}/batches/batchId/24",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
-								"programs",
-								"3"
+								"batches",
+								"batchId",
+								"24"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Get All Programs With Users",
+					"name": "Get Batch by Batch Name",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"",
-									"pm.test(\"Response is an array\", function () {",
-									"    var jsonData = pm.response.json();",
-									"    pm.expect(jsonData).to.be.an('array');",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response contains required batch fields\", function () {\r",
+									"    const jsonData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(jsonData).to.have.property(\"batchId\");\r",
+									"    pm.expect(jsonData).to.have.property(\"batchName\");\r",
+									"    pm.expect(jsonData).to.have.property(\"batchDescription\");\r",
+									"    pm.expect(jsonData).to.have.property(\"batchNoOfClasses\");\r",
+									"    pm.expect(jsonData).to.have.property(\"batchStatus\");\r",
+									"    pm.expect(jsonData).to.have.property(\"programId\");\r",
+									"    pm.expect(jsonData).to.have.property(\"programName\");\r",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "{{base_url}}/allProgramsWithUsers",
+							"raw": "{{baseUrl}}/batches/batchName/SDET226",
 							"host": [
-								"{{base_url}}"
+								"{{baseUrl}}"
 							],
 							"path": [
-								"allProgramsWithUsers"
+								"batches",
+								"batchName",
+								"SDET226"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Create Program - Valid Data",
+					"name": "Get Batch by Program ID",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status code is 201\", function () {",
-									"    pm.response.to.have.status(201);",
-									"});",
-									"",
-									"pm.test(\"Response contains created program\", function () {",
-									"    var jsonData = pm.response.json();",
-									"    pm.expect(jsonData).to.have.property('programId');",
-									"    pm.expect(jsonData).to.have.property('programName');",
-									"    pm.expect(jsonData).to.have.property('programDescription');",
-									"    pm.expect(jsonData).to.have.property('programStatus');",
-									"    pm.expect(jsonData).to.have.property('creationTime');",
-									"    pm.expect(jsonData).to.have.property('lastModTime');",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response contains required batch fields\", function () {\r",
+									"    const jsonData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(jsonData).to.have.property(\"batchId\");\r",
+									"    pm.expect(jsonData).to.have.property(\"batchName\");\r",
+									"    pm.expect(jsonData).to.have.property(\"batchDescription\");\r",
+									"    pm.expect(jsonData).to.have.property(\"batchNoOfClasses\");\r",
+									"    pm.expect(jsonData).to.have.property(\"batchStatus\");\r",
+									"    pm.expect(jsonData).to.have.property(\"programId\");\r",
+									"    pm.expect(jsonData).to.have.property(\"programName\");\r",
 									"});"
 								],
 								"type": "text/javascript",
-								"packages": {},
-								"requests": {}
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/batches/program/13",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"batches",
+								"program",
+								"13"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create New Batch",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"\r",
+									"// Assert status code\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.expect(pm.response.code).to.equal(201);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response contains created batch fields\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(jsonData).to.have.property('batchId');\r",
+									"    pm.expect(jsonData).to.have.property('batchName');\r",
+									"    pm.expect(jsonData).to.have.property('batchDescription');\r",
+									"    pm.expect(jsonData).to.have.property('batchNoOfClasses');\r",
+									"    pm.expect(jsonData).to.have.property('batchStatus');\r",
+									"    pm.expect(jsonData).to.have.property('programId');\r",
+									"    pm.expect(jsonData).to.have.property('programName');\r",
+									"});\r",
+									"\r",
+									"\r",
+									"// Validate response headers\r",
+									"pm.test(\"Content-Type is application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.equal(\"application/json\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -181,10 +258,6 @@
 						"method": "POST",
 						"header": [
 							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
 								"key": "Authorization",
 								"value": "Bearer {{authToken}}",
 								"type": "text"
@@ -192,44 +265,50 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"programName\": \"Jenkins-Bootcamp\",\n  \"programStatus\": \"Active\"\n}"
+							"raw": "{\r\n  \"batchDescription\": \"Automation batch\",\r\n  \"batchName\": \"SDET227\",\r\n  \"batchNoOfClasses\": 25,\r\n  \"batchStatus\": \"Active\",\r\n  \"programId\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/saveprogram",
+							"raw": "{{baseUrl}}/batches",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
-								"saveprogram"
+								"batches"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Update Program by ID",
+					"name": "Update by Batch ID",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"",
-									"pm.test(\"Response contains updated program\", function () {",
-									"    var jsonData = pm.response.json();",
-									"    pm.expect(jsonData).to.have.property('programId');",
-									"    pm.expect(jsonData).to.have.property('programName');",
-									"    pm.expect(jsonData).to.have.property('programDescription');",
-									"    pm.expect(jsonData).to.have.property('programStatus');",
-									"    pm.expect(jsonData).to.have.property('creationTime');",
-									"    pm.expect(jsonData).to.have.property('lastModTime');",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response contains required batch fields\", function () {\r",
+									"    const jsonData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(jsonData).to.have.property(\"batchId\");\r",
+									"    pm.expect(jsonData).to.have.property(\"batchName\");\r",
+									"    pm.expect(jsonData).to.have.property(\"batchDescription\");\r",
+									"    pm.expect(jsonData).to.have.property(\"batchNoOfClasses\");\r",
+									"    pm.expect(jsonData).to.have.property(\"batchStatus\");\r",
+									"    pm.expect(jsonData).to.have.property(\"programId\");\r",
+									"    pm.expect(jsonData).to.have.property(\"programName\");\r",
 									"});"
 								],
 								"type": "text/javascript",
-								"packages": {},
-								"requests": {}
+								"packages": {}
 							}
 						}
 					],
@@ -237,10 +316,6 @@
 						"method": "PUT",
 						"header": [
 							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
 								"key": "Authorization",
 								"value": "Bearer {{authToken}}",
 								"type": "text"
@@ -248,97 +323,45 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"programName\": \"Playwright-Bootcamp\",\n  \"programStatus\": \"Inactive\"\n}"
+							"raw": "{\r\n\"batchDescription\": \"SDET TOPPERS\",   \r\n\"batchName\": \"B2CBatch\",\r\n\"batchNoOfClasses\": 59,\r\n\"batchStatus\": \"INACTIVE\",\r\n\"programId\": 3,\r\n\"programName\": \"Testing1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/putprogram/75",
+							"raw": "{{baseUrl}}/batches/38",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
-								"putprogram",
-								"75"
-							]
-						},
-						"description": "Update program by program ID"
-					},
-					"response": []
-				},
-				{
-					"name": "Update Program by Name",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"",
-									"pm.test(\"Response contains updated program\", function () {",
-									"    var jsonData = pm.response.json();",
-									"    pm.expect(jsonData).to.have.property('programId');",
-									"    pm.expect(jsonData).to.have.property('programName');",
-									"    pm.expect(jsonData).to.have.property('programDescription');",
-									"    pm.expect(jsonData).to.have.property('programStatus');",
-									"    pm.expect(jsonData).to.have.property('creationTime');",
-									"    pm.expect(jsonData).to.have.property('lastModTime');",
-									"});"
-								],
-								"type": "text/javascript",
-								"packages": {},
-								"requests": {}
-							}
-						}
-					],
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{authToken}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"programName\": \"Java-Expert-Module\",\n  \"programDescription\": \"Expert Java Training\",\n  \"programStatus\": \"Active\"\n}"
-						},
-						"url": {
-							"raw": "{{baseUrl}}/program/Java-Bootcamp",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"program",
-								"Java-Bootcamp"
+								"batches",
+								"38"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Delete Program by ID",
+					"name": "Delete by Batch ID",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"",
-									"pm.test(\"Response contains deletion confirmation\", function () {",
-									"    pm.expect(pm.response.text()).to.include('deleted Successfully');",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Deletion success message is correct\", function () {\r",
+									"    let jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property('message');\r",
+									"    pm.expect(jsonData.message).to.include(\"deleted Successfully\");\r",
 									"});"
 								],
 								"type": "text/javascript",
-								"packages": {},
-								"requests": {}
+								"packages": {}
 							}
 						}
 					],
@@ -352,60 +375,15 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/deletebyprogid/99",
+							"raw": "{{baseUrl}}/batches/65",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
-								"deletebyprogid",
-								"99"
+								"batches",
+								"65"
 							]
-						},
-						"description": "Delete program by program ID"
-					},
-					"response": []
-				},
-				{
-					"name": "Delete Program by Name",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"",
-									"pm.test(\"Response contains deletion confirmation\", function () {",
-									"    pm.expect(pm.response.text()).to.include('deleted Successfully');",
-									"});"
-								],
-								"type": "text/javascript",
-								"packages": {},
-								"requests": {}
-							}
 						}
-					],
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{authToken}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{baseUrl}}/deletebyprogname/OracleEngineer",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"deletebyprogname",
-								"OracleEngineer"
-							]
-						},
-						"description": "Delete program by program name"
 					},
 					"response": []
 				}
@@ -415,34 +393,35 @@
 			"name": "Negative Tests",
 			"item": [
 				{
-					"name": "Get Program - Invalid ID",
+					"name": "Get Batches - Invalid ID",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status code is 404\", function () {",
-									"    pm.response.to.have.status(404);",
-									"});",
-									"",
-									"const response = pm.response.json();",
-									"pm.test(\"Response has required fields\", function () {",
-									"    pm.expect(response).to.have.property('message');",
-									"    pm.expect(response).to.have.property('success');",
-									"});",
-									"",
-									"pm.test(\"Error message matches expected format\", function () {",
-									"    pm.expect(response.message).to.match(/not found/i);",
-									"});",
-									"",
-									"pm.test(\"Success field is false for invalid Program ID\", function () {",
-									"    pm.expect(response.success).to.be.false;",
-									"});",
+									"const response = pm.response.json();\r",
+									"\r",
+									"\r",
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.expect(pm.response.code).to.equal(404);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response body has expected properties\", function () {\r",
+									"    pm.expect(response).to.have.property('message');\r",
+									"    pm.expect(response).to.have.property('success');\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response message is correct\", function () {\r",
+									"    pm.expect(response.message).to.include(\"Batch not found with Id\");\r",
+									"    pm.expect(response.success).to.be.false;\r",
+									"});\r",
 									""
 								],
 								"type": "text/javascript",
-								"packages": {},
-								"requests": {}
+								"packages": {}
 							}
 						}
 					],
@@ -456,12 +435,13 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/programs/999",
+							"raw": "{{baseUrl}}/batches/batchId/999",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
-								"programs",
+								"batches",
+								"batchId",
 								"999"
 							]
 						}
@@ -469,30 +449,31 @@
 					"response": []
 				},
 				{
-					"name": "Get Program - Negative or Zero ID",
+					"name": "Get Batches - Negative or Zero ID",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status code is 400\", function () {",
-									"    pm.response.to.have.status(400);",
-									"});",
-									"",
-									"const response = pm.response.json();",
-									"pm.test(\"Response has required fields\", function () {",
-									"    pm.expect(response).to.have.property('message');",
-									"    pm.expect(response).to.have.property('success');",
-									"});",
-									"",
-									"pm.test(\"Success field is false for invalid Program ID-Negative or Zero\", function () {",
-									"    pm.expect(response.success).to.be.false;",
-									"});",
+									"const response = pm.response.json();\r",
+									"\r",
+									"\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.expect(pm.response.code).to.equal(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body has required fields\", function () {\r",
+									"    pm.expect(response).to.have.property('message');\r",
+									"    pm.expect(response).to.have.property('success');\r",
+									"\r",
+									"\r",
+									"    pm.expect(response.success).to.be.a('boolean');\r",
+									"    pm.expect(response.success).to.equal(false);\r",
+									"});\r",
 									""
 								],
 								"type": "text/javascript",
-								"packages": {},
-								"requests": {}
+								"packages": {}
 							}
 						}
 					],
@@ -506,12 +487,13 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/programs/0",
+							"raw": "{{baseUrl}}/batches/batchId/0",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
-								"programs",
+								"batches",
+								"batchId",
 								"0"
 							]
 						}
@@ -519,34 +501,10 @@
 					"response": []
 				},
 				{
-					"name": "Create Program - Duplicate Name",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 400\", function () {",
-									"    pm.response.to.have.status(400);",
-									"});",
-									"",
-									"pm.test(\"Error message indicates duplicate or already exists\", function () {",
-									"    const message = pm.response.json().message.toLowerCase();",
-									"    pm.expect(message).to.include('already exists');",
-									"});"
-								],
-								"type": "text/javascript",
-								"packages": {},
-								"requests": {}
-							}
-						}
-					],
+					"name": "Create Batch-Duplicate Name",
 					"request": {
 						"method": "POST",
 						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
 							{
 								"key": "Authorization",
 								"value": "Bearer {{authToken}}",
@@ -555,673 +513,61 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"programName\": \"Java-Bootcamp\",\n  \"programDescription\": \"Duplicate Program\",\n  \"programStatus\": \"Active\"\n}"
+							"raw": "{\r\n  \"batchDescription\": \"Duplicate Automation batch\",\r\n  \"batchName\": \"SDET226\",\r\n  \"batchNoOfClasses\": 25,\r\n  \"batchStatus\": \"Active\",\r\n  \"programId\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/saveprogram",
+							"raw": "{{baseUrl}}/batches",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
-								"saveprogram"
-							]
-						},
-						"description": "Create program with duplicate name"
-					},
-					"response": []
-				},
-				{
-					"name": "Create Program - Omit the field Program Name",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 400\", function () {",
-									"    pm.response.to.have.status(400);",
-									"});",
-									"",
-									"pm.test(\"Error message indicates mandatory field\", function () {",
-									"    var jsonData = pm.response.json();",
-									"    pm.expect(jsonData.message).to.include(\"mandatory\");",
-									"});"
-								],
-								"type": "text/javascript",
-								"packages": {},
-								"requests": {}
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{authToken}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"programDescription\": \"Test Description\",\n  \"programStatus\": \"Active\"\n}"
-						},
-						"url": {
-							"raw": "{{baseUrl}}/saveprogram",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"saveprogram"
+								"batches"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Create Program - Name Too Short",
+					"name": "Create Batch-Invalid Batch Name",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status code is 400\", function () {",
-									"    pm.response.to.have.status(400);",
-									"});",
-									"",
-									"pm.test(\"Error message indicates length requirement\", function () {",
-									"    pm.expect(pm.response.text()).to.include('min length 4');",
-									"});"
-								],
-								"type": "text/javascript",
-								"packages": {},
-								"requests": {}
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{authToken}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"programName\": \"abc\",\n  \"programDescription\": \"Test Description\",\n  \"programStatus\": \"Active\"\n}"
-						},
-						"url": {
-							"raw": "{{baseUrl}}/saveprogram",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"saveprogram"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create Program - Name Too Long",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 400\", function () {",
-									"    pm.response.to.have.status(400);",
-									"});",
-									"",
-									"pm.test(\"Error message indicates length requirement\", function () {",
-									"    pm.expect(pm.response.text()).to.include('max length 25');",
-									"});"
-								],
-								"type": "text/javascript",
-								"packages": {},
-								"requests": {}
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{authToken}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"programName\": \"ThisIsAVeryLongProgramNameExceedingTwentyFiveCharacters\",\n  \"programDescription\": \"Test Description\",\n  \"programStatus\": \"Active\"\n}"
-						},
-						"url": {
-							"raw": "{{baseUrl}}/saveprogram",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"saveprogram"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create Program - Name with Special Characters",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 400\", function () {",
-									"    pm.response.to.have.status(400);",
-									"});",
-									"",
-									"pm.test(\"Error message indicates invalid characters\", function () {",
-									"    pm.expect(pm.response.text()).to.include('letters and sometimes hyphens');",
-									"});"
-								],
-								"type": "text/javascript",
-								"packages": {},
-								"requests": {}
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{authToken}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"programName\": \"Test@123\",\n  \"programDescription\": \"Test Description\",\n  \"programStatus\": \"Active\"\n}"
-						},
-						"url": {
-							"raw": "{{baseUrl}}/saveprogram",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"saveprogram"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create Program - Name with Numbers",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 400\", function () {",
-									"    pm.response.to.have.status(400);",
-									"});",
-									"",
-									"pm.test(\"Error message indicates invalid characters\", function () {",
-									"    pm.expect(pm.response.text()).to.include('letters and sometimes hyphens');",
-									"});"
-								],
-								"type": "text/javascript",
-								"packages": {},
-								"requests": {}
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{authToken}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"programName\": \"Test123\",\n  \"programDescription\": \"Test Description\",\n  \"programStatus\": \"Active\"\n}"
-						},
-						"url": {
-							"raw": "{{baseUrl}}/saveprogram",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"saveprogram"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create Program - Name with Spaces",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 400\", function () {",
-									"    pm.response.to.have.status(400);",
-									"});",
-									"",
-									"pm.test(\"Error message indicates invalid characters\", function () {",
-									"    pm.expect(pm.response.text()).to.include('letters and sometimes hyphens');",
-									"});"
-								],
-								"type": "text/javascript",
-								"packages": {},
-								"requests": {}
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{authToken}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"programName\": \"Test Program\",\n  \"programDescription\": \"Test Description\",\n  \"programStatus\": \"Active\"\n}"
-						},
-						"url": {
-							"raw": "{{baseUrl}}/saveprogram",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"saveprogram"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create Program - Description Too Short",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 400\", function () {",
-									"    pm.response.to.have.status(400);",
-									"});",
-									"",
-									"pm.test(\"Error message indicates description length\", function () {",
-									"    pm.expect(pm.response.text()).to.include('min length 4');",
-									"});"
-								],
-								"type": "text/javascript",
-								"packages": {},
-								"requests": {}
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{authToken}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"programName\": \"TestProgram\",\n  \"programDescription\": \"abc\",\n  \"programStatus\": \"Active\"\n}"
-						},
-						"url": {
-							"raw": "{{baseUrl}}/saveprogram",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"saveprogram"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create Program - Description Too Long",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 400\", function () {",
-									"    pm.response.to.have.status(400);",
-									"});",
-									"",
-									"pm.test(\"Error message indicates description length\", function () {",
-									"    pm.expect(pm.response.text()).to.include('max length 25');",
-									"});"
-								],
-								"type": "text/javascript",
-								"packages": {},
-								"requests": {}
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{authToken}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"programName\": \"TestProgram\",\n  \"programDescription\": \"ThisIsAVeryLongDescriptionExceedingTwentyFiveCharactersLimit\",\n  \"programStatus\": \"Active\"\n}"
-						},
-						"url": {
-							"raw": "{{baseUrl}}/saveprogram",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"saveprogram"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create Program - Description with Invalid Chars",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 400\", function () {",
-									"    pm.response.to.have.status(400);",
-									"});",
-									"",
-									"pm.test(\"Error message indicates invalid characters\", function () {",
-									"    pm.expect(pm.response.text()).to.include('must begin with letter');",
-									"});"
-								],
-								"type": "text/javascript",
-								"packages": {},
-								"requests": {}
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{authToken}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"programName\": \"TestProgram\",\n  \"programDescription\": \"Test@Description&\",\n  \"programStatus\": \"Active\"\n}"
-						},
-						"url": {
-							"raw": "{{baseUrl}}/saveprogram",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"saveprogram"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create Program - Description Starts with Number",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 400\", function () {",
-									"    pm.response.to.have.status(400);",
-									"});",
-									"",
-									"pm.test(\"Error message indicates must begin with letter\", function () {",
-									"    pm.expect(pm.response.text()).to.include('must begin with letter');",
-									"});"
-								],
-								"type": "text/javascript",
-								"packages": {},
-								"requests": {}
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{authToken}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"programName\": \"TestProgram\",\n  \"programDescription\": \"123Test\",\n  \"programStatus\": \"Active\"\n}"
-						},
-						"url": {
-							"raw": "{{baseUrl}}/saveprogram",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"saveprogram"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create Program - Invalid Status",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 400\", function () {",
-									"    pm.response.to.have.status(400);",
-									"});",
-									"",
-									"const response = pm.response.json();",
-									"pm.test(\"Error message indicates invalid status\", function () {",
-									"    pm.expect(response.message).to.include(\"Invalid Status\");",
-									"    pm.expect(response.message).to.include(\"must be Active or Inactive\");",
-									"});",
-									"",
-									"pm.test(\"Error message is exact match\", function () {",
-									"    pm.expect(response.message).to.eql(\"Invalid Status: must be Active or Inactive\");",
-									"});"
-								],
-								"type": "text/javascript",
-								"packages": {},
-								"requests": {}
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{authToken}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"programName\": \"TestProgram\",\n  \"programDescription\": \"Test Description\",\n  \"programStatus\": \"INVALID\"\n}"
-						},
-						"url": {
-							"raw": "{{baseUrl}}/saveprogram",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"saveprogram"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create Program - Blank Status",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 400\", function () {",
-									"    pm.response.to.have.status(400);",
-									"});",
-									"",
-									"const response = pm.response.json();",
-									"pm.test(\"Error message indicates invalid status\", function () {",
-									"    pm.expect(response.message).to.include(\"Invalid Status\");",
-									"    pm.expect(response.message).to.include(\"must be Active or Inactive\");",
-									"});",
-									"",
-									"pm.test(\"Error message is exact match\", function () {",
-									"    pm.expect(response.message).to.eql(\"Invalid Status: must be Active or Inactive\");",
-									"});"
-								],
-								"type": "text/javascript",
-								"packages": {},
-								"requests": {}
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{authToken}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"programName\": \"TestProgram\",\n  \"programDescription\": \"Test Description\",\n  \"programStatus\": \"\"\n}"
-						},
-						"url": {
-							"raw": "{{baseUrl}}/saveprogram",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"saveprogram"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update Program - Non-existent ID",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 404\", function () {",
-									"    pm.response.to.have.status(404);",
-									"});",
-									"",
-									"const response = pm.response.json();",
-									"pm.test(\"Response has required fields\", function () {",
-									"    pm.expect(response).to.have.property('message');",
-									"    pm.expect(response).to.have.property('success');",
-									"});",
-									"",
-									"pm.test(\"Error message matches expected format\", function () {",
-									"    pm.expect(response.message).to.match(/not found/i);",
-									"});",
-									"",
-									"pm.test(\"Success field is false for invalid Program ID\", function () {",
-									"    pm.expect(response.success).to.be.false;",
-									"});",
+									"const response = pm.response.json();\r",
+									"\r",
+									"\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.expect(pm.response.code).to.equal(400);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Success flag is false\", function () {\r",
+									"    pm.expect(response.success).to.be.false;\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Message field exists\", function () {\r",
+									"    pm.expect(response.message).to.exist;\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
 									""
 								],
 								"type": "text/javascript",
-								"packages": {},
-								"requests": {}
+								"packages": {}
 							}
 						}
 					],
 					"request": {
-						"method": "PUT",
+						"method": "POST",
 						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
 							{
 								"key": "Authorization",
 								"value": "Bearer {{authToken}}",
@@ -1230,55 +576,30 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"programName\": \"UpdatedProgram\",\n  \"programDescription\": \"Updated Description\",\n  \"programStatus\": \"Active\"\n}"
+							"raw": "{\r\n  \"batchDescription\": \"Invalid name\",\r\n  \"batchName\": \"SDET@1\",  \r\n  \"batchNoOfClasses\": 25,\r\n  \"batchStatus\": \"Active\",\r\n  \"programId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/putprogram/99",
+							"raw": "{{baseUrl}}/batches",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
-								"putprogram",
-								"99"
+								"batches"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Update Program - Invalid ID Format",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 400\", function () {",
-									"    pm.response.to.have.status(400);",
-									"});",
-									"",
-									"const response = pm.response.json();",
-									"pm.test(\"Response has required fields\", function () {",
-									"    pm.expect(response).to.have.property('message');",
-									"    pm.expect(response).to.have.property('success');",
-									"});",
-									"",
-									"pm.test(\"Success field is false for invalid Program ID-Negative or Zero\", function () {",
-									"    pm.expect(response.success).to.be.false;",
-									"});"
-								],
-								"type": "text/javascript",
-								"packages": {},
-								"requests": {}
-							}
-						}
-					],
+					"name": "Create Batch-Missing Batch Name",
 					"request": {
-						"method": "PUT",
+						"method": "POST",
 						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
 							{
 								"key": "Authorization",
 								"value": "Bearer {{authToken}}",
@@ -1287,63 +608,57 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"programName\": \"UpdatedProgram\",\n  \"programDescription\": \"Updated Description\",\n  \"programStatus\": \"Active\"\n}"
+							"raw": "{\r\n  \"batchDescription\": \"Automation level\",\r\n  \"batchNoOfClasses\": 25,\r\n  \"batchStatus\": \"Active\",\r\n  \"programId\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/putprogram/-1",
+							"raw": "{{baseUrl}}/batches",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
-								"putprogram",
-								"-1"
+								"batches"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Update Program - Non-existent Name",
+					"name": "Create Batch-Missing Program ID",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status code is 404\", function () {",
-									"    pm.response.to.have.status(404);",
-									"});",
-									"",
-									"const response = pm.response.json();",
-									"",
-									"pm.test(\"Response has required structure\", function () {",
-									"    pm.expect(response).to.be.an('object');",
-									"    pm.expect(response).to.have.property('message');",
-									"    pm.expect(response).to.have.property('success');",
-									"});",
-									"",
-									"pm.test(\"Error message contains core text\", function () {",
-									"    pm.expect(response.message).to.be.a('string');",
-									"    pm.expect(response.message).to.include(\"no such program\");",
-									"});",
-									"",
-									"pm.test(\"Success flag is false\", function () {",
-									"    pm.expect(response.success).to.be.false;",
-									"    pm.expect(response.success).to.be.a('boolean');",
-									"});"
+									"const response = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.expect(pm.response.code).to.equal(400);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Success is false\", function () {\r",
+									"    pm.expect(response.success).to.be.false;\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Message contains 'ProgramId field is needed'\", function () {\r",
+									"    pm.expect(response.message).to.include(\"ProgramId field is needed\");\r",
+									"});\r",
+									""
 								],
 								"type": "text/javascript",
-								"packages": {},
-								"requests": {}
+								"packages": {}
 							}
 						}
 					],
 					"request": {
-						"method": "PUT",
+						"method": "POST",
 						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
 							{
 								"key": "Authorization",
 								"value": "Bearer {{authToken}}",
@@ -1352,59 +667,57 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"programName\": \"UpdatedProgram\",\n  \"programDescription\": \"Updated Description\",\n  \"programStatus\": \"Active\"\n}"
+							"raw": "{\r\n  \"batchDescription\": \"Automation batch\",\r\n  \"batchName\": \"SDET221\",\r\n  \"batchNoOfClasses\": 25,\r\n  \"batchStatus\": \"Active\"\r\n }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/program/NonExistentProgram",
+							"raw": "{{baseUrl}}/batches",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
-								"program",
-								"NonExistentProgram"
+								"batches"
 							]
-						},
-						"description": "Update program by non-existent name"
+						}
 					},
 					"response": []
 				},
 				{
-					"name": "Delete Program - Non-existent ID",
+					"name": "Create Batch-Invalid Program ID",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status code is 404\", function () {",
-									"    pm.response.to.have.status(404);",
-									"});",
-									"",
-									"const response = pm.response.json();",
-									"",
-									"pm.test(\"Response has required structure\", function () {",
-									"    pm.expect(response).to.be.an('object');",
-									"    pm.expect(response).to.have.property('message');",
-									"    pm.expect(response).to.have.property('success');",
-									"});",
-									"",
-									"pm.test(\"Error message contains core text\", function () {",
-									"    pm.expect(response.message).to.be.a('string');",
-									"    pm.expect(response.message).to.include(\"No active program with the program Id\");",
-									"});",
-									"",
-									"pm.test(\"Success flag is false\", function () {",
-									"    pm.expect(response.success).to.be.false;",
-									"    pm.expect(response.success).to.be.a('boolean');",
-									"});"
+									"const response = pm.response.json();\r",
+									"\r",
+									"\r",
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.expect(pm.response.code).to.equal(404);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response body contains message and success fields\", function () {\r",
+									"    pm.expect(response).to.have.all.keys('message', 'success');\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Success field is a boolean\", function () {\r",
+									"    pm.expect(response.success).to.be.a('boolean');\r",
+									"});\r",
+									""
 								],
 								"type": "text/javascript",
-								"packages": {},
-								"requests": {}
+								"packages": {}
 							}
 						}
 					],
 					"request": {
-						"method": "DELETE",
+						"method": "POST",
 						"header": [
 							{
 								"key": "Authorization",
@@ -1412,13 +725,314 @@
 								"type": "text"
 							}
 						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"batchDescription\": \"Automation batch\",\r\n  \"batchName\": \"SDET221\",\r\n  \"batchNoOfClasses\": 25,\r\n  \"batchStatus\": \"Active\",\r\n  \"programId\": 9999\r\n }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "{{baseUrl}}/deletebyprogid/999",
+							"raw": "{{baseUrl}}/batches",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
-								"deletebyprogid",
+								"batches"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Batch-Missing Batch Status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"\r",
+									"\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.expect(pm.response.code).to.equal(400);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response has success field\", function () {\r",
+									"    pm.expect(response).to.have.property('success');\r",
+									"    pm.expect(response.success).to.be.a('boolean');\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response has message field\", function () {\r",
+									"    pm.expect(response).to.have.property('message');\r",
+									"    pm.expect(response.message).to.be.a('string');\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"batchDescription\": \"Duplicate Automation batch\",\r\n  \"batchName\": \"SDET226\",\r\n  \"batchNoOfClasses\": 25,\r\n  \"programId\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/batches",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"batches"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Batch-Missing No of Classes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"\r",
+									"\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.expect(pm.response.code).to.equal(400);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Success field is false\", function () {\r",
+									"    pm.expect(response.success).to.equal(false);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"batchDescription\": \"Duplicate Automation batch\",\r\n  \"batchName\": \"SDET226\",\r\n  \"batchStatus\": \"Active\",\r\n  \"programId\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/batches",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"batches"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Batch Description-less than4 char",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.expect(pm.response.code).to.equal(400);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response contains success = false\", function () {\r",
+									"    let json = pm.response.json();\r",
+									"    pm.expect(json.success).to.eql(false);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response contains error message\", function () {\r",
+									"    let json = pm.response.json();\r",
+									"    pm.expect(json).to.have.property(\"message\");\r",
+									"    pm.expect(json.message).to.be.a(\"string\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"batchDescription\": \"abc\",\r\n  \"batchName\": \"SDET113\",\r\n  \"batchNoOfClasses\": 20,\r\n  \"batchStatus\": \"Active\",\r\n  \"programId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/batches",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"batches"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Batch Description-more than 25 char Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400 - Bad Request\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response contains success = false\", function () {\r",
+									"    let json = pm.response.json();\r",
+									"    pm.expect(json.success).to.eql(false);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response contains error message\", function () {\r",
+									"    let json = pm.response.json();\r",
+									"    pm.expect(json).to.have.property(\"message\");\r",
+									"    pm.expect(json.message).to.be.a(\"string\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"batchDescription\": \"ThisIsAVeryLongDescriptionExceedingTwentyFiveCharactersLimit\",\r\n  \"batchName\": \"SDET31\",\r\n  \"batchNoOfClasses\": 25,\r\n  \"batchStatus\": \"Active\",\r\n  \"programId\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/batches",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"batches"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update with Invalid Batch ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.expect(pm.response.code).to.equal(404);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response body has expected properties\", function () {\r",
+									"    pm.expect(response).to.have.property(\"message\");\r",
+									"    pm.expect(response).to.have.property(\"success\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"batchDescription\": \"SDET TOPPERS\",   \r\n\"batchName\": \"B2CBatch\",\r\n\"batchNoOfClasses\": 59,\r\n\"batchStatus\": \"INACTIVE\",\r\n\"programId\": 3,\r\n\"programName\": \"Testing1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/batches/999",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"batches",
 								"999"
 							]
 						}
@@ -1426,31 +1040,37 @@
 					"response": []
 				},
 				{
-					"name": "Delete Program - Negative or Zero ID",
+					"name": "Delete with Invalid Batch ID",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status code is 400\", function () {",
-									"    pm.response.to.have.status(400);",
-									"});",
-									"",
-									"const response = pm.response.json();",
-									"",
-									"pm.test(\"Response has required fields\", function () {",
-									"    pm.expect(response).to.have.property('message');",
-									"    pm.expect(response).to.have.property('success');",
-									"});",
-									"",
-									"pm.test(\"Success flag is false\", function () {",
-									"    pm.expect(response.success).to.be.false;",
-									"    pm.expect(response.success).to.be.a('boolean');",
-									"});"
+									"const response = pm.response.json();\r",
+									"\r",
+									"\r",
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.expect(pm.response.code).to.equal(404);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response body has expected properties\", function () {\r",
+									"    pm.expect(response).to.have.all.keys('message', 'success');\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"'success' field is false\", function () {\r",
+									"    pm.expect(response.success).to.equal(false);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"'message' field contains expected text\", function () {\r",
+									"    pm.expect(response.message).to.include(\"Batch id not found or not exists\");\r",
+									"});\r",
+									""
 								],
 								"type": "text/javascript",
-								"packages": {},
-								"requests": {}
+								"packages": {}
 							}
 						}
 					],
@@ -1464,76 +1084,104 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/deletebyprogid/-1",
+							"raw": "{{baseUrl}}/batches/9999",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
-								"deletebyprogid",
-								"-1"
-							]
-						},
-						"description": "Delete program with negative ID"
-					},
-					"response": []
-				},
-				{
-					"name": "Delete Program - Non-existent Name",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 404\", function () {",
-									"    pm.response.to.have.status(404);",
-									"});",
-									"",
-									"const response = pm.response.json();",
-									"",
-									"pm.test(\"Response has required structure\", function () {",
-									"    pm.expect(response).to.have.property('message');",
-									"    pm.expect(response).to.have.property('success');",
-									"});",
-									"",
-									"pm.test(\"Error message contains core text\", function () {",
-									"    pm.expect(response.message).to.be.a('string');",
-									"    pm.expect(response.message).to.include(\"Active Program with the program name NonExistent Not found\");",
-									"});",
-									"",
-									"pm.test(\"Success flag is false\", function () {",
-									"    pm.expect(response.success).to.be.false;",
-									"    pm.expect(response.success).to.be.a('boolean');",
-									"});"
-								],
-								"type": "text/javascript",
-								"packages": {},
-								"requests": {}
-							}
-						}
-					],
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{authToken}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{baseUrl}}/deletebyprogname/NonExistent",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"deletebyprogname",
-								"NonExistent"
+								"batches",
+								"9999"
 							]
 						}
 					},
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Status code verification\r",
+							"pm.test(\"Status code is successful\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);\r",
+							"});\r",
+							"// Response time check\r",
+							"pm.test(\"Response time is less than 2000ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+							"});\r",
+							"// Content-Type verification\r",
+							"pm.test(\"Content-Type is application/json\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+							"});\r",
+							"// Verify response structure\r",
+							"pm.test(\"Response has required fields\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property('token');\r",
+							"    pm.expect(jsonData).to.have.property('userId');\r",
+							"    pm.expect(jsonData).to.have.property('email');\r",
+							"    pm.expect(jsonData).to.have.property('roles');\r",
+							"    pm.expect(jsonData).to.have.property('status');\r",
+							"});\r",
+							"// Verify token is not null\r",
+							"pm.test(\"JWT token is present\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.token).to.not.be.null;\r",
+							"    pm.expect(jsonData.token).to.be.a('string');\r",
+							"});\r",
+							"// Verify roles array\r",
+							"pm.test(\"Roles array is present\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.roles).to.be.an('array');\r",
+							"    pm.expect(jsonData.roles.length).to.be.above(0);\r",
+							"});\r",
+							"// Save token\r",
+							"// Save JWT token to environment\r",
+							"if (pm.response.code === 200) {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    if (jsonData.token) {\r",
+							"        pm.environment.set(\"authToken\", jsonData.token);\r",
+							"        pm.collectionVariables.set(\"authToken\", jsonData.token);\r",
+							"        console.log(\"Token saved: \" + jsonData.token);\r",
+							"    }\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"userLoginEmailId\": \"team1@gmail.com\",\r\n  \"password\": \"ApiHackathon@2025\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://lms-hackathon-nov-2025-8dd40899c026.herokuapp.com/lms/login",
+					"protocol": "https",
+					"host": [
+						"lms-hackathon-nov-2025-8dd40899c026",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"lms",
+						"login"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"auth": {
@@ -1552,7 +1200,6 @@
 			"script": {
 				"type": "text/javascript",
 				"packages": {},
-				"requests": {},
 				"exec": [
 					""
 				]
@@ -1563,7 +1210,6 @@
 			"script": {
 				"type": "text/javascript",
 				"packages": {},
-				"requests": {},
 				"exec": [
 					""
 				]
@@ -1572,19 +1218,7 @@
 	],
 	"variable": [
 		{
-			"key": "base_url",
-			"value": "http://localhost:8080"
-		},
-		{
-			"key": "auth_token",
-			"value": ""
-		},
-		{
-			"key": "program_id",
-			"value": ""
-		},
-		{
-			"key": "program_name",
+			"key": "authToken",
 			"value": ""
 		}
 	]
