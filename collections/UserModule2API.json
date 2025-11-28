@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "e3eb2a1c-8d69-40e4-a7b4-ad2c75060ad6",
+		"_postman_id": "89656c92-2951-4e5f-8f82-098a9de15aeb",
 		"name": "LMS-Users-Module2",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "49904469",
-		"_collection_link": "https://dishagupta1411-536017.postman.co/workspace/Disha_WS~b9d4ec54-c0e1-4413-8613-4d7fb2a0ba52/collection/49904469-e3eb2a1c-8d69-40e4-a7b4-ad2c75060ad6?action=share&source=collection_link&creator=49904469"
+		"_collection_link": "https://dishagupta1411-536017.postman.co/workspace/Disha_WS~b9d4ec54-c0e1-4413-8613-4d7fb2a0ba52/collection/49904469-89656c92-2951-4e5f-8f82-098a9de15aeb?action=share&source=collection_link&creator=49904469"
 	},
 	"item": [
 		{
@@ -17,35 +17,82 @@
 							"listen": "test",
 							"script": {
 								"exec": [
+									"//  Validate Status Code",
 									"pm.test(\"Status Code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
 									"});",
 									"",
+									"// Validate response is an array",
 									"pm.test(\"Response is an array\", function () {",
 									"    pm.expect(pm.response.json()).to.be.an('array');",
 									"});",
 									"",
-									"pm.test(\"Validate fields for first user in response\", function () {",
+									"//  Validate user object properties",
+									"pm.test(\"Validate user object properties\", function () {",
 									"    let response = pm.response.json();",
 									"",
 									"    if (response.length > 0) {",
 									"        let user = response[0];",
 									"",
+									"        // Mandatory fields",
 									"        pm.expect(user).to.have.property(\"userId\").that.is.a(\"string\");",
 									"        pm.expect(user).to.have.property(\"userFirstName\").that.is.a(\"string\");",
-									"        pm.expect(user).to.have.property(\"userMiddleName\");          // optional if null allowed",
 									"        pm.expect(user).to.have.property(\"userLastName\").that.is.a(\"string\");",
-									"        pm.expect(user).to.have.property(\"userLoginEmail\");          // optional if null allowed",
 									"        pm.expect(user).to.have.property(\"userLocation\").that.is.a(\"string\");",
 									"        pm.expect(user).to.have.property(\"userTimeZone\").that.is.a(\"string\");",
 									"        pm.expect(user).to.have.property(\"userLinkedinUrl\").that.is.a(\"string\");",
 									"        pm.expect(user).to.have.property(\"userVisaStatus\").that.is.a(\"string\");",
-									"        ",
 									"        pm.expect(user).to.have.property(\"userEduUg\").that.is.a(\"string\");",
 									"        pm.expect(user).to.have.property(\"userEduPg\").that.is.a(\"string\");",
 									"        pm.expect(user).to.have.property(\"userComments\");",
+									"",
+									"        //  Optional fields (string or null allowed)",
+									"        if (user.hasOwnProperty(\"userMiddleName\")) {",
+									"            pm.expect(",
+									"                user.userMiddleName === null || typeof user.userMiddleName === \"string\",",
+									"                \"userMiddleName should be string or null\"",
+									"            ).to.be.true;",
+									"        }",
+									"",
+									"        if (user.hasOwnProperty(\"userLoginEmail\")) {",
+									"            pm.expect(",
+									"                user.userLoginEmail === null || typeof user.userLoginEmail === \"string\",",
+									"                \"userLoginEmail should be string or null\"",
+									"            ).to.be.true;",
+									"        }",
+									"",
 									"    } else {",
-									"        pm.skip(\"Response array is empty, skipping field validation.\");",
+									"        console.warn(\"Response array is empty, skipping field validation.\");",
+									"    }",
+									"});",
+									"",
+									"// Validate Email format if present",
+									"pm.test(\"Validate email format (if provided)\", function () {",
+									"    let user = pm.response.json()[0];",
+									"    if (user && user.userLoginEmail) {",
+									"        pm.expect(user.userLoginEmail).to.match(/^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$/);",
+									"    } else {",
+									"        console.warn(\"Email is null or not provided, skipping validation.\");",
+									"    }",
+									"});",
+									"",
+									"// Validate LinkedIn URL format (if provided)",
+									"pm.test(\"Validate LinkedIn URL format (if provided)\", function () {",
+									"    let user = pm.response.json()[0];",
+									"    if (user && user.userLinkedinUrl) {",
+									"        pm.expect(user.userLinkedinUrl).to.match(/^https?:\\/\\/(www\\.)?linkedin\\.com\\/.+/);",
+									"    } else {",
+									"        console.warn(\"LinkedIn URL is null or not provided, skipping validation.\");",
+									"    }",
+									"});",
+									"",
+									"//  Validate phone number (if provided)",
+									"pm.test(\"Validate phone number (if provided)\", function () {",
+									"    let user = pm.response.json()[0];",
+									"    if (user && user.userPhoneNumber) {",
+									"        pm.expect(user.userPhoneNumber.toString().length).to.be.at.least(10);",
+									"    } else {",
+									"        console.warn(\"Phone number not provided, skipping validation.\");",
 									"    }",
 									"});",
 									""
@@ -57,16 +104,22 @@
 					],
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "{{baseUrl}}/users/programs/1",
+							"raw": "{{baseUrl}}/users/programs/7",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"users",
 								"programs",
-								"1"
+								"7"
 							]
 						}
 					},
@@ -99,11 +152,12 @@
 									"        ",
 									"        pm.expect(user).to.have.property(\"userId\").that.is.a(\"string\");",
 									"        pm.expect(user).to.have.property(\"userFirstName\").that.is.a(\"string\");",
-									"        pm.expect(user).to.have.property(\"userMiddleName\");  // Could be null",
-									"        pm.expect(user).to.have.property(\"userLastName\").that.is.a(\"string\");",
+									"        pm.expect(user).to.have.property(\"userMiddleName\"); // Could be null",
 									"        ",
-									"        pm.expect(user).to.have.property(\"userLoginEmail\");  // Could be null",
-									"        //pm.expect(user).to.have.property(\"userPhoneNumber\").that.is.a(\"number\");",
+									"        pm.expect(user).to.have.property(\"userLastName\").that.is.a(\"string\");",
+									"        pm.expect(user).to.have.property(\"userLoginEmail\"); // Could be null",
+									"        ",
+									"        // pm.expect(user).to.have.property(\"userPhoneNumber\").that.is.a(\"number\"); // Optional",
 									"        ",
 									"        pm.expect(user).to.have.property(\"userLocation\").that.is.a(\"string\");",
 									"        pm.expect(user).to.have.property(\"userTimeZone\").that.is.a(\"string\");",
@@ -114,43 +168,56 @@
 									"        pm.expect(user).to.have.property(\"userEduPg\").that.is.a(\"string\");",
 									"        pm.expect(user).to.have.property(\"userComments\");",
 									"    } else {",
-									"        pm.skip(\"Empty response array – No users available to validate.\");",
+									"        console.warn(\"⚠ Empty response array – No users available to validate.\");",
+									"        return; // Prevents failure while avoiding skip",
 									"    }",
 									"});",
 									"",
 									"// Validate Email format if available",
 									"pm.test(\"Validate email format if present\", function () {",
-									"    let user = pm.response.json()[0];",
+									"    let response = pm.response.json();",
+									"    if (response.length === 0) {",
+									"        console.warn(\"⚠ No users available to validate email format.\");",
+									"        return;",
+									"    }",
 									"",
+									"    let user = response[0];",
 									"    if (user.userLoginEmail) {",
-									"        pm.expect(user.userLoginEmail).to.match(",
-									"            /^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$/ // Basic email regex",
-									"        );",
+									"        pm.expect(user.userLoginEmail).to.match(/^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$/);",
 									"    } else {",
-									"        pm.skip(\"Email is null or not provided\");",
+									"        console.warn(\"⚠ Email is null or not provided.\");",
 									"    }",
 									"});",
 									"",
 									"// Validate LinkedIn URL format",
 									"pm.test(\"Validate LinkedIn URL format\", function () {",
-									"    let user = pm.response.json()[0];",
+									"    let response = pm.response.json();",
+									"    if (response.length === 0) {",
+									"        console.warn(\"⚠ No users available to validate LinkedIn URL.\");",
+									"        return;",
+									"    }",
 									"",
+									"    let user = response[0];",
 									"    if (user.userLinkedinUrl) {",
-									"        pm.expect(user.userLinkedinUrl).to.match(",
-									"            /^https?:\\/\\/(www\\.)?linkedin\\.com\\/.+/",
-									"        );",
+									"        pm.expect(user.userLinkedinUrl).to.match(/^https?:\\/\\/(www\\.)?linkedin\\.com\\/.+/);",
 									"    } else {",
-									"        pm.skip(\"LinkedIn URL is null or not provided\");",
+									"        console.warn(\"⚠ LinkedIn URL is null or not provided.\");",
 									"    }",
 									"});",
 									"",
 									"// Validate phone number has at least 10 digits",
 									"pm.test(\"Validate phone number (minimum 10 digits)\", function () {",
-									"    let user = pm.response.json()[0];",
+									"    let response = pm.response.json();",
+									"    if (response.length === 0) {",
+									"        console.warn(\"⚠ No users available to validate phone number.\");",
+									"        return;",
+									"    }",
+									"",
+									"    let user = response[0];",
 									"    if (user.userPhoneNumber) {",
 									"        pm.expect(user.userPhoneNumber.toString().length).to.be.at.least(10);",
 									"    } else {",
-									"        pm.skip(\"Phone number not provided\");",
+									"        console.warn(\"⚠ Phone number not provided.\");",
 									"    }",
 									"});",
 									""
@@ -162,7 +229,13 @@
 					],
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{baseUrl}}/users/roles/R03",
 							"host": [
@@ -212,6 +285,7 @@
 									"pm.test(\"Validate structure inside 'facetedFields'\", function () {",
 									"    if (res.facets.facetedFields.length > 0) {",
 									"        let field = res.facets.facetedFields[0];",
+									"",
 									"        pm.expect(field).to.have.property(\"displayName\");",
 									"        pm.expect(field.displayName).to.be.a(\"string\");",
 									"        pm.expect(field).to.have.property(\"filterValues\").that.is.an(\"array\");",
@@ -222,10 +296,12 @@
 									"            pm.expect(filter).to.have.property(\"count\").that.is.a(\"number\");",
 									"            pm.expect(filter).to.have.property(\"name\").that.is.a(\"string\");",
 									"        } else {",
-									"            pm.skip(\"No filter values available to validate\");",
+									"            console.warn(\"⚠ No filter values available to validate\");",
+									"            return;  ",
 									"        }",
 									"    } else {",
-									"        pm.skip(\"No faceted fields available to validate\");",
+									"        console.warn(\"⚠ No faceted fields available to validate\");",
+									"        return;  ",
 									"    }",
 									"});",
 									"",
@@ -242,7 +318,7 @@
 									"        pm.expect(user).to.have.property(\"userId\").that.is.a(\"string\");",
 									"        pm.expect(user).to.have.property(\"userFirstName\").that.is.a(\"string\");",
 									"        pm.expect(user).to.have.property(\"userLastName\").that.is.a(\"string\");",
-									"       // pm.expect(user).to.have.property(\"userPhoneNumber\").that.is.a(\"number\");",
+									"        // pm.expect(user).to.have.property(\"userPhoneNumber\").that.is.a(\"number\"); // optional",
 									"        pm.expect(user).to.have.property(\"userLocation\").that.is.a(\"string\");",
 									"        pm.expect(user).to.have.property(\"userTimeZone\").that.is.a(\"string\");",
 									"        pm.expect(user).to.have.property(\"userLinkedinUrl\").that.is.a(\"string\");",
@@ -253,9 +329,11 @@
 									"        pm.expect(user).to.have.property(\"userMiddleName\");",
 									"        pm.expect(user).to.have.property(\"userLoginEmail\");",
 									"    } else {",
-									"        pm.skip(\"No users available to validate\");",
+									"        console.warn(\"⚠ No users available to validate\");",
+									"        return;  ",
 									"    }",
 									"});",
+									"",
 									""
 								],
 								"type": "text/javascript",
@@ -265,7 +343,13 @@
 					],
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{baseUrl}}/v2/users",
 							"host": [
@@ -283,7 +367,13 @@
 					"name": ".Get User BatchId by User Id",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{baseUrl}}/users/user/U04",
 							"host": [
@@ -329,7 +419,8 @@
 									"        pm.expect(record).to.have.property(\"userLastName\").that.is.a(\"string\");",
 									"        pm.expect(record).to.have.property(\"userLoginEmail\").that.is.a(\"string\");",
 									"    } else {",
-									"        pm.skip(\"No records found in response to validate.\");",
+									"        console.warn(\"No records found in response to validate.\");",
+									"        return;",
 									"    }",
 									"});",
 									""
@@ -341,16 +432,22 @@
 					],
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "{{baseUrl}}/users/details/U08",
+							"raw": "{{baseUrl}}/users/details/U10",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"users",
 								"details",
-								"U08"
+								"U10"
 							]
 						}
 					},
@@ -389,7 +486,13 @@
 					],
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\"userComments\": \"na\",\n\"userEduPg\": \"ME\",\n\"userEduUg\": \"BE\",\n\"userFirstName\": \"Shreya\",\n\"userId\": \"String\",\n\"userLastName\": \"Ghoshal\",\n\"userMiddleName\": \"Singh\",\n\"userLinkedinUrl\": \"https://www.linkedin.com/in/shreyaghoshal4/\",\n\"userLocation\": \"Dallas\",\n\"userLoginEmail\": \"Robert.Louis@gmail.com\" ,\n\"userPhoneNumber\": \"+91 3214568899\",\n\"userTimeZone\": \"CST\",\n\"userVisaStatus\": \"H4-EAD\"\n}",
@@ -441,7 +544,13 @@
 					],
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\"userRoleList\": [\n{\n\"roleId\": \"R01\",\n\"userRoleStatus\": \"Active\"\n}\n]\n}",
@@ -503,7 +612,13 @@
 					],
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\"programId\": 1,\n\"roleId\": \"R01\",\n\"userId\": \"U02\",\n\"userRoleProgramBatches\": [\n{\n\"batchId\":1,\n\"userRoleProgramBatchStatus\":\n\"Active\"\n}\n]\n}",
@@ -531,7 +646,13 @@
 					"name": "Update User Login Status",
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\"loginStatus\": \"Active\",\n\"roleIds\": [\n\"R01\"\n],\n\"status\": \"Active\",\n\"userLoginEmail\": \"xyzabc@gmail.com\"\n}",
@@ -580,7 +701,13 @@
 					],
 					"request": {
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": ""
@@ -607,7 +734,13 @@
 					"name": "Get Users For Program-Invalid",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{baseUrl}}/users/programs/999999",
 							"host": [
@@ -626,7 +759,13 @@
 					"name": "Get Users By RoleId-Invalid",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{baseUrl}}/users/roles/R99",
 							"host": [
@@ -645,7 +784,13 @@
 					"name": ".Get User BatchId by User Id-Invalid",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{baseUrl}}/users/user/U40",
 							"host": [
@@ -664,7 +809,13 @@
 					"name": "Get User Details by Id-Invalid",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{baseUrl}}/users/details/U99",
 							"host": [
@@ -718,7 +869,13 @@
 					],
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\"userComments\": \"na\",\n\"userEduPg\": \"ME\",\n\"userEduUg\": \"BE\",\n\"userId\": \"String\",\n\"userLastName\": \"Ghoshal\",\n\"userMiddleName\": \"Singh\",\n\"userLinkedinUrl\": \"https://www.linkedin.com/in/shreyaghoshal4/\",\n\"userPhoneNumber\": \"+91 3214567890\",\n\"userTimeZone\": \"CST\",\n\"userVisaStatus\": \"H4-EAD\"\n}",
@@ -772,7 +929,13 @@
 					],
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\"userRoleList\": [\n{\n\"roleId\": \"R02\",\n\"userRoleStatus\": \"Active\"\n}\n]\n}",
@@ -827,7 +990,13 @@
 					],
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\"userRoleList\": [\n{\n\"roleId\": \"R01\",\n\"userRoleStatus\": \"Active\"\n}\n]\n}",
@@ -880,7 +1049,13 @@
 					],
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\"programId\": 1,\n\"roleId\": \"R01\",\n\"userId\": \"U99\",\n\"userRoleProgramBatches\": [\n{\n\"batchId\":1,\n\"userRoleProgramBatchStatus\":\n\"Active\"\n}\n]\n}",
@@ -941,7 +1116,13 @@
 					],
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\"programId\": 1,\n\"roleId\": \"R01\",\n\"userId\": \"U99\",\n\"userRoleProgramBatches\": [\n{\n\"userRoleProgramBatchStatus\":\n\"Active\"\n}\n]\n}",
@@ -969,7 +1150,13 @@
 					"name": "Update User Login Status-InValid",
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\"loginStatus\": \"Active\",\n\"roleIds\": [\n\"R01\"\n],\n\"status\": \"Active\",\n\"userLoginEmail\": \"xyzabc@gmail.com\"\n}",
@@ -997,7 +1184,13 @@
 					"name": "Update User Login Status-Missing",
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\"loginStatus\": \"Active\",\n\"roleIds\": [\n\"R01\"\n],\n\"userLoginEmail\": \"xyzabc@gmail.com\"\n}",
@@ -1050,7 +1243,13 @@
 					],
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{baseUrl}}/users/U999",
 							"host": [

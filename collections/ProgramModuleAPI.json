@@ -1,11 +1,11 @@
 {
 	"info": {
-		"_postman_id": "1cc06e64-2130-4dd9-8290-1211beb72b34",
+		"_postman_id": "b1cabc2c-055a-4dd4-80ce-470a93d253f1",
 		"name": "LMS Program Module API",
 		"description": "Comprehensive test collection for LMS Program Module APIs including all CRUD operations and validation tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "50244332",
-		"_collection_link": "https://saloniranka0303-4395223.postman.co/workspace/Saloni's-Workspace~c508e76f-3bd3-423c-8be0-4fb6ac1551a7/collection/50244332-1cc06e64-2130-4dd9-8290-1211beb72b34?action=share&source=collection_link&creator=50244332"
+		"_collection_link": "https://saloniranka0303-4395223.postman.co/workspace/c508e76f-3bd3-423c-8be0-4fb6ac1551a7/collection/50244332-b1cabc2c-055a-4dd4-80ce-470a93d253f1?action=share&source=collection_link&creator=50244332"
 	},
 	"item": [
 		{
@@ -27,9 +27,10 @@
 									"    pm.expect(jsonData).to.be.an('array');",
 									"});",
 									"",
+									"var programs = pm.response.json();",
 									"pm.test(\"Each program contains required fields\", function () {",
-									"    var jsonData = pm.response.json();",
-									"    jsonData.forEach(function(program) {",
+									"    ",
+									"    programs.forEach(function(program) {",
 									"        pm.expect(program).to.have.property('programId');",
 									"        pm.expect(program).to.have.property('programName');",
 									"        pm.expect(program).to.have.property('programDescription');",
@@ -37,7 +38,51 @@
 									"        pm.expect(program).to.have.property('creationTime');",
 									"        pm.expect(program).to.have.property('lastModTime');",
 									"    });",
-									"});"
+									"});",
+									"",
+									"function randomLetters(len) {",
+									"    const letters = \"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz\";",
+									"    let s = \"\";",
+									"    for (let i = 0; i < len; i++) {",
+									"        s += letters.charAt(Math.floor(Math.random() * letters.length));",
+									"    }",
+									"    return s;",
+									"}",
+									"",
+									"if (programs && programs.length > 0) {",
+									"    const activePrograms = programs.filter(program => ",
+									"        program.programStatus && program.programStatus.toLowerCase() === 'active'",
+									"    );",
+									"",
+									"    if (activePrograms && activePrograms.length > 0) {",
+									"        const sorted = activePrograms.sort((a, b) => a.programId - b.programId);",
+									"        ",
+									"        // For GET operations",
+									"        pm.environment.set(\"getProgramId\", sorted[0].programId);",
+									"        ",
+									"        // For CREATE - generate unique names",
+									"        //pm.environment.set(\"newProgramName\", `TestProg-${timestamp}`);",
+									"        // generate a random name (e.g. 10 letters) and optionally add a hyphen",
+									"        const randomName = randomLetters(4);",
+									"        pm.environment.set(\"newProgramName\", `TestProg-${randomName}`); ",
+									"    ",
+									"        const timestamp = Date.now();",
+									"",
+									"        // For UPDATE operations",
+									"        if (sorted.length > 1) {",
+									"            pm.environment.set(\"updateByProgramId\", sorted[1].programId);",
+									"            pm.environment.set(\"updateByProgramName\", sorted[1].programName);",
+									"",
+									"            pm.environment.set(\"updatedProgramDescription\", `Updated-${timestamp}`); ",
+									"        }",
+									"        ",
+									"        // For DELETE operations",
+									"        if (sorted.length > 2) {",
+									"            pm.environment.set(\"deleteProgramId\", sorted[2].programId);",
+									"        }",
+									"        console.log(\"Test data setup complete!\");",
+									"    }",
+									"}"
 								],
 								"type": "text/javascript",
 								"packages": {},
@@ -103,13 +148,13 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/programs/3",
+							"raw": "{{baseUrl}}/programs/{{getProgramId}}",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"programs",
-								"3"
+								"{{getProgramId}}"
 							]
 						}
 					},
@@ -131,17 +176,25 @@
 									"    pm.expect(jsonData).to.be.an('array');",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
 							}
 						}
 					],
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "{{base_url}}/allProgramsWithUsers",
+							"raw": "{{baseUrl}}/allProgramsWithUsers",
 							"host": [
-								"{{base_url}}"
+								"{{baseUrl}}"
 							],
 							"path": [
 								"allProgramsWithUsers"
@@ -192,7 +245,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"programName\": \"Jenkins-Bootcamp\",\n  \"programStatus\": \"Active\"\n}"
+							"raw": "{\n  \"programName\": \"{{newProgramName}}\",\n  \"programStatus\": \"Active\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/saveprogram",
@@ -248,16 +301,16 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"programName\": \"Playwright-Bootcamp\",\n  \"programStatus\": \"Inactive\"\n}"
+							"raw": "{\n  \"programName\": \"{{updateByProgramName}}\",\n  \"programDescription\": \"{{updatedProgramDescription}}\",\n  \"programStatus\": \"Active\"\n}"
 						},
 						"url": {
-							"raw": "{{baseUrl}}/putprogram/75",
+							"raw": "{{baseUrl}}/putprogram/{{updateByProgramId}}",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"putprogram",
-								"75"
+								"{{updateByProgramId}}"
 							]
 						},
 						"description": "Update program by program ID"
@@ -306,16 +359,16 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"programName\": \"Java-Expert-Module\",\n  \"programDescription\": \"Expert Java Training\",\n  \"programStatus\": \"Active\"\n}"
+							"raw": "{\n  \"programName\": \"{{newProgramName}}\",\n  \"programDescription\": \"{{updatedProgramDescription}}\",\n  \"programStatus\": \"Active\"\n}"
 						},
 						"url": {
-							"raw": "{{baseUrl}}/program/Java-Bootcamp",
+							"raw": "{{baseUrl}}/program/{{newProgramName}}",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"program",
-								"Java-Bootcamp"
+								"{{newProgramName}}"
 							]
 						}
 					},
@@ -352,13 +405,13 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/deletebyprogid/99",
+							"raw": "{{baseUrl}}/deletebyprogid/{{deleteProgramId}}",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"deletebyprogid",
-								"99"
+								"{{deleteProgramId}}"
 							]
 						},
 						"description": "Delete program by program ID"
@@ -396,13 +449,13 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/deletebyprogname/OracleEngineer",
+							"raw": "{{baseUrl}}/deletebyprogname/{{newProgramName}}",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"deletebyprogname",
-								"OracleEngineer"
+								"{{newProgramName}}"
 							]
 						},
 						"description": "Delete program by program name"
@@ -555,7 +608,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"programName\": \"Java-Bootcamp\",\n  \"programDescription\": \"Duplicate Program\",\n  \"programStatus\": \"Active\"\n}"
+							"raw": "{\n  \"programName\": \"LMSHAHackthonone\",\n  \"programDescription\": \"Duplicate Program\",\n  \"programStatus\": \"Active\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/saveprogram",

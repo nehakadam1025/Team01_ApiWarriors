@@ -1,9 +1,10 @@
 {
 	"info": {
-		"_postman_id": "80546e23-ae2b-42c1-ae10-c615b9c873d1",
+		"_postman_id": "763e5e12-0b92-4a08-8a7b-587ae157ebea",
 		"name": "LMS Hackathon",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "25015237"
+		"_exporter_id": "50023977",
+		"_collection_link": "https://padmajak-suryawanshi-4740333.postman.co/workspace/APIHackathon2025~40dd4d3b-bb3b-44dc-ad96-b3070ee0869a/collection/50023977-763e5e12-0b92-4a08-8a7b-587ae157ebea?action=share&source=collection_link&creator=50023977"
 	},
 	"item": [
 		{
@@ -41,6 +42,7 @@
 											"        console.log(\"Token saved: \" + jsonData.token);\r",
 											"    }\r",
 											"}\r",
+											"\r",
 											""
 										],
 										"type": "text/javascript",
@@ -348,13 +350,7 @@
 							],
 							"request": {
 								"method": "POST",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{authToken}}",
-										"type": "text"
-									}
-								],
+								"header": [],
 								"body": {
 									"mode": "raw",
 									"raw": "{\r\n    \"userLoginEmailId\":\"\"\r\n}",
@@ -398,13 +394,7 @@
 							],
 							"request": {
 								"method": "POST",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{authToken}}",
-										"type": "text"
-									}
-								],
+								"header": [],
 								"body": {
 									"mode": "raw",
 									"raw": "{\r\n    \"userLoginEmailId\":\"invaliduser@email.com\"\r\n}",
@@ -448,13 +438,7 @@
 							],
 							"request": {
 								"method": "POST",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{authToken}}",
-										"type": "text"
-									}
-								],
+								"header": [],
 								"body": {
 									"mode": "raw",
 									"raw": "",
@@ -498,13 +482,7 @@
 							],
 							"request": {
 								"method": "POST",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{authToken}}",
-										"type": "text"
-									}
-								],
+								"header": [],
 								"body": {
 									"mode": "raw",
 									"raw": "{\r\n    \"userLoginEmailId\":\"{{username}}\",\r\n    \"password\":\"\"\r\n}",
@@ -546,13 +524,7 @@
 							],
 							"request": {
 								"method": "POST",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{authToken}}",
-										"type": "text"
-									}
-								],
+								"header": [],
 								"body": {
 									"mode": "raw",
 									"raw": "{\r\n    \"userLoginEmailId\":\"\",\r\n    \"password\":\"{{password}}\"\r\n}",
@@ -594,13 +566,7 @@
 							],
 							"request": {
 								"method": "POST",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{authToken}}",
-										"type": "text"
-									}
-								],
+								"header": [],
 								"body": {
 									"mode": "raw",
 									"raw": "{\r\n    \"userLoginEmailId\":\"{{username}}\",\r\n    \"password\":\"123\"\r\n}",
@@ -642,13 +608,7 @@
 							],
 							"request": {
 								"method": "POST",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{authToken}}",
-										"type": "text"
-									}
-								],
+								"header": [],
 								"body": {
 									"mode": "raw",
 									"raw": "",
@@ -696,9 +656,10 @@
 											"    pm.expect(jsonData).to.be.an('array');",
 											"});",
 											"",
+											"var programs = pm.response.json();",
 											"pm.test(\"Each program contains required fields\", function () {",
-											"    var jsonData = pm.response.json();",
-											"    jsonData.forEach(function(program) {",
+											"    ",
+											"    programs.forEach(function(program) {",
 											"        pm.expect(program).to.have.property('programId');",
 											"        pm.expect(program).to.have.property('programName');",
 											"        pm.expect(program).to.have.property('programDescription');",
@@ -706,7 +667,51 @@
 											"        pm.expect(program).to.have.property('creationTime');",
 											"        pm.expect(program).to.have.property('lastModTime');",
 											"    });",
-											"});"
+											"});",
+											"",
+											"function randomLetters(len) {",
+											"    const letters = \"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz\";",
+											"    let s = \"\";",
+											"    for (let i = 0; i < len; i++) {",
+											"        s += letters.charAt(Math.floor(Math.random() * letters.length));",
+											"    }",
+											"    pm.collectionVariables.set(\"randomLetters\", s);",
+											"}",
+											"",
+											"if (programs && programs.length > 0) {",
+											"    const activePrograms = programs.filter(program => ",
+											"        program.programStatus && program.programStatus.toLowerCase() === 'active'",
+											"    );",
+											"",
+											"    if (activePrograms && activePrograms.length > 0) {",
+											"        const sorted = activePrograms.sort((a, b) => a.programId - b.programId);",
+											"        ",
+											"        // For GET operations",
+											"        pm.environment.set(\"getProgramId\", sorted[0].programId);",
+											"        ",
+											"        // For CREATE - generate unique names",
+											"        //pm.environment.set(\"newProgramName\", `TestProg-${timestamp}`);",
+											"        // generate a random name (e.g. 10 letters) and optionally add a hyphen",
+											"        const randomName = randomLetters(4);",
+											"        pm.environment.set(\"newProgramName\", `TestProg-${randomName}`); ",
+											"    ",
+											"        const timestamp = Date.now();",
+											"",
+											"        // For UPDATE operations",
+											"        if (sorted.length > 1) {",
+											"            pm.environment.set(\"updateByProgramId\", sorted[1].programId);",
+											"            pm.environment.set(\"updateByProgramName\", sorted[1].programName);",
+											"",
+											"            pm.environment.set(\"updatedProgramDescription\", `Updated-${timestamp}`); ",
+											"        }",
+											"        ",
+											"        // For DELETE operations",
+											"        if (sorted.length > 2) {",
+											"            pm.environment.set(\"deleteProgramId\", sorted[2].programId);",
+											"        }",
+											"        console.log(\"Test data setup complete!\");",
+											"    }",
+											"}"
 										],
 										"type": "text/javascript",
 										"packages": {},
@@ -772,13 +777,13 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/programs/3",
+									"raw": "{{baseUrl}}/programs/{{getProgramId}}",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"programs",
-										"3"
+										"{{getProgramId}}"
 									]
 								}
 							},
@@ -800,17 +805,25 @@
 											"    pm.expect(jsonData).to.be.an('array');",
 											"});"
 										],
-										"type": "text/javascript"
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
 									}
 								}
 							],
 							"request": {
 								"method": "GET",
-								"header": [],
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}",
+										"type": "text"
+									}
+								],
 								"url": {
-									"raw": "{{base_url}}/allProgramsWithUsers",
+									"raw": "{{baseUrl}}/allProgramsWithUsers",
 									"host": [
-										"{{base_url}}"
+										"{{baseUrl}}"
 									],
 									"path": [
 										"allProgramsWithUsers"
@@ -861,7 +874,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"programName\": \"Jenkins-Bootcamp\",\n  \"programStatus\": \"Active\"\n}"
+									"raw": "{\n  \"programName\": \"{{newProgramName}}\",\n  \"programStatus\": \"Active\"\n}"
 								},
 								"url": {
 									"raw": "{{baseUrl}}/saveprogram",
@@ -917,16 +930,16 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"programName\": \"Playwright-Bootcamp\",\n  \"programStatus\": \"Inactive\"\n}"
+									"raw": "{\n  \"programName\": \"{{updateByProgramName}}\",\n  \"programDescription\": \"{{updatedProgramDescription}}\",\n  \"programStatus\": \"Active\"\n}"
 								},
 								"url": {
-									"raw": "{{baseUrl}}/putprogram/75",
+									"raw": "{{baseUrl}}/putprogram/{{updateByProgramId}}",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"putprogram",
-										"75"
+										"{{updateByProgramId}}"
 									]
 								},
 								"description": "Update program by program ID"
@@ -975,16 +988,16 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"programName\": \"Java-Expert-Module\",\n  \"programDescription\": \"Expert Java Training\",\n  \"programStatus\": \"Active\"\n}"
+									"raw": "{\n  \"programName\": \"{{newProgramName}}\",\n  \"programDescription\": \"{{updatedProgramDescription}}\",\n  \"programStatus\": \"Active\"\n}"
 								},
 								"url": {
-									"raw": "{{baseUrl}}/program/Java-Bootcamp",
+									"raw": "{{baseUrl}}/program/{{newProgramName}}",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"program",
-										"Java-Bootcamp"
+										"{{newProgramName}}"
 									]
 								}
 							},
@@ -1021,13 +1034,13 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/deletebyprogid/99",
+									"raw": "{{baseUrl}}/deletebyprogid/{{deleteProgramId}}",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"deletebyprogid",
-										"99"
+										"{{deleteProgramId}}"
 									]
 								},
 								"description": "Delete program by program ID"
@@ -1065,1140 +1078,16 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/deletebyprogname/OracleEngineer",
+									"raw": "{{baseUrl}}/deletebyprogname/{{newProgramName}}",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"deletebyprogname",
-										"OracleEngineer"
+										"{{newProgramName}}"
 									]
 								},
 								"description": "Delete program by program name"
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Negative Tests",
-					"item": [
-						{
-							"name": "Get Program - Invalid ID",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 404\", function () {",
-											"    pm.response.to.have.status(404);",
-											"});",
-											"",
-											"const response = pm.response.json();",
-											"pm.test(\"Response has required fields\", function () {",
-											"    pm.expect(response).to.have.property('message');",
-											"    pm.expect(response).to.have.property('success');",
-											"});",
-											"",
-											"pm.test(\"Error message matches expected format\", function () {",
-											"    pm.expect(response.message).to.match(/not found/i);",
-											"});",
-											"",
-											"pm.test(\"Success field is false for invalid Program ID\", function () {",
-											"    pm.expect(response.success).to.be.false;",
-											"});",
-											""
-										],
-										"type": "text/javascript",
-										"packages": {},
-										"requests": {}
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{authToken}}",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{baseUrl}}/programs/999",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"programs",
-										"999"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Get Program - Negative or Zero ID",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 400\", function () {",
-											"    pm.response.to.have.status(400);",
-											"});",
-											"",
-											"const response = pm.response.json();",
-											"pm.test(\"Response has required fields\", function () {",
-											"    pm.expect(response).to.have.property('message');",
-											"    pm.expect(response).to.have.property('success');",
-											"});",
-											"",
-											"pm.test(\"Success field is false for invalid Program ID-Negative or Zero\", function () {",
-											"    pm.expect(response.success).to.be.false;",
-											"});",
-											""
-										],
-										"type": "text/javascript",
-										"packages": {},
-										"requests": {}
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{authToken}}",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{baseUrl}}/programs/0",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"programs",
-										"0"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Create Program - Duplicate Name",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 400\", function () {",
-											"    pm.response.to.have.status(400);",
-											"});",
-											"",
-											"pm.test(\"Error message indicates duplicate or already exists\", function () {",
-											"    const message = pm.response.json().message.toLowerCase();",
-											"    pm.expect(message).to.include('already exists');",
-											"});"
-										],
-										"type": "text/javascript",
-										"packages": {},
-										"requests": {}
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "Authorization",
-										"value": "Bearer {{authToken}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"programName\": \"Java-Bootcamp\",\n  \"programDescription\": \"Duplicate Program\",\n  \"programStatus\": \"Active\"\n}"
-								},
-								"url": {
-									"raw": "{{baseUrl}}/saveprogram",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"saveprogram"
-									]
-								},
-								"description": "Create program with duplicate name"
-							},
-							"response": []
-						},
-						{
-							"name": "Create Program - Omit the field Program Name",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 400\", function () {",
-											"    pm.response.to.have.status(400);",
-											"});",
-											"",
-											"pm.test(\"Error message indicates mandatory field\", function () {",
-											"    var jsonData = pm.response.json();",
-											"    pm.expect(jsonData.message).to.include(\"mandatory\");",
-											"});"
-										],
-										"type": "text/javascript",
-										"packages": {},
-										"requests": {}
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "Authorization",
-										"value": "Bearer {{authToken}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"programDescription\": \"Test Description\",\n  \"programStatus\": \"Active\"\n}"
-								},
-								"url": {
-									"raw": "{{baseUrl}}/saveprogram",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"saveprogram"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Create Program - Name Too Short",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 400\", function () {",
-											"    pm.response.to.have.status(400);",
-											"});",
-											"",
-											"pm.test(\"Error message indicates length requirement\", function () {",
-											"    pm.expect(pm.response.text()).to.include('min length 4');",
-											"});"
-										],
-										"type": "text/javascript",
-										"packages": {},
-										"requests": {}
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "Authorization",
-										"value": "Bearer {{authToken}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"programName\": \"abc\",\n  \"programDescription\": \"Test Description\",\n  \"programStatus\": \"Active\"\n}"
-								},
-								"url": {
-									"raw": "{{baseUrl}}/saveprogram",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"saveprogram"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Create Program - Name Too Long",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 400\", function () {",
-											"    pm.response.to.have.status(400);",
-											"});",
-											"",
-											"pm.test(\"Error message indicates length requirement\", function () {",
-											"    pm.expect(pm.response.text()).to.include('max length 25');",
-											"});"
-										],
-										"type": "text/javascript",
-										"packages": {},
-										"requests": {}
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "Authorization",
-										"value": "Bearer {{authToken}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"programName\": \"ThisIsAVeryLongProgramNameExceedingTwentyFiveCharacters\",\n  \"programDescription\": \"Test Description\",\n  \"programStatus\": \"Active\"\n}"
-								},
-								"url": {
-									"raw": "{{baseUrl}}/saveprogram",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"saveprogram"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Create Program - Name with Special Characters",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 400\", function () {",
-											"    pm.response.to.have.status(400);",
-											"});",
-											"",
-											"pm.test(\"Error message indicates invalid characters\", function () {",
-											"    pm.expect(pm.response.text()).to.include('letters and sometimes hyphens');",
-											"});"
-										],
-										"type": "text/javascript",
-										"packages": {},
-										"requests": {}
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "Authorization",
-										"value": "Bearer {{authToken}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"programName\": \"Test@123\",\n  \"programDescription\": \"Test Description\",\n  \"programStatus\": \"Active\"\n}"
-								},
-								"url": {
-									"raw": "{{baseUrl}}/saveprogram",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"saveprogram"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Create Program - Name with Numbers",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 400\", function () {",
-											"    pm.response.to.have.status(400);",
-											"});",
-											"",
-											"pm.test(\"Error message indicates invalid characters\", function () {",
-											"    pm.expect(pm.response.text()).to.include('letters and sometimes hyphens');",
-											"});"
-										],
-										"type": "text/javascript",
-										"packages": {},
-										"requests": {}
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "Authorization",
-										"value": "Bearer {{authToken}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"programName\": \"Test123\",\n  \"programDescription\": \"Test Description\",\n  \"programStatus\": \"Active\"\n}"
-								},
-								"url": {
-									"raw": "{{baseUrl}}/saveprogram",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"saveprogram"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Create Program - Name with Spaces",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 400\", function () {",
-											"    pm.response.to.have.status(400);",
-											"});",
-											"",
-											"pm.test(\"Error message indicates invalid characters\", function () {",
-											"    pm.expect(pm.response.text()).to.include('letters and sometimes hyphens');",
-											"});"
-										],
-										"type": "text/javascript",
-										"packages": {},
-										"requests": {}
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "Authorization",
-										"value": "Bearer {{authToken}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"programName\": \"Test Program\",\n  \"programDescription\": \"Test Description\",\n  \"programStatus\": \"Active\"\n}"
-								},
-								"url": {
-									"raw": "{{baseUrl}}/saveprogram",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"saveprogram"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Create Program - Description Too Short",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 400\", function () {",
-											"    pm.response.to.have.status(400);",
-											"});",
-											"",
-											"pm.test(\"Error message indicates description length\", function () {",
-											"    pm.expect(pm.response.text()).to.include('min length 4');",
-											"});"
-										],
-										"type": "text/javascript",
-										"packages": {},
-										"requests": {}
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "Authorization",
-										"value": "Bearer {{authToken}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"programName\": \"TestProgram\",\n  \"programDescription\": \"abc\",\n  \"programStatus\": \"Active\"\n}"
-								},
-								"url": {
-									"raw": "{{baseUrl}}/saveprogram",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"saveprogram"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Create Program - Description Too Long",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 400\", function () {",
-											"    pm.response.to.have.status(400);",
-											"});",
-											"",
-											"pm.test(\"Error message indicates description length\", function () {",
-											"    pm.expect(pm.response.text()).to.include('max length 25');",
-											"});"
-										],
-										"type": "text/javascript",
-										"packages": {},
-										"requests": {}
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "Authorization",
-										"value": "Bearer {{authToken}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"programName\": \"TestProgram\",\n  \"programDescription\": \"ThisIsAVeryLongDescriptionExceedingTwentyFiveCharactersLimit\",\n  \"programStatus\": \"Active\"\n}"
-								},
-								"url": {
-									"raw": "{{baseUrl}}/saveprogram",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"saveprogram"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Create Program - Description with Invalid Chars",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 400\", function () {",
-											"    pm.response.to.have.status(400);",
-											"});",
-											"",
-											"pm.test(\"Error message indicates invalid characters\", function () {",
-											"    pm.expect(pm.response.text()).to.include('must begin with letter');",
-											"});"
-										],
-										"type": "text/javascript",
-										"packages": {},
-										"requests": {}
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "Authorization",
-										"value": "Bearer {{authToken}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"programName\": \"TestProgram\",\n  \"programDescription\": \"Test@Description&\",\n  \"programStatus\": \"Active\"\n}"
-								},
-								"url": {
-									"raw": "{{baseUrl}}/saveprogram",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"saveprogram"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Create Program - Description Starts with Number",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 400\", function () {",
-											"    pm.response.to.have.status(400);",
-											"});",
-											"",
-											"pm.test(\"Error message indicates must begin with letter\", function () {",
-											"    pm.expect(pm.response.text()).to.include('must begin with letter');",
-											"});"
-										],
-										"type": "text/javascript",
-										"packages": {},
-										"requests": {}
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "Authorization",
-										"value": "Bearer {{authToken}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"programName\": \"TestProgram\",\n  \"programDescription\": \"123Test\",\n  \"programStatus\": \"Active\"\n}"
-								},
-								"url": {
-									"raw": "{{baseUrl}}/saveprogram",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"saveprogram"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Create Program - Invalid Status",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 400\", function () {",
-											"    pm.response.to.have.status(400);",
-											"});",
-											"",
-											"const response = pm.response.json();",
-											"pm.test(\"Error message indicates invalid status\", function () {",
-											"    pm.expect(response.message).to.include(\"Invalid Status\");",
-											"    pm.expect(response.message).to.include(\"must be Active or Inactive\");",
-											"});",
-											"",
-											"pm.test(\"Error message is exact match\", function () {",
-											"    pm.expect(response.message).to.eql(\"Invalid Status: must be Active or Inactive\");",
-											"});"
-										],
-										"type": "text/javascript",
-										"packages": {},
-										"requests": {}
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "Authorization",
-										"value": "Bearer {{authToken}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"programName\": \"TestProgram\",\n  \"programDescription\": \"Test Description\",\n  \"programStatus\": \"INVALID\"\n}"
-								},
-								"url": {
-									"raw": "{{baseUrl}}/saveprogram",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"saveprogram"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Create Program - Blank Status",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 400\", function () {",
-											"    pm.response.to.have.status(400);",
-											"});",
-											"",
-											"const response = pm.response.json();",
-											"pm.test(\"Error message indicates invalid status\", function () {",
-											"    pm.expect(response.message).to.include(\"Invalid Status\");",
-											"    pm.expect(response.message).to.include(\"must be Active or Inactive\");",
-											"});",
-											"",
-											"pm.test(\"Error message is exact match\", function () {",
-											"    pm.expect(response.message).to.eql(\"Invalid Status: must be Active or Inactive\");",
-											"});"
-										],
-										"type": "text/javascript",
-										"packages": {},
-										"requests": {}
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "Authorization",
-										"value": "Bearer {{authToken}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"programName\": \"TestProgram\",\n  \"programDescription\": \"Test Description\",\n  \"programStatus\": \"\"\n}"
-								},
-								"url": {
-									"raw": "{{baseUrl}}/saveprogram",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"saveprogram"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Update Program - Non-existent ID",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 404\", function () {",
-											"    pm.response.to.have.status(404);",
-											"});",
-											"",
-											"const response = pm.response.json();",
-											"pm.test(\"Response has required fields\", function () {",
-											"    pm.expect(response).to.have.property('message');",
-											"    pm.expect(response).to.have.property('success');",
-											"});",
-											"",
-											"pm.test(\"Error message matches expected format\", function () {",
-											"    pm.expect(response.message).to.match(/not found/i);",
-											"});",
-											"",
-											"pm.test(\"Success field is false for invalid Program ID\", function () {",
-											"    pm.expect(response.success).to.be.false;",
-											"});",
-											""
-										],
-										"type": "text/javascript",
-										"packages": {},
-										"requests": {}
-									}
-								}
-							],
-							"request": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "Authorization",
-										"value": "Bearer {{authToken}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"programName\": \"UpdatedProgram\",\n  \"programDescription\": \"Updated Description\",\n  \"programStatus\": \"Active\"\n}"
-								},
-								"url": {
-									"raw": "{{baseUrl}}/putprogram/99",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"putprogram",
-										"99"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Update Program - Invalid ID Format",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 400\", function () {",
-											"    pm.response.to.have.status(400);",
-											"});",
-											"",
-											"const response = pm.response.json();",
-											"pm.test(\"Response has required fields\", function () {",
-											"    pm.expect(response).to.have.property('message');",
-											"    pm.expect(response).to.have.property('success');",
-											"});",
-											"",
-											"pm.test(\"Success field is false for invalid Program ID-Negative or Zero\", function () {",
-											"    pm.expect(response.success).to.be.false;",
-											"});"
-										],
-										"type": "text/javascript",
-										"packages": {},
-										"requests": {}
-									}
-								}
-							],
-							"request": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "Authorization",
-										"value": "Bearer {{authToken}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"programName\": \"UpdatedProgram\",\n  \"programDescription\": \"Updated Description\",\n  \"programStatus\": \"Active\"\n}"
-								},
-								"url": {
-									"raw": "{{baseUrl}}/putprogram/-1",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"putprogram",
-										"-1"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Update Program - Non-existent Name",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 404\", function () {",
-											"    pm.response.to.have.status(404);",
-											"});",
-											"",
-											"const response = pm.response.json();",
-											"",
-											"pm.test(\"Response has required structure\", function () {",
-											"    pm.expect(response).to.be.an('object');",
-											"    pm.expect(response).to.have.property('message');",
-											"    pm.expect(response).to.have.property('success');",
-											"});",
-											"",
-											"pm.test(\"Error message contains core text\", function () {",
-											"    pm.expect(response.message).to.be.a('string');",
-											"    pm.expect(response.message).to.include(\"no such program\");",
-											"});",
-											"",
-											"pm.test(\"Success flag is false\", function () {",
-											"    pm.expect(response.success).to.be.false;",
-											"    pm.expect(response.success).to.be.a('boolean');",
-											"});"
-										],
-										"type": "text/javascript",
-										"packages": {},
-										"requests": {}
-									}
-								}
-							],
-							"request": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "Authorization",
-										"value": "Bearer {{authToken}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"programName\": \"UpdatedProgram\",\n  \"programDescription\": \"Updated Description\",\n  \"programStatus\": \"Active\"\n}"
-								},
-								"url": {
-									"raw": "{{baseUrl}}/program/NonExistentProgram",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"program",
-										"NonExistentProgram"
-									]
-								},
-								"description": "Update program by non-existent name"
-							},
-							"response": []
-						},
-						{
-							"name": "Delete Program - Non-existent ID",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 404\", function () {",
-											"    pm.response.to.have.status(404);",
-											"});",
-											"",
-											"const response = pm.response.json();",
-											"",
-											"pm.test(\"Response has required structure\", function () {",
-											"    pm.expect(response).to.be.an('object');",
-											"    pm.expect(response).to.have.property('message');",
-											"    pm.expect(response).to.have.property('success');",
-											"});",
-											"",
-											"pm.test(\"Error message contains core text\", function () {",
-											"    pm.expect(response.message).to.be.a('string');",
-											"    pm.expect(response.message).to.include(\"No active program with the program Id\");",
-											"});",
-											"",
-											"pm.test(\"Success flag is false\", function () {",
-											"    pm.expect(response.success).to.be.false;",
-											"    pm.expect(response.success).to.be.a('boolean');",
-											"});"
-										],
-										"type": "text/javascript",
-										"packages": {},
-										"requests": {}
-									}
-								}
-							],
-							"request": {
-								"method": "DELETE",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{authToken}}",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{baseUrl}}/deletebyprogid/999",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"deletebyprogid",
-										"999"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Delete Program - Negative or Zero ID",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 400\", function () {",
-											"    pm.response.to.have.status(400);",
-											"});",
-											"",
-											"const response = pm.response.json();",
-											"",
-											"pm.test(\"Response has required fields\", function () {",
-											"    pm.expect(response).to.have.property('message');",
-											"    pm.expect(response).to.have.property('success');",
-											"});",
-											"",
-											"pm.test(\"Success flag is false\", function () {",
-											"    pm.expect(response.success).to.be.false;",
-											"    pm.expect(response.success).to.be.a('boolean');",
-											"});"
-										],
-										"type": "text/javascript",
-										"packages": {},
-										"requests": {}
-									}
-								}
-							],
-							"request": {
-								"method": "DELETE",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{authToken}}",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{baseUrl}}/deletebyprogid/-1",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"deletebyprogid",
-										"-1"
-									]
-								},
-								"description": "Delete program with negative ID"
-							},
-							"response": []
-						},
-						{
-							"name": "Delete Program - Non-existent Name",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 404\", function () {",
-											"    pm.response.to.have.status(404);",
-											"});",
-											"",
-											"const response = pm.response.json();",
-											"",
-											"pm.test(\"Response has required structure\", function () {",
-											"    pm.expect(response).to.have.property('message');",
-											"    pm.expect(response).to.have.property('success');",
-											"});",
-											"",
-											"pm.test(\"Error message contains core text\", function () {",
-											"    pm.expect(response.message).to.be.a('string');",
-											"    pm.expect(response.message).to.include(\"Active Program with the program name NonExistent Not found\");",
-											"});",
-											"",
-											"pm.test(\"Success flag is false\", function () {",
-											"    pm.expect(response.success).to.be.false;",
-											"    pm.expect(response.success).to.be.a('boolean');",
-											"});"
-										],
-										"type": "text/javascript",
-										"packages": {},
-										"requests": {}
-									}
-								}
-							],
-							"request": {
-								"method": "DELETE",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{authToken}}",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{baseUrl}}/deletebyprogname/NonExistent",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"deletebyprogname",
-										"NonExistent"
-									]
-								}
 							},
 							"response": []
 						}
@@ -5654,11 +4543,2002 @@
 					]
 				}
 			]
+		},
+		{
+			"name": "User Module 2",
+			"item": [
+				{
+					"name": "Positive Tests Copy",
+					"item": [
+						{
+							"name": "Get Users by ProgramID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"//  Validate Status Code",
+											"pm.test(\"Status Code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"// Validate response is an array",
+											"pm.test(\"Response is an array\", function () {",
+											"    pm.expect(pm.response.json()).to.be.an('array');",
+											"});",
+											"",
+											"//  Validate user object properties",
+											"pm.test(\"Validate user object properties\", function () {",
+											"    let response = pm.response.json();",
+											"",
+											"    if (response.length > 0) {",
+											"        let user = response[0];",
+											"",
+											"        // Mandatory fields",
+											"        pm.expect(user).to.have.property(\"userId\").that.is.a(\"string\");",
+											"        pm.expect(user).to.have.property(\"userFirstName\").that.is.a(\"string\");",
+											"        pm.expect(user).to.have.property(\"userLastName\").that.is.a(\"string\");",
+											"        pm.expect(user).to.have.property(\"userLocation\").that.is.a(\"string\");",
+											"        pm.expect(user).to.have.property(\"userTimeZone\").that.is.a(\"string\");",
+											"        pm.expect(user).to.have.property(\"userLinkedinUrl\").that.is.a(\"string\");",
+											"        pm.expect(user).to.have.property(\"userVisaStatus\").that.is.a(\"string\");",
+											"        pm.expect(user).to.have.property(\"userEduUg\").that.is.a(\"string\");",
+											"        pm.expect(user).to.have.property(\"userEduPg\").that.is.a(\"string\");",
+											"        pm.expect(user).to.have.property(\"userComments\");",
+											"",
+											"        //  Optional fields (string or null allowed)",
+											"        if (user.hasOwnProperty(\"userMiddleName\")) {",
+											"            pm.expect(",
+											"                user.userMiddleName === null || typeof user.userMiddleName === \"string\",",
+											"                \"userMiddleName should be string or null\"",
+											"            ).to.be.true;",
+											"        }",
+											"",
+											"        if (user.hasOwnProperty(\"userLoginEmail\")) {",
+											"            pm.expect(",
+											"                user.userLoginEmail === null || typeof user.userLoginEmail === \"string\",",
+											"                \"userLoginEmail should be string or null\"",
+											"            ).to.be.true;",
+											"        }",
+											"",
+											"    } else {",
+											"        console.warn(\"Response array is empty, skipping field validation.\");",
+											"    }",
+											"});",
+											"",
+											"// Validate Email format if present",
+											"pm.test(\"Validate email format (if provided)\", function () {",
+											"    let user = pm.response.json()[0];",
+											"    if (user && user.userLoginEmail) {",
+											"        pm.expect(user.userLoginEmail).to.match(/^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$/);",
+											"    } else {",
+											"        console.warn(\"Email is null or not provided, skipping validation.\");",
+											"    }",
+											"});",
+											"",
+											"// Validate LinkedIn URL format (if provided)",
+											"pm.test(\"Validate LinkedIn URL format (if provided)\", function () {",
+											"    let user = pm.response.json()[0];",
+											"    if (user && user.userLinkedinUrl) {",
+											"        pm.expect(user.userLinkedinUrl).to.match(/^https?:\\/\\/(www\\.)?linkedin\\.com\\/.+/);",
+											"    } else {",
+											"        console.warn(\"LinkedIn URL is null or not provided, skipping validation.\");",
+											"    }",
+											"});",
+											"",
+											"//  Validate phone number (if provided)",
+											"pm.test(\"Validate phone number (if provided)\", function () {",
+											"    let user = pm.response.json()[0];",
+											"    if (user && user.userPhoneNumber) {",
+											"        pm.expect(user.userPhoneNumber.toString().length).to.be.at.least(10);",
+											"    } else {",
+											"        console.warn(\"Phone number not provided, skipping validation.\");",
+											"    }",
+											"});",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/users/programs/7",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"programs",
+										"7"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Users By roleID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Validate status code",
+											"pm.test(\"Status code is 200 OK\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"// Validate response is an array",
+											"pm.test(\"Response is an array\", function () {",
+											"    let jsonResponse = pm.response.json();",
+											"    pm.expect(jsonResponse).to.be.an(\"array\");",
+											"});",
+											"",
+											"// Validate fields for first user in response",
+											"pm.test(\"Validate user object properties\", function () {",
+											"    let response = pm.response.json();",
+											"",
+											"    if (response.length > 0) {",
+											"        let user = response[0];",
+											"        ",
+											"        pm.expect(user).to.have.property(\"userId\").that.is.a(\"string\");",
+											"        pm.expect(user).to.have.property(\"userFirstName\").that.is.a(\"string\");",
+											"        pm.expect(user).to.have.property(\"userMiddleName\"); // Could be null",
+											"        ",
+											"        pm.expect(user).to.have.property(\"userLastName\").that.is.a(\"string\");",
+											"        pm.expect(user).to.have.property(\"userLoginEmail\"); // Could be null",
+											"        ",
+											"        // pm.expect(user).to.have.property(\"userPhoneNumber\").that.is.a(\"number\"); // Optional",
+											"        ",
+											"        pm.expect(user).to.have.property(\"userLocation\").that.is.a(\"string\");",
+											"        pm.expect(user).to.have.property(\"userTimeZone\").that.is.a(\"string\");",
+											"        pm.expect(user).to.have.property(\"userLinkedinUrl\").that.is.a(\"string\");",
+											"        pm.expect(user).to.have.property(\"userVisaStatus\").that.is.a(\"string\");",
+											"        ",
+											"        pm.expect(user).to.have.property(\"userEduUg\").that.is.a(\"string\");",
+											"        pm.expect(user).to.have.property(\"userEduPg\").that.is.a(\"string\");",
+											"        pm.expect(user).to.have.property(\"userComments\");",
+											"    } else {",
+											"        console.warn(\"⚠ Empty response array – No users available to validate.\");",
+											"        return; // Prevents failure while avoiding skip",
+											"    }",
+											"});",
+											"",
+											"// Validate Email format if available",
+											"pm.test(\"Validate email format if present\", function () {",
+											"    let response = pm.response.json();",
+											"    if (response.length === 0) {",
+											"        console.warn(\"⚠ No users available to validate email format.\");",
+											"        return;",
+											"    }",
+											"",
+											"    let user = response[0];",
+											"    if (user.userLoginEmail) {",
+											"        pm.expect(user.userLoginEmail).to.match(/^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$/);",
+											"    } else {",
+											"        console.warn(\"⚠ Email is null or not provided.\");",
+											"    }",
+											"});",
+											"",
+											"// Validate LinkedIn URL format",
+											"pm.test(\"Validate LinkedIn URL format\", function () {",
+											"    let response = pm.response.json();",
+											"    if (response.length === 0) {",
+											"        console.warn(\"⚠ No users available to validate LinkedIn URL.\");",
+											"        return;",
+											"    }",
+											"",
+											"    let user = response[0];",
+											"    if (user.userLinkedinUrl) {",
+											"        pm.expect(user.userLinkedinUrl).to.match(/^https?:\\/\\/(www\\.)?linkedin\\.com\\/.+/);",
+											"    } else {",
+											"        console.warn(\"⚠ LinkedIn URL is null or not provided.\");",
+											"    }",
+											"});",
+											"",
+											"// Validate phone number has at least 10 digits",
+											"pm.test(\"Validate phone number (minimum 10 digits)\", function () {",
+											"    let response = pm.response.json();",
+											"    if (response.length === 0) {",
+											"        console.warn(\"⚠ No users available to validate phone number.\");",
+											"        return;",
+											"    }",
+											"",
+											"    let user = response[0];",
+											"    if (user.userPhoneNumber) {",
+											"        pm.expect(user.userPhoneNumber.toString().length).to.be.at.least(10);",
+											"    } else {",
+											"        console.warn(\"⚠ Phone number not provided.\");",
+											"    }",
+											"});",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/users/roles/R03",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"roles",
+										"R03"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Gets Users by roleId V2",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Validate status code",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"// Parse response",
+											"let res = pm.response.json();",
+											"",
+											"// Validate that response is an object",
+											"pm.test(\"Response is an object\", function () {",
+											"    pm.expect(res).to.be.an(\"object\");",
+											"});",
+											"",
+											"// Validate 'facets' exists",
+											"pm.test(\"'facets' object validation\", function () {",
+											"    pm.expect(res).to.have.property(\"facets\");",
+											"    pm.expect(res.facets).to.be.an(\"object\");",
+											"});",
+											"",
+											"// Validate 'facetedFields' array",
+											"pm.test(\"'facetedFields' array validation\", function () {",
+											"    pm.expect(res.facets).to.have.property(\"facetedFields\").that.is.an(\"array\");",
+											"});",
+											"",
+											"// Check first facetedField structure",
+											"pm.test(\"Validate structure inside 'facetedFields'\", function () {",
+											"    if (res.facets.facetedFields.length > 0) {",
+											"        let field = res.facets.facetedFields[0];",
+											"",
+											"        pm.expect(field).to.have.property(\"displayName\");",
+											"        pm.expect(field.displayName).to.be.a(\"string\");",
+											"        pm.expect(field).to.have.property(\"filterValues\").that.is.an(\"array\");",
+											"",
+											"        // Validate 'filterValues' structure",
+											"        if (field.filterValues.length > 0) {",
+											"            let filter = field.filterValues[0];",
+											"            pm.expect(filter).to.have.property(\"count\").that.is.a(\"number\");",
+											"            pm.expect(filter).to.have.property(\"name\").that.is.a(\"string\");",
+											"        } else {",
+											"            console.warn(\"⚠ No filter values available to validate\");",
+											"            return;  ",
+											"        }",
+											"    } else {",
+											"        console.warn(\"⚠ No faceted fields available to validate\");",
+											"        return;  ",
+											"    }",
+											"});",
+											"",
+											"// Validate 'users' array",
+											"pm.test(\"'users' array exists\", function () {",
+											"    pm.expect(res).to.have.property(\"users\").that.is.an(\"array\");",
+											"});",
+											"",
+											"// Validate user object fields",
+											"pm.test(\"Validate user object structure\", function () {",
+											"    if (res.users.length > 0) {",
+											"        let user = res.users[0];",
+											"",
+											"        pm.expect(user).to.have.property(\"userId\").that.is.a(\"string\");",
+											"        pm.expect(user).to.have.property(\"userFirstName\").that.is.a(\"string\");",
+											"        pm.expect(user).to.have.property(\"userLastName\").that.is.a(\"string\");",
+											"        // pm.expect(user).to.have.property(\"userPhoneNumber\").that.is.a(\"number\"); // optional",
+											"        pm.expect(user).to.have.property(\"userLocation\").that.is.a(\"string\");",
+											"        pm.expect(user).to.have.property(\"userTimeZone\").that.is.a(\"string\");",
+											"        pm.expect(user).to.have.property(\"userLinkedinUrl\").that.is.a(\"string\");",
+											"        pm.expect(user).to.have.property(\"userVisaStatus\").that.is.a(\"string\");",
+											"        pm.expect(user).to.have.property(\"userEduUg\").that.is.a(\"string\");",
+											"        pm.expect(user).to.have.property(\"userEduPg\").that.is.a(\"string\");",
+											"        pm.expect(user).to.have.property(\"userComments\");",
+											"        pm.expect(user).to.have.property(\"userMiddleName\");",
+											"        pm.expect(user).to.have.property(\"userLoginEmail\");",
+											"    } else {",
+											"        console.warn(\"⚠ No users available to validate\");",
+											"        return;  ",
+											"    }",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/v2/users",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v2",
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": ".Get User BatchId by User Id",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/users/user/U04",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"user",
+										"U04"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get User Details by Id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Validate status code",
+											"pm.test(\"Status code is 200 OK\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"// Parse response",
+											"let res = pm.response.json();",
+											"",
+											"// Check response is an array",
+											"pm.test(\"Response is an array\", function () {",
+											"    pm.expect(res).to.be.an(\"array\");",
+											"});",
+											"",
+											"// Validate structure of first object",
+											"pm.test(\"Validate response object structure\", function () {",
+											"    if (res.length > 0) {",
+											"        let record = res[0];",
+											"",
+											"        pm.expect(record).to.have.property(\"programName\").that.is.a(\"string\");",
+											"        pm.expect(record).to.have.property(\"batchName\").that.is.a(\"string\");",
+											"        pm.expect(record).to.have.property(\"userFirstName\").that.is.a(\"string\");",
+											"        pm.expect(record).to.have.property(\"userLastName\").that.is.a(\"string\");",
+											"        pm.expect(record).to.have.property(\"userLoginEmail\").that.is.a(\"string\");",
+											"    } else {",
+											"        console.warn(\"No records found in response to validate.\");",
+											"        return;",
+											"    }",
+											"});",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/users/details/U10",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"details",
+										"U10"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update User By ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Validate Status Code",
+											"pm.test(\"Status code is 200 - Success\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"// Parse response",
+											"let res = pm.response.json();",
+											"",
+											"",
+											"// Validate mandatory fields exist in response",
+											"[\"userFirstName\", \"userLastName\", \"userPhoneNumber\", \"userVisaStatus\", \"userTimeZone\"].forEach(field => {",
+											"    pm.test(`Response should contain ${field}`, function () {",
+											"        pm.expect(res).to.have.property(field);",
+											"        pm.expect(res[field]).to.not.be.null;",
+											"        pm.expect(res[field]).to.not.eql(\"\");",
+											"    });",
+											"});",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\"userComments\": \"na\",\n\"userEduPg\": \"ME\",\n\"userEduUg\": \"BE\",\n\"userFirstName\": \"Shreya\",\n\"userId\": \"String\",\n\"userLastName\": \"Ghoshal\",\n\"userMiddleName\": \"Singh\",\n\"userLinkedinUrl\": \"https://www.linkedin.com/in/shreyaghoshal4/\",\n\"userLocation\": \"Dallas\",\n\"userLoginEmail\": \"Robert.Louis@gmail.com\" ,\n\"userPhoneNumber\": \"+91 3214568899\",\n\"userTimeZone\": \"CST\",\n\"userVisaStatus\": \"H4-EAD\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/users/U05",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"U05"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update User RoleID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Validate Status Code",
+											"pm.test(\"Status code is 200 - Success\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"// Parse response",
+											"let res = pm.response.text();  // Response is a text message",
+											"",
+											"// Check success message",
+											"pm.test(\"Response message is correct\", function () {",
+											"   pm.expect(res).to.have.string(\"Role Id Updated\");",
+											"",
+											"});",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\"userRoleList\": [\n{\n\"roleId\": \"R01\",\n\"userRoleStatus\": \"Active\"\n}\n]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/users/roleId/U08",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"roleId",
+										"U08"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Assign Update User Role Program Batch Status",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Validate Status Code",
+											"pm.test(\"Status Code is 200 - Success\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"// Validate response message (text response)",
+											"let responseText = pm.response.text();",
+											"",
+											"pm.test(\"Correct success message received\", function () {",
+											"    // Replace VARIABLES.USER_ID if you set userId using variable",
+											"    pm.expect(responseText).to.include(\"has been successfully assigned\");",
+											"});",
+											"",
+											"// Validate JSON format only if API returns JSON response",
+											"pm.test(\"Valid JSON structure (if applicable)\", function () {",
+											"    try {",
+											"        JSON.parse(responseText);",
+											"        console.log(\"Response is JSON\");",
+											"    } catch (error) {",
+											"        console.log(\"Response not JSON, may be plain text\");",
+											"    }",
+											"});",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\"programId\": 1,\n\"roleId\": \"R01\",\n\"userId\": \"U02\",\n\"userRoleProgramBatches\": [\n{\n\"batchId\":1,\n\"userRoleProgramBatchStatus\":\n\"Active\"\n}\n]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/users/roleProgramBatchStatus/U02",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"roleProgramBatchStatus",
+										"U02"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update User Login Status",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\"loginStatus\": \"Active\",\n\"roleIds\": [\n\"R01\"\n],\n\"status\": \"Active\",\n\"userLoginEmail\": \"xyzabc@gmail.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/users/userLogin/U03",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"userLogin",
+										"U03"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete User",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200 - User inactive successfully\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"let responseText = pm.response.text();",
+											"",
+											"// If API returns plain text",
+											"pm.test(\"Success message should mention user inactive\", function () {",
+											"    pm.expect(responseText.toLowerCase()).to.include(\"deleted\");",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{baseUrl}}/users/U101",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"U101"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Negative Tests Copy",
+					"item": [
+						{
+							"name": "Get Users For Program-Invalid",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/users/programs/999999",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"programs",
+										"999999"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Users By RoleId-Invalid",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/users/roles/R99",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"roles",
+										"R99"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": ".Get User BatchId by User Id-Invalid",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/users/user/U40",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"user",
+										"U40"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get User Details by Id-Invalid",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/users/details/U99",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"details",
+										"U99"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update User By Id-Invalid",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Validate Status Code",
+											"pm.test(\"Status code is 400 - Bad Request\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"// Parse response",
+											"let res = pm.response.json();",
+											"",
+											"// Validate success = false",
+											"pm.test(\"Success flag should be false\", function () {",
+											"    pm.expect(res.success).to.eql(false);",
+											"});",
+											"",
+											"// Check error message",
+											"pm.test(\"Error message must be provided\", function () {",
+											"    pm.expect(res).to.have.property(\"message\");",
+											"    pm.expect(res.message).to.not.be.empty;",
+											"});",
+											"",
+											"// Optional: Validate which field is missing",
+											"pm.test(\"Error message should mention missing field\", function () {",
+											"    pm.expect(res.message.toLowerCase()).to.include(\"mandatory\");",
+											"});",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\"userComments\": \"na\",\n\"userEduPg\": \"ME\",\n\"userEduUg\": \"BE\",\n\"userId\": \"String\",\n\"userLastName\": \"Ghoshal\",\n\"userMiddleName\": \"Singh\",\n\"userLinkedinUrl\": \"https://www.linkedin.com/in/shreyaghoshal4/\",\n\"userPhoneNumber\": \"+91 3214567890\",\n\"userTimeZone\": \"CST\",\n\"userVisaStatus\": \"H4-EAD\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/users/U05",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"U05"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update User RoleID-Invalid UserID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Validate status code",
+											"pm.test(\"Status code is 404 - Invalid User ID\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});",
+											"",
+											"let res = pm.response.json(); // Assuming JSON response",
+											"",
+											"pm.test(\"Success flag should be false\", function () {",
+											"    pm.expect(res.success).to.eql(false);",
+											"});",
+											"",
+											"// Check message for invalid user",
+											"pm.test(\"Error message should mention User not found\", function () {",
+											"    pm.expect(res.message.toLowerCase()).to.include(\"not found\");",
+											"});",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\"userRoleList\": [\n{\n\"roleId\": \"R02\",\n\"userRoleStatus\": \"Active\"\n}\n]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/users/roleId/U999",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"roleId",
+										"U999"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update User RoleId-Role Already Exists",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Validate status code",
+											"pm.test(\"Status code is 404 - Role Already Exists\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});",
+											"",
+											"let res = pm.response.json();",
+											"",
+											"pm.test(\"Success flag should be false\", function () {",
+											"    pm.expect(res.success).to.eql(false);",
+											"});",
+											"",
+											"// Check message",
+											"pm.test(\"Error message should mention role already exists\", function () {",
+											"    pm.expect(res.message.toLowerCase()).to.include(\"already exists\");",
+											"});",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\"userRoleList\": [\n{\n\"roleId\": \"R01\",\n\"userRoleStatus\": \"Active\"\n}\n]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/users/roleId/U08",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"roleId",
+										"U08"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Assign Update User Role Program Batch Status-InValid UserID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status Code is 404 - Invalid User ID\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});",
+											"",
+											"let jsonResponse = pm.response.json();",
+											"",
+											"pm.test(\"Success flag should be false\", function () {",
+											"    pm.expect(jsonResponse.success).to.eql(false);",
+											"});",
+											"",
+											"pm.test(\"Error message should mention invalid user\", function () {",
+											"    pm.expect(jsonResponse.message.toLowerCase()).to.include(\"not found\");",
+											"});",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\"programId\": 1,\n\"roleId\": \"R01\",\n\"userId\": \"U99\",\n\"userRoleProgramBatches\": [\n{\n\"batchId\":1,\n\"userRoleProgramBatchStatus\":\n\"Active\"\n}\n]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/users/roleProgramBatchStatus/U99",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"roleProgramBatchStatus",
+										"U99"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Assign Update User Role Program Batch Status-MissingField",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status Code is 400 - Bad Request\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"let res = pm.response.json();",
+											"",
+											"pm.test(\"Error message exists\", function () {",
+											"    pm.expect(res.message).to.exist;",
+											"    pm.expect(res.message.length).to.be.greaterThan(0);",
+											"});",
+											"",
+											"pm.test(\"Success flag should be false\", function () {",
+											"    pm.expect(res.success).to.eql(false);",
+											"});",
+											"",
+											"// Example additional validation if backend provides missingField details",
+											"if (res.missingFields) {",
+											"    pm.test(\"Missing field details should be provided\", function () {",
+											"        pm.expect(res.missingFields).to.be.an(\"array\");",
+											"    });",
+											"}",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\"programId\": 1,\n\"roleId\": \"R01\",\n\"userId\": \"U99\",\n\"userRoleProgramBatches\": [\n{\n\"userRoleProgramBatchStatus\":\n\"Active\"\n}\n]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/users/roleProgramBatchStatus/U02",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"roleProgramBatchStatus",
+										"U02"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update User Login Status-InValid",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\"loginStatus\": \"Active\",\n\"roleIds\": [\n\"R01\"\n],\n\"status\": \"Active\",\n\"userLoginEmail\": \"xyzabc@gmail.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/users/userLogin/U999",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"userLogin",
+										"U999"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update User Login Status-Missing",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\"loginStatus\": \"Active\",\n\"roleIds\": [\n\"R01\"\n],\n\"userLoginEmail\": \"xyzabc@gmail.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/users/userLogin/U999",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"userLogin",
+										"U999"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete User-Invalid",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404 - Invalid user ID\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});",
+											"",
+											"let res = pm.response.json();",
+											"",
+											"pm.test(\"Error message should indicate user not found\", function () {",
+											"    pm.expect(res.message.toLowerCase()).to.include(\"not found\");",
+											"});",
+											"",
+											"pm.test(\"Success flag should be false\", function () {",
+											"    pm.expect(res.success).to.eql(false);",
+											"});",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/users/U999",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"U999"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Skill Master",
+			"item": [
+				{
+					"name": "Positive Tests",
+					"item": [
+						{
+							"name": "Create New Skill",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response has required properties\", function () {\r",
+											"    const responseJson = pm.response.json();\r",
+											"    pm.expect(responseJson).to.have.property('skillId');\r",
+											"    pm.expect(responseJson).to.have.property('skillName');\r",
+											"    pm.expect(responseJson).to.have.property('creationTime');\r",
+											"    pm.expect(responseJson).to.have.property('lastModTime');\r",
+											"\t\r",
+											"\tpm.collectionVariables.set(\"skillId\", responseJson.skillId);\r",
+											"    console.log(\"skillId saved: \" + responseJson.skillId);\r",
+											"\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n   \"skillName\": \"reading\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/SaveSkillMaster",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"SaveSkillMaster"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Skill by skill id",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response has required properties\", function () {\r",
+											"    const responseJson = pm.response.json();\r",
+											"    pm.expect(responseJson).to.have.property('skillId');\r",
+											"    pm.expect(responseJson).to.have.property('skillName');\r",
+											"    pm.expect(responseJson).to.have.property('creationTime');\r",
+											"    pm.expect(responseJson).to.have.property('lastModTime');\r",
+											"\t\r",
+											"\t\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n \r\n  \"skillName\": \"writing\"\r\n  \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/updateSkills/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"updateSkills",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "{{skillId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Skill Master",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response is an array\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData).to.be.an('array');\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Each skill contains required fields\", function () {\r",
+											"\tvar skills = pm.response.json();\r",
+											"\tvar iso8601 = /^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$/;\r",
+											"    \r",
+											"    skills.forEach(function(skill) {\r",
+											"        pm.expect(skill).to.have.property('skillId');\r",
+											"        pm.expect(skill).to.have.property('skillName');\r",
+											"        pm.expect(skill).to.have.property('creationTime');\r",
+											"        pm.expect(skill).to.have.property('lastModTime');\r",
+											"\r",
+											"\t\tpm.expect(skill.skillId).to.be.a('number');\r",
+											"\t\tpm.expect(skill.skillName).to.be.a('string');\r",
+											"\t\tpm.expect(skill.creationTime).to.be.a('string');\r",
+											"\t\tpm.expect(skill.lastModTime).to.be.a('string');\r",
+											"\r",
+											"\t\tpm.expect(skill.creationTime).to.match(iso8601, 'creationTime should be valid ISO 8601');\r",
+											"        pm.expect(skill.lastModTime).to.match(iso8601, 'lastModTime should be valid ISO 8601');\r",
+											"\r",
+											"        var c = new Date(skill.creationTime);\r",
+											"        var m = new Date(skill.lastModTime);\r",
+											"        pm.expect(isFinite(c.getTime())).to.be.true;\r",
+											"        pm.expect(isFinite(m.getTime())).to.be.true;\r",
+											"\r",
+											"        // Optional: ensure creationTime is not after lastModTime\r",
+											"        pm.expect(c.getTime()).to.be.at.most(m.getTime());\r",
+											"\r",
+											"\r",
+											"    });\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{baseUrl}}/allSkillMaster",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"allSkillMaster"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Skill by skill name",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response is an array\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData).to.be.an('array');\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Each skill contains required fields\", function () {\r",
+											"\tvar skills = pm.response.json();\r",
+											"\tvar iso8601 = /^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$/;\r",
+											"    \r",
+											"    skills.forEach(function(skill) {\r",
+											"        pm.expect(skill).to.have.property('skillId');\r",
+											"        pm.expect(skill).to.have.property('skillName');\r",
+											"        pm.expect(skill).to.have.property('creationTime');\r",
+											"        pm.expect(skill).to.have.property('lastModTime');\r",
+											"\r",
+											"\t\tpm.expect(skill.skillId).to.be.a('number');\r",
+											"\t\tpm.expect(skill.skillName).to.be.a('string');\r",
+											"\t\tpm.expect(skill.creationTime).to.be.a('string');\r",
+											"\t\tpm.expect(skill.lastModTime).to.be.a('string');\r",
+											"\r",
+											"\t\tpm.expect(skill.creationTime).to.match(iso8601, 'creationTime should be valid ISO 8601');\r",
+											"        pm.expect(skill.lastModTime).to.match(iso8601, 'lastModTime should be valid ISO 8601');\r",
+											"\r",
+											"        var c = new Date(skill.creationTime);\r",
+											"        var m = new Date(skill.lastModTime);\r",
+											"        pm.expect(isFinite(c.getTime())).to.be.true;\r",
+											"        pm.expect(isFinite(m.getTime())).to.be.true;\r",
+											"\r",
+											"        // Optional: ensure creationTime is not after lastModTime\r",
+											"        pm.expect(c.getTime()).to.be.at.most(m.getTime());\r",
+											"\t\t\r",
+											"\r",
+											"    });\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Exactly one skill is returned\", function () {\r",
+											"\tconst json = pm.response.json();\r",
+											"\tpm.expect(json).to.be.an('array');\r",
+											"\tpm.expect(json.length, \"Expected exactly one result\").to.equal(1);\r",
+											"});\r",
+											"/*\r",
+											"pm.test(\"Returned skill has the requested name\", function () {\r",
+											"\tconst json = pm.response.json();\r",
+											"\tconst requestedName = pm.variables.get(\"skillMasterName\"); // path var or env/collection override\r",
+											"\tpm.expect(json[0]).to.have.property('skillName');\r",
+											"\tpm.expect(json[0].skillName).to.equal(requestedName);\r",
+											"});\r",
+											"*/"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{baseUrl}}/skills/:skillMasterName",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"skills",
+										":skillMasterName"
+									],
+									"variable": [
+										{
+											"key": "skillMasterName",
+											"value": "Python class2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Skill by Skill id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"\tpm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/deletebySkillId/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"deletebySkillId",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "{{skillId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Negative Tests",
+					"item": [
+						{
+							"name": "Create New Skill - Empty Request Body",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is not 200\", function () {\r",
+											"    pm.expect(pm.response.code).to.not.equal(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/SaveSkillMaster",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"SaveSkillMaster"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create New Skill - Empty Skill Name",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is not 200\", function () {\r",
+											"    pm.expect(pm.response.code).to.not.equal(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n \r\n  \"skillName\": \"\"\r\n  \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/SaveSkillMaster",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"SaveSkillMaster"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create New Skill - Duplicate Skill Name",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is not 200\", function () {\r",
+											"    pm.expect(pm.response.code).to.not.equal(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n \r\n  \"skillName\": \"reading\"\r\n  \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/SaveSkillMaster",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"SaveSkillMaster"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Skill by skill id - Non existent Id",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n \r\n  \"skillName\": \"writing\"\r\n  \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/updateSkills/{{skillId}}123",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"updateSkills",
+										"{{skillId}}123"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "User Logout",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{authToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/logoutlms",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"logoutlms"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{authToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
 		}
 	],
 	"variable": [
 		{
 			"key": "authToken",
+			"value": ""
+		},
+		{
+			"key": "randomLetters",
+			"value": ""
+		},
+		{
+			"key": "skillId",
 			"value": ""
 		}
 	]
