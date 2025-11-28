@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "c400bbe3-d948-43a0-978d-9fd8c9a09d92",
+		"_postman_id": "763e5e12-0b92-4a08-8a7b-587ae157ebea",
 		"name": "LMS Hackathon",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "50244332",
-		"_collection_link": "https://saloniranka0303-4395223.postman.co/workspace/c508e76f-3bd3-423c-8be0-4fb6ac1551a7/collection/50244332-c400bbe3-d948-43a0-978d-9fd8c9a09d92?action=share&source=collection_link&creator=50244332"
+		"_exporter_id": "50023977",
+		"_collection_link": "https://padmajak-suryawanshi-4740333.postman.co/workspace/APIHackathon2025~40dd4d3b-bb3b-44dc-ad96-b3070ee0869a/collection/50023977-763e5e12-0b92-4a08-8a7b-587ae157ebea?action=share&source=collection_link&creator=50023977"
 	},
 	"item": [
 		{
@@ -350,13 +350,7 @@
 							],
 							"request": {
 								"method": "POST",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{authToken}}",
-										"type": "text"
-									}
-								],
+								"header": [],
 								"body": {
 									"mode": "raw",
 									"raw": "{\r\n    \"userLoginEmailId\":\"\"\r\n}",
@@ -400,13 +394,7 @@
 							],
 							"request": {
 								"method": "POST",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{authToken}}",
-										"type": "text"
-									}
-								],
+								"header": [],
 								"body": {
 									"mode": "raw",
 									"raw": "{\r\n    \"userLoginEmailId\":\"invaliduser@email.com\"\r\n}",
@@ -450,13 +438,7 @@
 							],
 							"request": {
 								"method": "POST",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{authToken}}",
-										"type": "text"
-									}
-								],
+								"header": [],
 								"body": {
 									"mode": "raw",
 									"raw": "",
@@ -500,13 +482,7 @@
 							],
 							"request": {
 								"method": "POST",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{authToken}}",
-										"type": "text"
-									}
-								],
+								"header": [],
 								"body": {
 									"mode": "raw",
 									"raw": "{\r\n    \"userLoginEmailId\":\"{{username}}\",\r\n    \"password\":\"\"\r\n}",
@@ -548,13 +524,7 @@
 							],
 							"request": {
 								"method": "POST",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{authToken}}",
-										"type": "text"
-									}
-								],
+								"header": [],
 								"body": {
 									"mode": "raw",
 									"raw": "{\r\n    \"userLoginEmailId\":\"\",\r\n    \"password\":\"{{password}}\"\r\n}",
@@ -596,13 +566,7 @@
 							],
 							"request": {
 								"method": "POST",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{authToken}}",
-										"type": "text"
-									}
-								],
+								"header": [],
 								"body": {
 									"mode": "raw",
 									"raw": "{\r\n    \"userLoginEmailId\":\"{{username}}\",\r\n    \"password\":\"123\"\r\n}",
@@ -644,13 +608,7 @@
 							],
 							"request": {
 								"method": "POST",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{authToken}}",
-										"type": "text"
-									}
-								],
+								"header": [],
 								"body": {
 									"mode": "raw",
 									"raw": "",
@@ -5850,6 +5808,642 @@
 			]
 		},
 		{
+			"name": "Skill Master",
+			"item": [
+				{
+					"name": "Positive Tests",
+					"item": [
+						{
+							"name": "Create New Skill",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response has required properties\", function () {\r",
+											"    const responseJson = pm.response.json();\r",
+											"    pm.expect(responseJson).to.have.property('skillId');\r",
+											"    pm.expect(responseJson).to.have.property('skillName');\r",
+											"    pm.expect(responseJson).to.have.property('creationTime');\r",
+											"    pm.expect(responseJson).to.have.property('lastModTime');\r",
+											"\t\r",
+											"\tpm.collectionVariables.set(\"skillId\", responseJson.skillId);\r",
+											"    console.log(\"skillId saved: \" + responseJson.skillId);\r",
+											"\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n   \"skillName\": \"reading\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/SaveSkillMaster",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"SaveSkillMaster"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Skill by skill id",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response has required properties\", function () {\r",
+											"    const responseJson = pm.response.json();\r",
+											"    pm.expect(responseJson).to.have.property('skillId');\r",
+											"    pm.expect(responseJson).to.have.property('skillName');\r",
+											"    pm.expect(responseJson).to.have.property('creationTime');\r",
+											"    pm.expect(responseJson).to.have.property('lastModTime');\r",
+											"\t\r",
+											"\t\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n \r\n  \"skillName\": \"writing\"\r\n  \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/updateSkills/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"updateSkills",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "{{skillId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Skill Master",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response is an array\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData).to.be.an('array');\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Each skill contains required fields\", function () {\r",
+											"\tvar skills = pm.response.json();\r",
+											"\tvar iso8601 = /^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$/;\r",
+											"    \r",
+											"    skills.forEach(function(skill) {\r",
+											"        pm.expect(skill).to.have.property('skillId');\r",
+											"        pm.expect(skill).to.have.property('skillName');\r",
+											"        pm.expect(skill).to.have.property('creationTime');\r",
+											"        pm.expect(skill).to.have.property('lastModTime');\r",
+											"\r",
+											"\t\tpm.expect(skill.skillId).to.be.a('number');\r",
+											"\t\tpm.expect(skill.skillName).to.be.a('string');\r",
+											"\t\tpm.expect(skill.creationTime).to.be.a('string');\r",
+											"\t\tpm.expect(skill.lastModTime).to.be.a('string');\r",
+											"\r",
+											"\t\tpm.expect(skill.creationTime).to.match(iso8601, 'creationTime should be valid ISO 8601');\r",
+											"        pm.expect(skill.lastModTime).to.match(iso8601, 'lastModTime should be valid ISO 8601');\r",
+											"\r",
+											"        var c = new Date(skill.creationTime);\r",
+											"        var m = new Date(skill.lastModTime);\r",
+											"        pm.expect(isFinite(c.getTime())).to.be.true;\r",
+											"        pm.expect(isFinite(m.getTime())).to.be.true;\r",
+											"\r",
+											"        // Optional: ensure creationTime is not after lastModTime\r",
+											"        pm.expect(c.getTime()).to.be.at.most(m.getTime());\r",
+											"\r",
+											"\r",
+											"    });\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{baseUrl}}/allSkillMaster",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"allSkillMaster"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Skill by skill name",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response is an array\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData).to.be.an('array');\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Each skill contains required fields\", function () {\r",
+											"\tvar skills = pm.response.json();\r",
+											"\tvar iso8601 = /^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$/;\r",
+											"    \r",
+											"    skills.forEach(function(skill) {\r",
+											"        pm.expect(skill).to.have.property('skillId');\r",
+											"        pm.expect(skill).to.have.property('skillName');\r",
+											"        pm.expect(skill).to.have.property('creationTime');\r",
+											"        pm.expect(skill).to.have.property('lastModTime');\r",
+											"\r",
+											"\t\tpm.expect(skill.skillId).to.be.a('number');\r",
+											"\t\tpm.expect(skill.skillName).to.be.a('string');\r",
+											"\t\tpm.expect(skill.creationTime).to.be.a('string');\r",
+											"\t\tpm.expect(skill.lastModTime).to.be.a('string');\r",
+											"\r",
+											"\t\tpm.expect(skill.creationTime).to.match(iso8601, 'creationTime should be valid ISO 8601');\r",
+											"        pm.expect(skill.lastModTime).to.match(iso8601, 'lastModTime should be valid ISO 8601');\r",
+											"\r",
+											"        var c = new Date(skill.creationTime);\r",
+											"        var m = new Date(skill.lastModTime);\r",
+											"        pm.expect(isFinite(c.getTime())).to.be.true;\r",
+											"        pm.expect(isFinite(m.getTime())).to.be.true;\r",
+											"\r",
+											"        // Optional: ensure creationTime is not after lastModTime\r",
+											"        pm.expect(c.getTime()).to.be.at.most(m.getTime());\r",
+											"\t\t\r",
+											"\r",
+											"    });\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Exactly one skill is returned\", function () {\r",
+											"\tconst json = pm.response.json();\r",
+											"\tpm.expect(json).to.be.an('array');\r",
+											"\tpm.expect(json.length, \"Expected exactly one result\").to.equal(1);\r",
+											"});\r",
+											"/*\r",
+											"pm.test(\"Returned skill has the requested name\", function () {\r",
+											"\tconst json = pm.response.json();\r",
+											"\tconst requestedName = pm.variables.get(\"skillMasterName\"); // path var or env/collection override\r",
+											"\tpm.expect(json[0]).to.have.property('skillName');\r",
+											"\tpm.expect(json[0].skillName).to.equal(requestedName);\r",
+											"});\r",
+											"*/"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{baseUrl}}/skills/:skillMasterName",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"skills",
+										":skillMasterName"
+									],
+									"variable": [
+										{
+											"key": "skillMasterName",
+											"value": "Python class2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Skill by Skill id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"\tpm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/deletebySkillId/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"deletebySkillId",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "{{skillId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Negative Tests",
+					"item": [
+						{
+							"name": "Create New Skill - Empty Request Body",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is not 200\", function () {\r",
+											"    pm.expect(pm.response.code).to.not.equal(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/SaveSkillMaster",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"SaveSkillMaster"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create New Skill - Empty Skill Name",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is not 200\", function () {\r",
+											"    pm.expect(pm.response.code).to.not.equal(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n \r\n  \"skillName\": \"\"\r\n  \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/SaveSkillMaster",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"SaveSkillMaster"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create New Skill - Duplicate Skill Name",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is not 200\", function () {\r",
+											"    pm.expect(pm.response.code).to.not.equal(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n \r\n  \"skillName\": \"reading\"\r\n  \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/SaveSkillMaster",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"SaveSkillMaster"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Skill by skill id - Non existent Id",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n \r\n  \"skillName\": \"writing\"\r\n  \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/updateSkills/{{skillId}}123",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"updateSkills",
+										"{{skillId}}123"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
 			"name": "User Logout",
 			"event": [
 				{
@@ -5900,6 +6494,16 @@
 			"response": []
 		}
 	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{authToken}}",
+				"type": "string"
+			}
+		]
+	},
 	"event": [
 		{
 			"listen": "prerequest",
@@ -5931,6 +6535,10 @@
 		},
 		{
 			"key": "randomLetters",
+			"value": ""
+		},
+		{
+			"key": "skillId",
 			"value": ""
 		}
 	]
