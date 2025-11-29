@@ -1,0 +1,3642 @@
+{
+	"info": {
+		"_postman_id": "fe95e574-a6d8-4029-8cb8-3fb986ddd2fb",
+		"name": "LMSUserModule",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25015237"
+	},
+	"item": [
+		{
+			"name": "Positive Test",
+			"item": [
+				{
+					"name": "Creating User with Role",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response contains created user\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property('userId');\r",
+									"    pm.environment.set(\"userId\",jsonData.user.userId);\r",
+									"})\r",
+									"//var jsonData=pm.response.json();\r",
+									"//if(jsonData)\r",
+									"//{\r",
+									"    //console.log(jsonData.user.userId);\r",
+									"    //pm.collectionVariables.set(\"userId\",jsonData.user.userId);or\r",
+									"    //pm.enviornmentVariables.set(\"userId\",jsonData.user.userId);\r",
+									"   // console.log(pm.collectionVariables.get(\"userId\"));\r",
+									"//}\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n\"userComments\": \"APHackathons\",\r\n\"userEduPg\": \"Msc\",\r\n\"userEduUg\": \"Bsc\",\r\n\"userFirstName\": \"Virat\",\r\n\"userLastName\": \"Kumar\",\r\n\"userLinkedinUrl\": \"https://www.linkedin.com/in/Kumar33/\",\r\n\"userLocation\": \"USA\",\r\n\"userMiddleName\": \"Rajan\",\r\n\"userPhoneNumber\": \"+91 804647459\",\r\n\"userRoleMaps\": [\r\n{\r\n\"roleId\": \"R02\",\r\n\"userRoleStatus\": \"Active\"\r\n}\r\n],\r\n\"userTimeZone\": \"EST\",\r\n\"userVisaStatus\": \"H1B\",\r\n\"userLogin\": {\r\n\"userLoginEmail\": \"rdham34@gmail.com\",\r\n\"loginStatus\" : \"Active\",\r\n\"status\": \"Active\"\r\n} \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/roleStatus",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"roleStatus"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All Users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All Active Users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/activeUsers",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"activeUsers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Emails of All Active Users with Active Status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/fetch-emails",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"fetch-emails"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All Roles",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/roles",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Information by User ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/U61",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"U61"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All Users with Roles",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/roles",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Count of Active and Inactive Users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/byStatus",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"byStatus"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User by Program Batch",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/programBatch/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"programBatch",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Users by ProgramID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//  Validate Status Code",
+									"pm.test(\"Status Code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"// Validate response is an array",
+									"pm.test(\"Response is an array\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an('array');",
+									"});",
+									"",
+									"//  Validate user object properties",
+									"pm.test(\"Validate user object properties\", function () {",
+									"    let response = pm.response.json();",
+									"",
+									"    if (response.length > 0) {",
+									"        let user = response[0];",
+									"",
+									"        // Mandatory fields",
+									"        pm.expect(user).to.have.property(\"userId\").that.is.a(\"string\");",
+									"        pm.expect(user).to.have.property(\"userFirstName\").that.is.a(\"string\");",
+									"        pm.expect(user).to.have.property(\"userLastName\").that.is.a(\"string\");",
+									"        pm.expect(user).to.have.property(\"userLocation\").that.is.a(\"string\");",
+									"        pm.expect(user).to.have.property(\"userTimeZone\").that.is.a(\"string\");",
+									"        pm.expect(user).to.have.property(\"userLinkedinUrl\").that.is.a(\"string\");",
+									"        pm.expect(user).to.have.property(\"userVisaStatus\").that.is.a(\"string\");",
+									"        pm.expect(user).to.have.property(\"userEduUg\").that.is.a(\"string\");",
+									"        pm.expect(user).to.have.property(\"userEduPg\").that.is.a(\"string\");",
+									"        pm.expect(user).to.have.property(\"userComments\");",
+									"",
+									"        //  Optional fields (string or null allowed)",
+									"        if (user.hasOwnProperty(\"userMiddleName\")) {",
+									"            pm.expect(",
+									"                user.userMiddleName === null || typeof user.userMiddleName === \"string\",",
+									"                \"userMiddleName should be string or null\"",
+									"            ).to.be.true;",
+									"        }",
+									"",
+									"        if (user.hasOwnProperty(\"userLoginEmail\")) {",
+									"            pm.expect(",
+									"                user.userLoginEmail === null || typeof user.userLoginEmail === \"string\",",
+									"                \"userLoginEmail should be string or null\"",
+									"            ).to.be.true;",
+									"        }",
+									"",
+									"    } else {",
+									"        console.warn(\"Response array is empty, skipping field validation.\");",
+									"    }",
+									"});",
+									"",
+									"// Validate Email format if present",
+									"pm.test(\"Validate email format (if provided)\", function () {",
+									"    let user = pm.response.json()[0];",
+									"    if (user && user.userLoginEmail) {",
+									"        pm.expect(user.userLoginEmail).to.match(/^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$/);",
+									"    } else {",
+									"        console.warn(\"Email is null or not provided, skipping validation.\");",
+									"    }",
+									"});",
+									"",
+									"// Validate LinkedIn URL format (if provided)",
+									"pm.test(\"Validate LinkedIn URL format (if provided)\", function () {",
+									"    let user = pm.response.json()[0];",
+									"    if (user && user.userLinkedinUrl) {",
+									"        pm.expect(user.userLinkedinUrl).to.match(/^https?:\\/\\/(www\\.)?linkedin\\.com\\/.+/);",
+									"    } else {",
+									"        console.warn(\"LinkedIn URL is null or not provided, skipping validation.\");",
+									"    }",
+									"});",
+									"",
+									"//  Validate phone number (if provided)",
+									"pm.test(\"Validate phone number (if provided)\", function () {",
+									"    let user = pm.response.json()[0];",
+									"    if (user && user.userPhoneNumber) {",
+									"        pm.expect(user.userPhoneNumber.toString().length).to.be.at.least(10);",
+									"    } else {",
+									"        console.warn(\"Phone number not provided, skipping validation.\");",
+									"    }",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/users/programs/7",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"programs",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Users By roleID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validate status code",
+									"pm.test(\"Status code is 200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"// Validate response is an array",
+									"pm.test(\"Response is an array\", function () {",
+									"    let jsonResponse = pm.response.json();",
+									"    pm.expect(jsonResponse).to.be.an(\"array\");",
+									"});",
+									"",
+									"// Validate fields for first user in response",
+									"pm.test(\"Validate user object properties\", function () {",
+									"    let response = pm.response.json();",
+									"",
+									"    if (response.length > 0) {",
+									"        let user = response[0];",
+									"        ",
+									"        pm.expect(user).to.have.property(\"userId\").that.is.a(\"string\");",
+									"        pm.expect(user).to.have.property(\"userFirstName\").that.is.a(\"string\");",
+									"        pm.expect(user).to.have.property(\"userMiddleName\"); // Could be null",
+									"        ",
+									"        pm.expect(user).to.have.property(\"userLastName\").that.is.a(\"string\");",
+									"        pm.expect(user).to.have.property(\"userLoginEmail\"); // Could be null",
+									"        ",
+									"        // pm.expect(user).to.have.property(\"userPhoneNumber\").that.is.a(\"number\"); // Optional",
+									"        ",
+									"        pm.expect(user).to.have.property(\"userLocation\").that.is.a(\"string\");",
+									"        pm.expect(user).to.have.property(\"userTimeZone\").that.is.a(\"string\");",
+									"        pm.expect(user).to.have.property(\"userLinkedinUrl\").that.is.a(\"string\");",
+									"        pm.expect(user).to.have.property(\"userVisaStatus\").that.is.a(\"string\");",
+									"        ",
+									"        pm.expect(user).to.have.property(\"userEduUg\").that.is.a(\"string\");",
+									"        pm.expect(user).to.have.property(\"userEduPg\").that.is.a(\"string\");",
+									"        pm.expect(user).to.have.property(\"userComments\");",
+									"    } else {",
+									"        console.warn(\"⚠ Empty response array – No users available to validate.\");",
+									"        return; // Prevents failure while avoiding skip",
+									"    }",
+									"});",
+									"",
+									"// Validate Email format if available",
+									"pm.test(\"Validate email format if present\", function () {",
+									"    let response = pm.response.json();",
+									"    if (response.length === 0) {",
+									"        console.warn(\"⚠ No users available to validate email format.\");",
+									"        return;",
+									"    }",
+									"",
+									"    let user = response[0];",
+									"    if (user.userLoginEmail) {",
+									"        pm.expect(user.userLoginEmail).to.match(/^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$/);",
+									"    } else {",
+									"        console.warn(\"⚠ Email is null or not provided.\");",
+									"    }",
+									"});",
+									"",
+									"// Validate LinkedIn URL format",
+									"pm.test(\"Validate LinkedIn URL format\", function () {",
+									"    let response = pm.response.json();",
+									"    if (response.length === 0) {",
+									"        console.warn(\"⚠ No users available to validate LinkedIn URL.\");",
+									"        return;",
+									"    }",
+									"",
+									"    let user = response[0];",
+									"    if (user.userLinkedinUrl) {",
+									"        pm.expect(user.userLinkedinUrl).to.match(/^https?:\\/\\/(www\\.)?linkedin\\.com\\/.+/);",
+									"    } else {",
+									"        console.warn(\"⚠ LinkedIn URL is null or not provided.\");",
+									"    }",
+									"});",
+									"",
+									"// Validate phone number has at least 10 digits",
+									"pm.test(\"Validate phone number (minimum 10 digits)\", function () {",
+									"    let response = pm.response.json();",
+									"    if (response.length === 0) {",
+									"        console.warn(\"⚠ No users available to validate phone number.\");",
+									"        return;",
+									"    }",
+									"",
+									"    let user = response[0];",
+									"    if (user.userPhoneNumber) {",
+									"        pm.expect(user.userPhoneNumber.toString().length).to.be.at.least(10);",
+									"    } else {",
+									"        console.warn(\"⚠ Phone number not provided.\");",
+									"    }",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/users/roles/R03",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"roles",
+								"R03"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Gets Users by roleId V2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validate status code",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"// Parse response",
+									"let res = pm.response.json();",
+									"",
+									"// Validate that response is an object",
+									"pm.test(\"Response is an object\", function () {",
+									"    pm.expect(res).to.be.an(\"object\");",
+									"});",
+									"",
+									"// Validate 'facets' exists",
+									"pm.test(\"'facets' object validation\", function () {",
+									"    pm.expect(res).to.have.property(\"facets\");",
+									"    pm.expect(res.facets).to.be.an(\"object\");",
+									"});",
+									"",
+									"// Validate 'facetedFields' array",
+									"pm.test(\"'facetedFields' array validation\", function () {",
+									"    pm.expect(res.facets).to.have.property(\"facetedFields\").that.is.an(\"array\");",
+									"});",
+									"",
+									"// Check first facetedField structure",
+									"pm.test(\"Validate structure inside 'facetedFields'\", function () {",
+									"    if (res.facets.facetedFields.length > 0) {",
+									"        let field = res.facets.facetedFields[0];",
+									"",
+									"        pm.expect(field).to.have.property(\"displayName\");",
+									"        pm.expect(field.displayName).to.be.a(\"string\");",
+									"        pm.expect(field).to.have.property(\"filterValues\").that.is.an(\"array\");",
+									"",
+									"        // Validate 'filterValues' structure",
+									"        if (field.filterValues.length > 0) {",
+									"            let filter = field.filterValues[0];",
+									"            pm.expect(filter).to.have.property(\"count\").that.is.a(\"number\");",
+									"            pm.expect(filter).to.have.property(\"name\").that.is.a(\"string\");",
+									"        } else {",
+									"            console.warn(\"⚠ No filter values available to validate\");",
+									"            return;  ",
+									"        }",
+									"    } else {",
+									"        console.warn(\"⚠ No faceted fields available to validate\");",
+									"        return;  ",
+									"    }",
+									"});",
+									"",
+									"// Validate 'users' array",
+									"pm.test(\"'users' array exists\", function () {",
+									"    pm.expect(res).to.have.property(\"users\").that.is.an(\"array\");",
+									"});",
+									"",
+									"// Validate user object fields",
+									"pm.test(\"Validate user object structure\", function () {",
+									"    if (res.users.length > 0) {",
+									"        let user = res.users[0];",
+									"",
+									"        pm.expect(user).to.have.property(\"userId\").that.is.a(\"string\");",
+									"        pm.expect(user).to.have.property(\"userFirstName\").that.is.a(\"string\");",
+									"        pm.expect(user).to.have.property(\"userLastName\").that.is.a(\"string\");",
+									"        // pm.expect(user).to.have.property(\"userPhoneNumber\").that.is.a(\"number\"); // optional",
+									"        pm.expect(user).to.have.property(\"userLocation\").that.is.a(\"string\");",
+									"        pm.expect(user).to.have.property(\"userTimeZone\").that.is.a(\"string\");",
+									"        pm.expect(user).to.have.property(\"userLinkedinUrl\").that.is.a(\"string\");",
+									"        pm.expect(user).to.have.property(\"userVisaStatus\").that.is.a(\"string\");",
+									"        pm.expect(user).to.have.property(\"userEduUg\").that.is.a(\"string\");",
+									"        pm.expect(user).to.have.property(\"userEduPg\").that.is.a(\"string\");",
+									"        pm.expect(user).to.have.property(\"userComments\");",
+									"        pm.expect(user).to.have.property(\"userMiddleName\");",
+									"        pm.expect(user).to.have.property(\"userLoginEmail\");",
+									"    } else {",
+									"        console.warn(\"⚠ No users available to validate\");",
+									"        return;  ",
+									"    }",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/v2/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v2",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": ".Get User BatchId by User Id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/users/user/U04",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"user",
+								"U04"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Details by Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validate status code",
+									"pm.test(\"Status code is 200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"// Parse response",
+									"let res = pm.response.json();",
+									"",
+									"// Check response is an array",
+									"pm.test(\"Response is an array\", function () {",
+									"    pm.expect(res).to.be.an(\"array\");",
+									"});",
+									"",
+									"// Validate structure of first object",
+									"pm.test(\"Validate response object structure\", function () {",
+									"    if (res.length > 0) {",
+									"        let record = res[0];",
+									"",
+									"        pm.expect(record).to.have.property(\"programName\").that.is.a(\"string\");",
+									"        pm.expect(record).to.have.property(\"batchName\").that.is.a(\"string\");",
+									"        pm.expect(record).to.have.property(\"userFirstName\").that.is.a(\"string\");",
+									"        pm.expect(record).to.have.property(\"userLastName\").that.is.a(\"string\");",
+									"        pm.expect(record).to.have.property(\"userLoginEmail\").that.is.a(\"string\");",
+									"    } else {",
+									"        console.warn(\"No records found in response to validate.\");",
+									"        return;",
+									"    }",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/users/details/U10",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"details",
+								"U10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User By ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validate Status Code",
+									"pm.test(\"Status code is 200 - Success\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"// Parse response",
+									"let res = pm.response.json();",
+									"",
+									"",
+									"// Validate mandatory fields exist in response",
+									"[\"userFirstName\", \"userLastName\", \"userPhoneNumber\", \"userVisaStatus\", \"userTimeZone\"].forEach(field => {",
+									"    pm.test(`Response should contain ${field}`, function () {",
+									"        pm.expect(res).to.have.property(field);",
+									"        pm.expect(res[field]).to.not.be.null;",
+									"        pm.expect(res[field]).to.not.eql(\"\");",
+									"    });",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"userComments\": \"na\",\n\"userEduPg\": \"ME\",\n\"userEduUg\": \"BE\",\n\"userFirstName\": \"Shreya\",\n\"userId\": \"String\",\n\"userLastName\": \"Ghoshal\",\n\"userMiddleName\": \"Singh\",\n\"userLinkedinUrl\": \"https://www.linkedin.com/in/shreyaghoshal4/\",\n\"userLocation\": \"Dallas\",\n\"userLoginEmail\": \"Robert.Louis@gmail.com\" ,\n\"userPhoneNumber\": \"+91 3214568899\",\n\"userTimeZone\": \"CST\",\n\"userVisaStatus\": \"H4-EAD\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/U05",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"U05"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User RoleID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validate Status Code",
+									"pm.test(\"Status code is 200 - Success\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"// Parse response",
+									"let res = pm.response.text();  // Response is a text message",
+									"",
+									"// Check success message",
+									"pm.test(\"Response message is correct\", function () {",
+									"   pm.expect(res).to.have.string(\"Role Id Updated\");",
+									"",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"userRoleList\": [\n{\n\"roleId\": \"R01\",\n\"userRoleStatus\": \"Active\"\n}\n]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/roleId/U08",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"roleId",
+								"U08"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Assign Update User Role Program Batch Status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validate Status Code",
+									"pm.test(\"Status Code is 200 - Success\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"// Validate response message (text response)",
+									"let responseText = pm.response.text();",
+									"",
+									"pm.test(\"Correct success message received\", function () {",
+									"    // Replace VARIABLES.USER_ID if you set userId using variable",
+									"    pm.expect(responseText).to.include(\"has been successfully assigned\");",
+									"});",
+									"",
+									"// Validate JSON format only if API returns JSON response",
+									"pm.test(\"Valid JSON structure (if applicable)\", function () {",
+									"    try {",
+									"        JSON.parse(responseText);",
+									"        console.log(\"Response is JSON\");",
+									"    } catch (error) {",
+									"        console.log(\"Response not JSON, may be plain text\");",
+									"    }",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"programId\": 1,\n\"roleId\": \"R01\",\n\"userId\": \"U02\",\n\"userRoleProgramBatches\": [\n{\n\"batchId\":1,\n\"userRoleProgramBatchStatus\":\n\"Active\"\n}\n]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/roleProgramBatchStatus/U02",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"roleProgramBatchStatus",
+								"U02"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User Login Status",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"loginStatus\": \"Active\",\n\"roleIds\": [\n\"R01\"\n],\n\"status\": \"Active\",\n\"userLoginEmail\": \"xyzabc@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/userLogin/U03",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"userLogin",
+								"U03"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 - User inactive successfully\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"let responseText = pm.response.text();",
+									"",
+									"// If API returns plain text",
+									"pm.test(\"Success message should mention user inactive\", function () {",
+									"    pm.expect(responseText.toLowerCase()).to.include(\"deleted\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/U101",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"U101"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Negative Test",
+			"item": [
+				{
+					"name": "Creating User with Role with blank First Name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response contains created user\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property('userId');\r",
+									"})\r",
+									"//var jsonData=pm.response.json();\r",
+									"//if(jsonData)\r",
+									"//{\r",
+									"    //console.log(jsonData.user.userId);\r",
+									"    //pm.collectionVariables.set(\"userId\",jsonData.user.userId);or\r",
+									"    //pm.enviornmentVariables.set(\"userId\",jsonData.user.userId);\r",
+									"   // console.log(pm.collectionVariables.get(\"userId\"));\r",
+									"//}\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n\"userComments\": \"APHackathons\",\r\n\"userEduPg\": \"Msc\",\r\n\"userEduUg\": \"Bsc\",\r\n\"userFirstName\": \"\",\r\n\"userLastName\": \"Kumar\",\r\n\"userLinkedinUrl\": \"https://www.linkedin.com/in/Kumar33/\",\r\n\"userLocation\": \"USA\",\r\n\"userMiddleName\": \"Rajan\",\r\n\"userPhoneNumber\": \"+91 804647459\",\r\n\"userRoleMaps\": [\r\n{\r\n\"roleId\": \"R02\",\r\n\"userRoleStatus\": \"Active\"\r\n}\r\n],\r\n\"userTimeZone\": \"EST\",\r\n\"userVisaStatus\": \"H1B\",\r\n\"userLogin\": {\r\n\"userLoginEmail\": \"rdham34@gmail.com\",\r\n\"loginStatus\" : \"Active\",\r\n\"status\": \"Active\"\r\n} \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/roleStatus",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"roleStatus"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Creating User with Role with blank Last Name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response contains created user\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property('userId');\r",
+									"})\r",
+									"//var jsonData=pm.response.json();\r",
+									"//if(jsonData)\r",
+									"//{\r",
+									"    //console.log(jsonData.user.userId);\r",
+									"    //pm.collectionVariables.set(\"userId\",jsonData.user.userId);or\r",
+									"    //pm.enviornmentVariables.set(\"userId\",jsonData.user.userId);\r",
+									"   // console.log(pm.collectionVariables.get(\"userId\"));\r",
+									"//}\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n\"userComments\": \"APHackathons\",\r\n\"userEduPg\": \"Msc\",\r\n\"userEduUg\": \"Bsc\",\r\n\"userFirstName\": \"Virat\",\r\n\"userLastName\": \"\",\r\n\"userLinkedinUrl\": \"https://www.linkedin.com/in/Kumar33/\",\r\n\"userLocation\": \"USA\",\r\n\"userMiddleName\": \"Rajan\",\r\n\"userPhoneNumber\": \"+91 804647459\",\r\n\"userRoleMaps\": [\r\n{\r\n\"roleId\": \"R02\",\r\n\"userRoleStatus\": \"Active\"\r\n}\r\n],\r\n\"userTimeZone\": \"EST\",\r\n\"userVisaStatus\": \"H1B\",\r\n\"userLogin\": {\r\n\"userLoginEmail\": \"rdham34@gmail.com\",\r\n\"loginStatus\" : \"Active\",\r\n\"status\": \"Active\"\r\n} \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/roleStatus",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"roleStatus"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Creating User with Role with blank Middle Name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response contains created user\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property('userId');\r",
+									"})\r",
+									"//var jsonData=pm.response.json();\r",
+									"//if(jsonData)\r",
+									"//{\r",
+									"    //console.log(jsonData.user.userId);\r",
+									"    //pm.collectionVariables.set(\"userId\",jsonData.user.userId);or\r",
+									"    //pm.enviornmentVariables.set(\"userId\",jsonData.user.userId);\r",
+									"   // console.log(pm.collectionVariables.get(\"userId\"));\r",
+									"//}\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n\"userComments\": \"APHackathons\",\r\n\"userEduPg\": \"Msc\",\r\n\"userEduUg\": \"Bsc\",\r\n\"userFirstName\": \"Virat\",\r\n\"userLastName\": \"Kumar\",\r\n\"userLinkedinUrl\": \"https://www.linkedin.com/in/Kumar33/\",\r\n\"userLocation\": \"USA\",\r\n\"userMiddleName\": \"\",\r\n\"userPhoneNumber\": \"+91 804647459\",\r\n\"userRoleMaps\": [\r\n{\r\n\"roleId\": \"R02\",\r\n\"userRoleStatus\": \"Active\"\r\n}\r\n],\r\n\"userTimeZone\": \"EST\",\r\n\"userVisaStatus\": \"H1B\",\r\n\"userLogin\": {\r\n\"userLoginEmail\": \"rdham34@gmail.com\",\r\n\"loginStatus\" : \"Active\",\r\n\"status\": \"Active\"\r\n} \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/roleStatus",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"roleStatus"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Creating User with Role with blank LinkedUrl",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response contains created user\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property('userId');\r",
+									"})\r",
+									"//var jsonData=pm.response.json();\r",
+									"//if(jsonData)\r",
+									"//{\r",
+									"    //console.log(jsonData.user.userId);\r",
+									"    //pm.collectionVariables.set(\"userId\",jsonData.user.userId);or\r",
+									"    //pm.enviornmentVariables.set(\"userId\",jsonData.user.userId);\r",
+									"   // console.log(pm.collectionVariables.get(\"userId\"));\r",
+									"//}\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n\"userComments\": \"APHackathons\",\r\n\"userEduPg\": \"Msc\",\r\n\"userEduUg\": \"Bsc\",\r\n\"userFirstName\": \"Virat\",\r\n\"userLastName\": \"Kumar\",\r\n\"userLinkedinUrl\": \"\",\r\n\"userLocation\": \"USA\",\r\n\"userMiddleName\": \"Rajan\",\r\n\"userPhoneNumber\": \"+91 804647459\",\r\n\"userRoleMaps\": [\r\n{\r\n\"roleId\": \"R02\",\r\n\"userRoleStatus\": \"Active\"\r\n}\r\n],\r\n\"userTimeZone\": \"EST\",\r\n\"userVisaStatus\": \"H1B\",\r\n\"userLogin\": {\r\n\"userLoginEmail\": \"rdham34@gmail.com\",\r\n\"loginStatus\" : \"Active\",\r\n\"status\": \"Active\"\r\n} \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/roleStatus",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"roleStatus"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Creating User with Role with blank PhoneNumber",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response contains created user\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property('userId');\r",
+									"})\r",
+									"//var jsonData=pm.response.json();\r",
+									"//if(jsonData)\r",
+									"//{\r",
+									"    //console.log(jsonData.user.userId);\r",
+									"    //pm.collectionVariables.set(\"userId\",jsonData.user.userId);or\r",
+									"    //pm.enviornmentVariables.set(\"userId\",jsonData.user.userId);\r",
+									"   // console.log(pm.collectionVariables.get(\"userId\"));\r",
+									"//}\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n\"userComments\": \"APHackathons\",\r\n\"userEduPg\": \"Msc\",\r\n\"userEduUg\": \"Bsc\",\r\n\"userFirstName\": \"Virat\",\r\n\"userLastName\": \"Kumar\",\r\n\"userLinkedinUrl\": \"https://www.linkedin.com/in/Kumar33/\",\r\n\"userLocation\": \"USA\",\r\n\"userMiddleName\": \"Rajan\",\r\n\"userPhoneNumber\": \"\",\r\n\"userRoleMaps\": [\r\n{\r\n\"roleId\": \"R02\",\r\n\"userRoleStatus\": \"Active\"\r\n}\r\n],\r\n\"userTimeZone\": \"EST\",\r\n\"userVisaStatus\": \"H1B\",\r\n\"userLogin\": {\r\n\"userLoginEmail\": \"rdham34@gmail.com\",\r\n\"loginStatus\" : \"Active\",\r\n\"status\": \"Active\"\r\n} \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/roleStatus",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"roleStatus"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Creating User with Role with blank LoginEmail",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response contains created user\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property('userId');\r",
+									"})\r",
+									"//var jsonData=pm.response.json();\r",
+									"//if(jsonData)\r",
+									"//{\r",
+									"    //console.log(jsonData.user.userId);\r",
+									"    //pm.collectionVariables.set(\"userId\",jsonData.user.userId);or\r",
+									"    //pm.enviornmentVariables.set(\"userId\",jsonData.user.userId);\r",
+									"   // console.log(pm.collectionVariables.get(\"userId\"));\r",
+									"//}\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n\"userComments\": \"APHackathons\",\r\n\"userEduPg\": \"Msc\",\r\n\"userEduUg\": \"Bsc\",\r\n\"userFirstName\": \"Virat\",\r\n\"userLastName\": \"Kumar\",\r\n\"userLinkedinUrl\": \"https://www.linkedin.com/in/Kumar33/\",\r\n\"userLocation\": \"USA\",\r\n\"userMiddleName\": \"Rajan\",\r\n\"userPhoneNumber\": \"+91 804647459\",\r\n\"userRoleMaps\": [\r\n{\r\n\"roleId\": \"R02\",\r\n\"userRoleStatus\": \"Active\"\r\n}\r\n],\r\n\"userTimeZone\": \"EST\",\r\n\"userVisaStatus\": \"H1B\",\r\n\"userLogin\": {\r\n\"userLoginEmail\": \"\",\r\n\"loginStatus\" : \"Active\",\r\n\"status\": \"Active\"\r\n} \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/roleStatus",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"roleStatus"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Creating User with Role with blank Comments",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response contains created user\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property('userId');\r",
+									"})\r",
+									"//var jsonData=pm.response.json();\r",
+									"//if(jsonData)\r",
+									"//{\r",
+									"    //console.log(jsonData.user.userId);\r",
+									"    //pm.collectionVariables.set(\"userId\",jsonData.user.userId);or\r",
+									"    //pm.enviornmentVariables.set(\"userId\",jsonData.user.userId);\r",
+									"   // console.log(pm.collectionVariables.get(\"userId\"));\r",
+									"//}\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n\"userComments\": \"\",\r\n\"userEduPg\": \"Msc\",\r\n\"userEduUg\": \"Bsc\",\r\n\"userFirstName\": \"Virat\",\r\n\"userLastName\": \"Kumar\",\r\n\"userLinkedinUrl\": \"https://www.linkedin.com/in/Kumar33/\",\r\n\"userLocation\": \"USA\",\r\n\"userMiddleName\": \"Rajan\",\r\n\"userPhoneNumber\": \"+91 804647459\",\r\n\"userRoleMaps\": [\r\n{\r\n\"roleId\": \"R02\",\r\n\"userRoleStatus\": \"Active\"\r\n}\r\n],\r\n\"userTimeZone\": \"EST\",\r\n\"userVisaStatus\": \"H1B\",\r\n\"userLogin\": {\r\n\"userLoginEmail\": \"rdham34@gmail.com\",\r\n\"loginStatus\" : \"Active\",\r\n\"status\": \"Active\"\r\n} \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/roleStatus",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"roleStatus"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Creating User with Role with blank EduPg",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response contains created user\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property('userId');\r",
+									"})\r",
+									"//var jsonData=pm.response.json();\r",
+									"//if(jsonData)\r",
+									"//{\r",
+									"    //console.log(jsonData.user.userId);\r",
+									"    //pm.collectionVariables.set(\"userId\",jsonData.user.userId);or\r",
+									"    //pm.enviornmentVariables.set(\"userId\",jsonData.user.userId);\r",
+									"   // console.log(pm.collectionVariables.get(\"userId\"));\r",
+									"//}\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n\"userComments\": \"APHackathons\",\r\n\"userEduPg\": \"\",\r\n\"userEduUg\": \"Bsc\",\r\n\"userFirstName\": \"Virat\",\r\n\"userLastName\": \"Kumar\",\r\n\"userLinkedinUrl\": \"https://www.linkedin.com/in/Kumar33/\",\r\n\"userLocation\": \"USA\",\r\n\"userMiddleName\": \"Rajan\",\r\n\"userPhoneNumber\": \"+91 804647459\",\r\n\"userRoleMaps\": [\r\n{\r\n\"roleId\": \"R02\",\r\n\"userRoleStatus\": \"Active\"\r\n}\r\n],\r\n\"userTimeZone\": \"EST\",\r\n\"userVisaStatus\": \"H1B\",\r\n\"userLogin\": {\r\n\"userLoginEmail\": \"rdham34@gmail.com\",\r\n\"loginStatus\" : \"Active\",\r\n\"status\": \"Active\"\r\n} \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/roleStatus",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"roleStatus"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Creating User with Role with blank EduUg",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response contains created user\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property('userId');\r",
+									"})\r",
+									"//var jsonData=pm.response.json();\r",
+									"//if(jsonData)\r",
+									"//{\r",
+									"    //console.log(jsonData.user.userId);\r",
+									"    //pm.collectionVariables.set(\"userId\",jsonData.user.userId);or\r",
+									"    //pm.enviornmentVariables.set(\"userId\",jsonData.user.userId);\r",
+									"   // console.log(pm.collectionVariables.get(\"userId\"));\r",
+									"//}\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n\"userComments\": \"APHackathons\",\r\n\"userEduPg\": \"Msc\",\r\n\"userEduUg\": \"\",\r\n\"userFirstName\": \"Virat\",\r\n\"userLastName\": \"Kumar\",\r\n\"userLinkedinUrl\": \"https://www.linkedin.com/in/Kumar33/\",\r\n\"userLocation\": \"USA\",\r\n\"userMiddleName\": \"Rajan\",\r\n\"userPhoneNumber\": \"+91 804647459\",\r\n\"userRoleMaps\": [\r\n{\r\n\"roleId\": \"R02\",\r\n\"userRoleStatus\": \"Active\"\r\n}\r\n],\r\n\"userTimeZone\": \"EST\",\r\n\"userVisaStatus\": \"H1B\",\r\n\"userLogin\": {\r\n\"userLoginEmail\": \"rdham34@gmail.com\",\r\n\"loginStatus\" : \"Active\",\r\n\"status\": \"Active\"\r\n} \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/roleStatus",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"roleStatus"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Creating User with Role with blank Location",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response contains created user\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property('userId');\r",
+									"})\r",
+									"//var jsonData=pm.response.json();\r",
+									"//if(jsonData)\r",
+									"//{\r",
+									"    //console.log(jsonData.user.userId);\r",
+									"    //pm.collectionVariables.set(\"userId\",jsonData.user.userId);or\r",
+									"    //pm.enviornmentVariables.set(\"userId\",jsonData.user.userId);\r",
+									"   // console.log(pm.collectionVariables.get(\"userId\"));\r",
+									"//}\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n\"userComments\": \"APHackathons\",\r\n\"userEduPg\": \"Msc\",\r\n\"userEduUg\": \"Bsc\",\r\n\"userFirstName\": \"Virat\",\r\n\"userLastName\": \"Kumar\",\r\n\"userLinkedinUrl\": \"https://www.linkedin.com/in/Kumar33/\",\r\n\"userLocation\": \"\",\r\n\"userMiddleName\": \"Rajan\",\r\n\"userPhoneNumber\": \"+91 804647459\",\r\n\"userRoleMaps\": [\r\n{\r\n\"roleId\": \"R02\",\r\n\"userRoleStatus\": \"Active\"\r\n}\r\n],\r\n\"userTimeZone\": \"EST\",\r\n\"userVisaStatus\": \"H1B\",\r\n\"userLogin\": {\r\n\"userLoginEmail\": \"rdham34@gmail.com\",\r\n\"loginStatus\" : \"Active\",\r\n\"status\": \"Active\"\r\n} \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/roleStatus",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"roleStatus"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Creating User with Role with blank roleId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response contains created user\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property('userId');\r",
+									"})\r",
+									"//var jsonData=pm.response.json();\r",
+									"//if(jsonData)\r",
+									"//{\r",
+									"    //console.log(jsonData.user.userId);\r",
+									"    //pm.collectionVariables.set(\"userId\",jsonData.user.userId);or\r",
+									"    //pm.enviornmentVariables.set(\"userId\",jsonData.user.userId);\r",
+									"   // console.log(pm.collectionVariables.get(\"userId\"));\r",
+									"//}\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n\"userComments\": \"APHackathons\",\r\n\"userEduPg\": \"Msc\",\r\n\"userEduUg\": \"Bsc\",\r\n\"userFirstName\": \"Virat\",\r\n\"userLastName\": \"Kumar\",\r\n\"userLinkedinUrl\": \"https://www.linkedin.com/in/Kumar33/\",\r\n\"userLocation\": \"USA\",\r\n\"userMiddleName\": \"Rajan\",\r\n\"userPhoneNumber\": \"+91 804647459\",\r\n\"userRoleMaps\": [\r\n{\r\n\"roleId\": \"\",\r\n\"userRoleStatus\": \"Active\"\r\n}\r\n],\r\n\"userTimeZone\": \"EST\",\r\n\"userVisaStatus\": \"H1B\",\r\n\"userLogin\": {\r\n\"userLoginEmail\": \"rdham34@gmail.com\",\r\n\"loginStatus\" : \"Active\",\r\n\"status\": \"Active\"\r\n} \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/roleStatus",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"roleStatus"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Creating User with Role with blank RoleStatus",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response contains created user\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property('userId');\r",
+									"})\r",
+									"//var jsonData=pm.response.json();\r",
+									"//if(jsonData)\r",
+									"//{\r",
+									"    //console.log(jsonData.user.userId);\r",
+									"    //pm.collectionVariables.set(\"userId\",jsonData.user.userId);or\r",
+									"    //pm.enviornmentVariables.set(\"userId\",jsonData.user.userId);\r",
+									"   // console.log(pm.collectionVariables.get(\"userId\"));\r",
+									"//}\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n\"userComments\": \"APHackathons\",\r\n\"userEduPg\": \"Msc\",\r\n\"userEduUg\": \"Bsc\",\r\n\"userFirstName\": \"Virat\",\r\n\"userLastName\": \"Kumar\",\r\n\"userLinkedinUrl\": \"https://www.linkedin.com/in/Kumar33/\",\r\n\"userLocation\": \"USA\",\r\n\"userMiddleName\": \"Rajan\",\r\n\"userPhoneNumber\": \"+91 804647459\",\r\n\"userRoleMaps\": [\r\n{\r\n\"roleId\": \"R02\",\r\n\"userRoleStatus\": \"\"\r\n}\r\n],\r\n\"userTimeZone\": \"EST\",\r\n\"userVisaStatus\": \"H1B\",\r\n\"userLogin\": {\r\n\"userLoginEmail\": \"rdham34@gmail.com\",\r\n\"loginStatus\" : \"Active\",\r\n\"status\": \"Active\"\r\n} \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/roleStatus",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"roleStatus"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Creating User with Role with blank TimeZone",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response contains created user\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property('userId');\r",
+									"})\r",
+									"//var jsonData=pm.response.json();\r",
+									"//if(jsonData)\r",
+									"//{\r",
+									"    //console.log(jsonData.user.userId);\r",
+									"    //pm.collectionVariables.set(\"userId\",jsonData.user.userId);or\r",
+									"    //pm.enviornmentVariables.set(\"userId\",jsonData.user.userId);\r",
+									"   // console.log(pm.collectionVariables.get(\"userId\"));\r",
+									"//}\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n\"userComments\": \"APHackathons\",\r\n\"userEduPg\": \"Msc\",\r\n\"userEduUg\": \"Bsc\",\r\n\"userFirstName\": \"Virat\",\r\n\"userLastName\": \"Kumar\",\r\n\"userLinkedinUrl\": \"https://www.linkedin.com/in/Kumar33/\",\r\n\"userLocation\": \"USA\",\r\n\"userMiddleName\": \"Rajan\",\r\n\"userPhoneNumber\": \"+91 804647459\",\r\n\"userRoleMaps\": [\r\n{\r\n\"roleId\": \"R02\",\r\n\"userRoleStatus\": \"Active\"\r\n}\r\n],\r\n\"userTimeZone\": \"\",\r\n\"userVisaStatus\": \"H1B\",\r\n\"userLogin\": {\r\n\"userLoginEmail\": \"rdham34@gmail.com\",\r\n\"loginStatus\" : \"Active\",\r\n\"status\": \"Active\"\r\n} \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/roleStatus",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"roleStatus"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Creating User with Role with blank VisaStatus",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response contains created user\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property('userId');\r",
+									"})\r",
+									"//var jsonData=pm.response.json();\r",
+									"//if(jsonData)\r",
+									"//{\r",
+									"    //console.log(jsonData.user.userId);\r",
+									"    //pm.collectionVariables.set(\"userId\",jsonData.user.userId);or\r",
+									"    //pm.enviornmentVariables.set(\"userId\",jsonData.user.userId);\r",
+									"   // console.log(pm.collectionVariables.get(\"userId\"));\r",
+									"//}\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n\"userComments\": \"APHackathons\",\r\n\"userEduPg\": \"Msc\",\r\n\"userEduUg\": \"Bsc\",\r\n\"userFirstName\": \"Virat\",\r\n\"userLastName\": \"Kumar\",\r\n\"userLinkedinUrl\": \"https://www.linkedin.com/in/Kumar33/\",\r\n\"userLocation\": \"USA\",\r\n\"userMiddleName\": \"Rajan\",\r\n\"userPhoneNumber\": \"+91 804647459\",\r\n\"userRoleMaps\": [\r\n{\r\n\"roleId\": \"R02\",\r\n\"userRoleStatus\": \"Active\"\r\n}\r\n],\r\n\"userTimeZone\": \"EST\",\r\n\"userVisaStatus\": \"\",\r\n\"userLogin\": {\r\n\"userLoginEmail\": \"rdham34@gmail.com\",\r\n\"loginStatus\" : \"Active\",\r\n\"status\": \"Active\"\r\n} \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/roleStatus",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"roleStatus"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Creating User with Role with blank LoginStatus",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response contains created user\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property('userId');\r",
+									"})\r",
+									"//var jsonData=pm.response.json();\r",
+									"//if(jsonData)\r",
+									"//{\r",
+									"    //console.log(jsonData.user.userId);\r",
+									"    //pm.collectionVariables.set(\"userId\",jsonData.user.userId);or\r",
+									"    //pm.enviornmentVariables.set(\"userId\",jsonData.user.userId);\r",
+									"   // console.log(pm.collectionVariables.get(\"userId\"));\r",
+									"//}\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n\"userComments\": \"APHackathons\",\r\n\"userEduPg\": \"Msc\",\r\n\"userEduUg\": \"Bsc\",\r\n\"userFirstName\": \"Virat\",\r\n\"userLastName\": \"Kumar\",\r\n\"userLinkedinUrl\": \"https://www.linkedin.com/in/Kumar33/\",\r\n\"userLocation\": \"USA\",\r\n\"userMiddleName\": \"Rajan\",\r\n\"userPhoneNumber\": \"+91 804647459\",\r\n\"userRoleMaps\": [\r\n{\r\n\"roleId\": \"R02\",\r\n\"userRoleStatus\": \"Active\"\r\n}\r\n],\r\n\"userTimeZone\": \"EST\",\r\n\"userVisaStatus\": \"H1B\",\r\n\"userLogin\": {\r\n\"userLoginEmail\": \"rdham34@gmail.com\",\r\n\"loginStatus\" : \"\",\r\n\"status\": \"Active\"\r\n} \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/roleStatus",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"roleStatus"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Creating User with Role with blank Status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response contains created user\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property('userId');\r",
+									"})\r",
+									"//var jsonData=pm.response.json();\r",
+									"//if(jsonData)\r",
+									"//{\r",
+									"    //console.log(jsonData.user.userId);\r",
+									"    //pm.collectionVariables.set(\"userId\",jsonData.user.userId);or\r",
+									"    //pm.enviornmentVariables.set(\"userId\",jsonData.user.userId);\r",
+									"   // console.log(pm.collectionVariables.get(\"userId\"));\r",
+									"//}\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n\"userComments\": \"APHackathons\",\r\n\"userEduPg\": \"Msc\",\r\n\"userEduUg\": \"Bsc\",\r\n\"userFirstName\": \"Virat\",\r\n\"userLastName\": \"Kumar\",\r\n\"userLinkedinUrl\": \"https://www.linkedin.com/in/Kumar33/\",\r\n\"userLocation\": \"USA\",\r\n\"userMiddleName\": \"Rajan\",\r\n\"userPhoneNumber\": \"+91 804647459\",\r\n\"userRoleMaps\": [\r\n{\r\n\"roleId\": \"R02\",\r\n\"userRoleStatus\": \"Active\"\r\n}\r\n],\r\n\"userTimeZone\": \"EST\",\r\n\"userVisaStatus\": \"H1B\",\r\n\"userLogin\": {\r\n\"userLoginEmail\": \"rdham34@gmail.com\",\r\n\"loginStatus\" : \"Active\",\r\n\"status\": \"\"\r\n} \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/roleStatus",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"roleStatus"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Creating User with Role with invalid endpoint",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response contains created user\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property('userId');\r",
+									"})\r",
+									"//var jsonData=pm.response.json();\r",
+									"//if(jsonData)\r",
+									"//{\r",
+									"    //console.log(jsonData.user.userId);\r",
+									"    //pm.collectionVariables.set(\"userId\",jsonData.user.userId);or\r",
+									"    //pm.enviornmentVariables.set(\"userId\",jsonData.user.userId);\r",
+									"   // console.log(pm.collectionVariables.get(\"userId\"));\r",
+									"//}\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n\"userComments\": \"APHackathons\",\r\n\"userEduPg\": \"Msc\",\r\n\"userEduUg\": \"Bsc\",\r\n\"userFirstName\": \"Virat\",\r\n\"userLastName\": \"Kumar\",\r\n\"userLinkedinUrl\": \"https://www.linkedin.com/in/Kumar33/\",\r\n\"userLocation\": \"USA\",\r\n\"userMiddleName\": \"Rajan\",\r\n\"userPhoneNumber\": \"+91 804647459\",\r\n\"userRoleMaps\": [\r\n{\r\n\"roleId\": \"R02\",\r\n\"userRoleStatus\": \"Active\"\r\n}\r\n],\r\n\"userTimeZone\": \"EST\",\r\n\"userVisaStatus\": \"H1B\",\r\n\"userLogin\": {\r\n\"userLoginEmail\": \"rdham34@gmail.com\",\r\n\"loginStatus\" : \"Active\",\r\n\"status\": \"Active\"\r\n} \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/roleStat",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"roleStat"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All Users with invalid endpoint",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/use",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"use"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All Active Users with invalid endpoint",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/activeUse",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"activeUse"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Emails of All Active Users with Active Status with invalid endpoint",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/fetch-ema",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"fetch-ema"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All Roles with invalid endpoint",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/rol",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"rol"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Information by User ID with invalid endpoint",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/use/{{userId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"use",
+								"{{userId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Information by User ID with invalid userId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/P67",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"P67"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All Users with Roles with invalid endpoint",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/rol",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"rol"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Count of Active and Inactive Users with invalid endpoint",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/bySta",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"bySta"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User by Program Batch with invalid endpoint",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/programBat/{{batchId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"programBat",
+								"{{batchId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User by Program Batch with invalid batchId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/programBatch/T78",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"programBatch",
+								"T78"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Users For Program-Invalid",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/users/programs/999999",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"programs",
+								"999999"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Users By RoleId-Invalid",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/users/roles/R99",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"roles",
+								"R99"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": ".Get User BatchId by User Id-Invalid",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/users/user/U40",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"user",
+								"U40"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Details by Id-Invalid",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/users/details/U99",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"details",
+								"U99"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User By Id-Invalid",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validate Status Code",
+									"pm.test(\"Status code is 400 - Bad Request\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"// Parse response",
+									"let res = pm.response.json();",
+									"",
+									"// Validate success = false",
+									"pm.test(\"Success flag should be false\", function () {",
+									"    pm.expect(res.success).to.eql(false);",
+									"});",
+									"",
+									"// Check error message",
+									"pm.test(\"Error message must be provided\", function () {",
+									"    pm.expect(res).to.have.property(\"message\");",
+									"    pm.expect(res.message).to.not.be.empty;",
+									"});",
+									"",
+									"// Optional: Validate which field is missing",
+									"pm.test(\"Error message should mention missing field\", function () {",
+									"    pm.expect(res.message.toLowerCase()).to.include(\"mandatory\");",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"userComments\": \"na\",\n\"userEduPg\": \"ME\",\n\"userEduUg\": \"BE\",\n\"userId\": \"String\",\n\"userLastName\": \"Ghoshal\",\n\"userMiddleName\": \"Singh\",\n\"userLinkedinUrl\": \"https://www.linkedin.com/in/shreyaghoshal4/\",\n\"userPhoneNumber\": \"+91 3214567890\",\n\"userTimeZone\": \"CST\",\n\"userVisaStatus\": \"H4-EAD\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/U05",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"U05"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User RoleID-Invalid UserID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validate status code",
+									"pm.test(\"Status code is 404 - Invalid User ID\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"let res = pm.response.json(); // Assuming JSON response",
+									"",
+									"pm.test(\"Success flag should be false\", function () {",
+									"    pm.expect(res.success).to.eql(false);",
+									"});",
+									"",
+									"// Check message for invalid user",
+									"pm.test(\"Error message should mention User not found\", function () {",
+									"    pm.expect(res.message.toLowerCase()).to.include(\"not found\");",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"userRoleList\": [\n{\n\"roleId\": \"R02\",\n\"userRoleStatus\": \"Active\"\n}\n]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/roleId/U999",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"roleId",
+								"U999"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User RoleId-Role Already Exists",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validate status code",
+									"pm.test(\"Status code is 404 - Role Already Exists\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"let res = pm.response.json();",
+									"",
+									"pm.test(\"Success flag should be false\", function () {",
+									"    pm.expect(res.success).to.eql(false);",
+									"});",
+									"",
+									"// Check message",
+									"pm.test(\"Error message should mention role already exists\", function () {",
+									"    pm.expect(res.message.toLowerCase()).to.include(\"already exists\");",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"userRoleList\": [\n{\n\"roleId\": \"R01\",\n\"userRoleStatus\": \"Active\"\n}\n]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/roleId/U08",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"roleId",
+								"U08"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Assign Update User Role Program Batch Status-InValid UserID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status Code is 404 - Invalid User ID\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"let jsonResponse = pm.response.json();",
+									"",
+									"pm.test(\"Success flag should be false\", function () {",
+									"    pm.expect(jsonResponse.success).to.eql(false);",
+									"});",
+									"",
+									"pm.test(\"Error message should mention invalid user\", function () {",
+									"    pm.expect(jsonResponse.message.toLowerCase()).to.include(\"not found\");",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"programId\": 1,\n\"roleId\": \"R01\",\n\"userId\": \"U99\",\n\"userRoleProgramBatches\": [\n{\n\"batchId\":1,\n\"userRoleProgramBatchStatus\":\n\"Active\"\n}\n]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/roleProgramBatchStatus/U99",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"roleProgramBatchStatus",
+								"U99"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Assign Update User Role Program Batch Status-MissingField",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status Code is 400 - Bad Request\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"let res = pm.response.json();",
+									"",
+									"pm.test(\"Error message exists\", function () {",
+									"    pm.expect(res.message).to.exist;",
+									"    pm.expect(res.message.length).to.be.greaterThan(0);",
+									"});",
+									"",
+									"pm.test(\"Success flag should be false\", function () {",
+									"    pm.expect(res.success).to.eql(false);",
+									"});",
+									"",
+									"// Example additional validation if backend provides missingField details",
+									"if (res.missingFields) {",
+									"    pm.test(\"Missing field details should be provided\", function () {",
+									"        pm.expect(res.missingFields).to.be.an(\"array\");",
+									"    });",
+									"}",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"programId\": 1,\n\"roleId\": \"R01\",\n\"userId\": \"U99\",\n\"userRoleProgramBatches\": [\n{\n\"userRoleProgramBatchStatus\":\n\"Active\"\n}\n]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/roleProgramBatchStatus/U02",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"roleProgramBatchStatus",
+								"U02"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User Login Status-InValid",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"loginStatus\": \"Active\",\n\"roleIds\": [\n\"R01\"\n],\n\"status\": \"Active\",\n\"userLoginEmail\": \"xyzabc@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/userLogin/U999",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"userLogin",
+								"U999"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User Login Status-Missing",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"loginStatus\": \"Active\",\n\"roleIds\": [\n\"R01\"\n],\n\"userLoginEmail\": \"xyzabc@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/userLogin/U999",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"userLogin",
+								"U999"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User-Invalid",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404 - Invalid user ID\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"let res = pm.response.json();",
+									"",
+									"pm.test(\"Error message should indicate user not found\", function () {",
+									"    pm.expect(res.message.toLowerCase()).to.include(\"not found\");",
+									"});",
+									"",
+									"pm.test(\"Success flag should be false\", function () {",
+									"    pm.expect(res.success).to.eql(false);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/users/U999",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"U999"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer"
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"value": ""
+		},
+		{
+			"key": "userId",
+			"value": ""
+		}
+	]
+}
