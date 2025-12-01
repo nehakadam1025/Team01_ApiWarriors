@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "125cc4b5-268e-4c65-97d5-a0f529e161d0",
+		"_postman_id": "883efc25-642f-46d8-b6db-10d1ba8e72e5",
 		"name": "LMS Hackathon",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "50024072",
-		"_collection_link": "https://nehak2025-2536606.postman.co/workspace/Neha's-Workspace~bd961bac-afb6-4a46-85fb-ee5e6c14829e/collection/50024072-125cc4b5-268e-4c65-97d5-a0f529e161d0?action=share&source=collection_link&creator=50024072"
+		"_exporter_id": "50023977",
+		"_collection_link": "https://padmajak-suryawanshi-4740333.postman.co/workspace/APIHackathon2025~40dd4d3b-bb3b-44dc-ad96-b3070ee0869a/collection/50023977-883efc25-642f-46d8-b6db-10d1ba8e72e5?action=share&source=collection_link&creator=50023977"
 	},
 	"item": [
 		{
@@ -6183,7 +6183,108 @@
 									]
 								}
 							},
-							"response": []
+							"response": [
+								{
+									"name": "Create New Skill",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n   \"skillName\": \"reading\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/SaveSkillMaster",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"SaveSkillMaster"
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "",
+									"header": [
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, no-store, max-age=0, must-revalidate"
+										},
+										{
+											"key": "Content-Length",
+											"value": "0"
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 01 Dec 2025 04:49:20 GMT"
+										},
+										{
+											"key": "Expires",
+											"value": "0"
+										},
+										{
+											"key": "Nel",
+											"value": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Report-To",
+											"value": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=NBRf84PEgOtIOplT1RnRhL12ojT%2BUGYiSK8HYu11ex0%3D\\u0026sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add\\u0026ts=1764564560\"}],\"max_age\":3600}"
+										},
+										{
+											"key": "Reporting-Endpoints",
+											"value": "heroku-nel=\"https://nel.heroku.com/reports?s=NBRf84PEgOtIOplT1RnRhL12ojT%2BUGYiSK8HYu11ex0%3D&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&ts=1764564560\""
+										},
+										{
+											"key": "Server",
+											"value": "Heroku"
+										},
+										{
+											"key": "Strict-Transport-Security",
+											"value": "max-age=31536000 ; includeSubDomains"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Vary",
+											"value": "Access-Control-Request-Method"
+										},
+										{
+											"key": "Vary",
+											"value": "Access-Control-Request-Headers"
+										},
+										{
+											"key": "Via",
+											"value": "1.1 heroku-router"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "X-Xss-Protection",
+											"value": "0"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
 						},
 						{
 							"name": "Update Skill by skill id",
@@ -6258,7 +6359,125 @@
 									]
 								}
 							},
-							"response": []
+							"response": [
+								{
+									"name": "Update Skill by skill id",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{authToken}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n \r\n  \"skillName\": \"writing\"\r\n  \r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/updateSkills/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"updateSkills",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "{{skillId}}"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "",
+									"header": [
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, no-store, max-age=0, must-revalidate"
+										},
+										{
+											"key": "Content-Length",
+											"value": "16"
+										},
+										{
+											"key": "Content-Type",
+											"value": "text/plain;charset=UTF-8"
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 01 Dec 2025 04:49:31 GMT"
+										},
+										{
+											"key": "Expires",
+											"value": "0"
+										},
+										{
+											"key": "Nel",
+											"value": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Report-To",
+											"value": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=tscvqwAg2zBs6uTEkKaZ5bE%2BMyKXbkcgxCSmQiXLrsU%3D\\u0026sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add\\u0026ts=1764564571\"}],\"max_age\":3600}"
+										},
+										{
+											"key": "Reporting-Endpoints",
+											"value": "heroku-nel=\"https://nel.heroku.com/reports?s=tscvqwAg2zBs6uTEkKaZ5bE%2BMyKXbkcgxCSmQiXLrsU%3D&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&ts=1764564571\""
+										},
+										{
+											"key": "Server",
+											"value": "Heroku"
+										},
+										{
+											"key": "Strict-Transport-Security",
+											"value": "max-age=31536000 ; includeSubDomains"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Vary",
+											"value": "Access-Control-Request-Method"
+										},
+										{
+											"key": "Vary",
+											"value": "Access-Control-Request-Headers"
+										},
+										{
+											"key": "Via",
+											"value": "1.1 heroku-router"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "X-Xss-Protection",
+											"value": "0"
+										}
+									],
+									"cookie": [],
+									"body": "Invalid endpoint"
+								}
+							]
 						},
 						{
 							"name": "Get All Skill Master",
@@ -6340,7 +6559,113 @@
 									]
 								}
 							},
-							"response": []
+							"response": [
+								{
+									"name": "Get All Skill Master",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{authToken}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{baseUrl}}/allSkillMaster",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"allSkillMaster"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "",
+									"header": [
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, no-store, max-age=0, must-revalidate"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 01 Dec 2025 04:49:44 GMT"
+										},
+										{
+											"key": "Expires",
+											"value": "0"
+										},
+										{
+											"key": "Nel",
+											"value": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Report-To",
+											"value": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=SUSc%2BOYdN8anDNTC29Zbyj1fIjnvzlvWQqe3MIj2A8g%3D\\u0026sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add\\u0026ts=1764564584\"}],\"max_age\":3600}"
+										},
+										{
+											"key": "Reporting-Endpoints",
+											"value": "heroku-nel=\"https://nel.heroku.com/reports?s=SUSc%2BOYdN8anDNTC29Zbyj1fIjnvzlvWQqe3MIj2A8g%3D&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&ts=1764564584\""
+										},
+										{
+											"key": "Server",
+											"value": "Heroku"
+										},
+										{
+											"key": "Strict-Transport-Security",
+											"value": "max-age=31536000 ; includeSubDomains"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Vary",
+											"value": "Access-Control-Request-Method"
+										},
+										{
+											"key": "Vary",
+											"value": "Access-Control-Request-Headers"
+										},
+										{
+											"key": "Via",
+											"value": "1.1 heroku-router"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "X-Xss-Protection",
+											"value": "0"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										}
+									],
+									"cookie": [],
+									"body": "[\n    {\n        \"skillId\": 892,\n        \"skillName\": \"AgroCD\",\n        \"creationTime\": \"2025-11-27T06:31:04.579+00:00\",\n        \"lastModTime\": \"2025-11-27T06:31:04.579+00:00\"\n    },\n    {\n        \"skillId\": 895,\n        \"skillName\": \"        \",\n        \"creationTime\": \"2025-11-27T06:31:04.579+00:00\",\n        \"lastModTime\": \"2025-11-27T06:31:04.579+00:00\"\n    },\n    {\n        \"skillId\": 896,\n        \"skillName\": \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWWWWWWWWWWWWWWWWWWWWWWWWSWWWWWWWWWWWWWWWWWWWWWWWWWWWEEeeeeeeeeeeewwwwwwwwwwwwwwwwwwwwwwwwwerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr\",\n        \"creationTime\": \"2025-11-27T06:31:04.579+00:00\",\n        \"lastModTime\": \"2025-11-27T06:31:04.579+00:00\"\n    },\n    {\n        \"skillId\": 897,\n        \"skillName\": \"     Docker123           \",\n        \"creationTime\": \"2025-11-27T06:31:04.579+00:00\",\n        \"lastModTime\": \"2025-11-27T06:31:04.579+00:00\"\n    },\n    {\n        \"skillId\": 898,\n        \"skillName\": \"' OR '1'='1\",\n        \"creationTime\": \"2025-11-27T06:31:04.579+00:00\",\n        \"lastModTime\": \"2025-11-27T06:31:04.579+00:00\"\n    },\n    {\n        \"skillId\": 899,\n        \"skillName\": \"<script>console.log('SafeTest')</script>\",\n        \"creationTime\": \"2025-11-27T06:31:04.579+00:00\",\n        \"lastModTime\": \"2025-11-27T06:31:04.579+00:00\"\n    },\n    {\n        \"skillId\": 657,\n        \"skillName\": \"Java Basics1234\",\n        \"creationTime\": \"2025-11-29T20:14:04.953+00:00\",\n        \"lastModTime\": \"2025-11-29T20:14:04.953+00:00\"\n    },\n    {\n        \"skillId\": 175,\n        \"skillName\": \"Advanced Java\",\n        \"creationTime\": \"2025-11-24T22:34:35.429+00:00\",\n        \"lastModTime\": \"2025-11-24T22:34:35.429+00:00\"\n    },\n    {\n        \"skillId\": 902,\n        \"skillName\": \"!@#$%^&*\",\n        \"creationTime\": \"2025-11-20T19:39:39.762+00:00\",\n        \"lastModTime\": \"2025-11-20T19:39:39.762+00:00\"\n    },\n    {\n        \"skillId\": 1,\n        \"skillName\": \"Advanced Java\",\n        \"creationTime\": \"2025-11-25T01:18:38.503+00:00\",\n        \"lastModTime\": \"2025-11-25T01:18:38.503+00:00\"\n    },\n    {\n        \"skillId\": 235,\n        \"skillName\": \"MachineLearning\",\n        \"creationTime\": \"2021-10-04T18:14:01.957+00:00\",\n        \"lastModTime\": \"2021-10-04T18:14:01.957+00:00\"\n    },\n    {\n        \"skillId\": 237,\n        \"skillName\": \"Machine Learning\",\n        \"creationTime\": \"2021-10-04T18:14:01.957+00:00\",\n        \"lastModTime\": \"2021-10-04T18:14:01.957+00:00\"\n    },\n    {\n        \"skillId\": 264,\n        \"skillName\": \"Advanced Java5\",\n        \"creationTime\": \"2025-11-25T21:17:48.639+00:00\",\n        \"lastModTime\": \"2025-11-25T21:17:48.639+00:00\"\n    },\n    {\n        \"skillId\": 266,\n        \"skillName\": \"Machine Learning1\",\n        \"creationTime\": \"2021-10-04T18:14:01.957+00:00\",\n        \"lastModTime\": \"2021-10-04T18:14:01.957+00:00\"\n    },\n    {\n        \"skillId\": 267,\n        \"skillName\": \"Machine Learning81\",\n        \"creationTime\": \"2021-10-04T18:14:01.957+00:00\",\n        \"lastModTime\": \"2021-10-04T18:14:01.957+00:00\"\n    },\n    {\n        \"skillId\": 294,\n        \"skillName\": \"gola\",\n        \"creationTime\": \"2025-11-26T16:56:41.784+00:00\",\n        \"lastModTime\": \"2025-11-26T16:56:41.784+00:00\"\n    },\n    {\n        \"skillId\": 299,\n        \"skillName\": \"golajava\",\n        \"creationTime\": \"2025-11-26T17:08:51.708+00:00\",\n        \"lastModTime\": \"2025-11-26T17:08:51.708+00:00\"\n    },\n    {\n        \"skillId\": 300,\n        \"skillName\": \"golaccc\",\n        \"creationTime\": \"2025-11-26T17:08:51.708+00:00\",\n        \"lastModTime\": \"2025-11-26T17:08:51.708+00:00\"\n    },\n    {\n        \"skillId\": 302,\n        \"skillName\": \"golajava333\",\n        \"creationTime\": \"2025-11-26T17:08:51.708+00:00\",\n        \"lastModTime\": \"2025-11-26T17:08:51.708+00:00\"\n    },\n    {\n        \"skillId\": 658,\n        \"skillName\": \"Microsoft\",\n        \"creationTime\": \"2025-11-29T20:14:05.186+00:00\",\n        \"lastModTime\": \"2025-11-29T20:14:05.186+00:00\"\n    },\n    {\n        \"skillId\": 903,\n        \"skillName\": \"Telugu!@#$%^&*\",\n        \"creationTime\": \"2025-11-20T19:39:39.762+00:00\",\n        \"lastModTime\": \"2025-11-20T19:39:39.762+00:00\"\n    },\n    {\n        \"skillId\": 904,\n        \"skillName\": \"Telugu+++++++++------\",\n        \"creationTime\": \"2025-11-20T19:39:39.762+00:00\",\n        \"lastModTime\": \"2025-11-20T19:39:39.762+00:00\"\n    },\n    {\n        \"skillId\": 660,\n        \"skillName\": \"Microsoft1234\",\n        \"creationTime\": \"2025-11-29T20:19:17.219+00:00\",\n        \"lastModTime\": \"2025-11-29T20:19:17.219+00:00\"\n    },\n    {\n        \"skillId\": 661,\n        \"skillName\": \"Java Basics12344566\",\n        \"creationTime\": \"2025-11-29T20:21:48.144+00:00\",\n        \"lastModTime\": \"2025-11-29T20:21:48.144+00:00\"\n    },\n    {\n        \"skillId\": 432,\n        \"skillName\": \"French\",\n        \"creationTime\": \"2025-11-27T20:47:31.341+00:00\",\n        \"lastModTime\": \"2025-11-27T20:47:31.341+00:00\"\n    },\n    {\n        \"skillId\": 619,\n        \"skillName\": \"xjq9K7Z57u\",\n        \"creationTime\": \"2025-11-28T23:41:36.411+00:00\",\n        \"lastModTime\": \"2025-11-28T23:41:36.411+00:00\"\n    },\n    {\n        \"skillId\": 914,\n        \"skillName\": \"SCDWTversion\",\n        \"creationTime\": \"2025-11-20T19:39:39.762+00:00\",\n        \"lastModTime\": \"2025-11-20T19:39:39.762+00:00\"\n    },\n    {\n        \"skillId\": 620,\n        \"skillName\": \"My2puMRyeb\",\n        \"creationTime\": \"2025-11-28T22:26:58.778+00:00\",\n        \"lastModTime\": \"2025-11-28T22:26:58.778+00:00\"\n    },\n    {\n        \"skillId\": 621,\n        \"skillName\": \"p6HwPpvUlh\",\n        \"creationTime\": \"2025-11-28T22:26:58.778+00:00\",\n        \"lastModTime\": \"2025-11-28T22:26:58.778+00:00\"\n    },\n    {\n        \"skillId\": 627,\n        \"skillName\": \"7kzIcSoYzq\",\n        \"creationTime\": \"2025-11-28T22:26:58.778+00:00\",\n        \"lastModTime\": \"2025-11-28T22:26:58.778+00:00\"\n    },\n    {\n        \"skillId\": 628,\n        \"skillName\": \"70jp6FdjLY\",\n        \"creationTime\": \"2025-11-28T22:26:58.778+00:00\",\n        \"lastModTime\": \"2025-11-28T22:26:58.778+00:00\"\n    },\n    {\n        \"skillId\": 630,\n        \"skillName\": \"tYVG5QVCTe\",\n        \"creationTime\": \"2025-11-28T22:26:58.778+00:00\",\n        \"lastModTime\": \"2025-11-28T22:26:58.778+00:00\"\n    },\n    {\n        \"skillId\": 455,\n        \"skillName\": \"Mic@rosoft\",\n        \"creationTime\": \"2025-11-20T19:39:39.762+00:00\",\n        \"lastModTime\": \"2025-11-20T19:39:39.762+00:00\"\n    },\n    {\n        \"skillId\": 456,\n        \"skillName\": \"Mic@r@@osoft\",\n        \"creationTime\": \"2025-11-20T19:39:39.762+00:00\",\n        \"lastModTime\": \"2025-11-20T19:39:39.762+00:00\"\n    },\n    {\n        \"skillId\": 457,\n        \"skillName\": \"Mic@r@@osoft admin\",\n        \"creationTime\": \"2025-11-20T19:39:39.762+00:00\",\n        \"lastModTime\": \"2025-11-20T19:39:39.762+00:00\"\n    },\n    {\n        \"skillId\": 458,\n        \"skillName\": \"Java\",\n        \"creationTime\": \"2025-11-20T19:39:39.762+00:00\",\n        \"lastModTime\": \"2025-11-20T19:39:39.762+00:00\"\n    },\n    {\n        \"skillId\": 757,\n        \"skillName\": \"564757\",\n        \"creationTime\": \"2025-11-27T06:31:04.579+00:00\",\n        \"lastModTime\": \"2025-11-27T06:31:04.579+00:00\"\n    },\n    {\n        \"skillId\": 926,\n        \"skillName\": \"B1EMNxE90r\",\n        \"creationTime\": \"2025-11-28T22:26:58.778+00:00\",\n        \"lastModTime\": \"2025-11-28T22:26:58.778+00:00\"\n    },\n    {\n        \"skillId\": 711,\n        \"skillName\": \"pam\",\n        \"creationTime\": \"2025-11-30T06:08:48.521+00:00\",\n        \"lastModTime\": \"2025-11-30T06:08:48.521+00:00\"\n    },\n    {\n        \"skillId\": 637,\n        \"skillName\": \"check\",\n        \"creationTime\": \"2025-11-28T23:41:36.411+00:00\",\n        \"lastModTime\": \"2025-11-28T23:41:36.411+00:00\"\n    },\n    {\n        \"skillId\": 727,\n        \"skillName\": \"French1\",\n        \"creationTime\": \"2025-11-30T03:04:29.837+00:00\",\n        \"lastModTime\": \"2025-11-30T03:04:29.837+00:00\"\n    },\n    {\n        \"skillId\": 728,\n        \"skillName\": \"French11\",\n        \"creationTime\": \"2025-11-30T03:05:53.777+00:00\",\n        \"lastModTime\": \"2025-11-30T03:05:53.777+00:00\"\n    },\n    {\n        \"skillId\": 730,\n        \"skillName\": \"pam1\",\n        \"creationTime\": \"2025-11-30T06:08:48.521+00:00\",\n        \"lastModTime\": \"2025-11-30T06:08:48.521+00:00\"\n    },\n    {\n        \"skillId\": 729,\n        \"skillName\": \"French111\",\n        \"creationTime\": \"2025-11-12T03:05:53.777+00:00\",\n        \"lastModTime\": \"2025-11-30T03:05:53.777+00:00\"\n    },\n    {\n        \"skillId\": 640,\n        \"skillName\": \"iHqx09X5Xu\",\n        \"creationTime\": \"2025-11-28T22:26:58.778+00:00\",\n        \"lastModTime\": \"2025-11-28T22:26:58.778+00:00\"\n    },\n    {\n        \"skillId\": 712,\n        \"skillName\": \"Spanish1\",\n        \"creationTime\": \"2025-11-24T22:42:18.160+00:00\",\n        \"lastModTime\": \"2025-11-24T22:42:18.160+00:00\"\n    },\n    {\n        \"skillId\": 642,\n        \"skillName\": \"ut8fSCAZxC\",\n        \"creationTime\": \"2025-11-28T22:26:58.778+00:00\",\n        \"lastModTime\": \"2025-11-28T22:26:58.778+00:00\"\n    },\n    {\n        \"skillId\": 731,\n        \"skillName\": \"French11111\",\n        \"creationTime\": \"2025-11-12T03:05:53.777+00:00\",\n        \"lastModTime\": \"2025-11-11T03:05:53.777+00:00\"\n    },\n    {\n        \"skillId\": 732,\n        \"skillName\": \"Korean123\",\n        \"creationTime\": \"2025-11-30T03:58:49.621+00:00\",\n        \"lastModTime\": \"2025-11-30T03:58:49.621+00:00\"\n    },\n    {\n        \"skillId\": 643,\n        \"skillName\": \"bfk4eedFSy\",\n        \"creationTime\": \"2025-11-28T22:26:58.778+00:00\",\n        \"lastModTime\": \"2025-11-28T22:26:58.778+00:00\"\n    },\n    {\n        \"skillId\": 524,\n        \"skillName\": \"Advanced Java6\",\n        \"creationTime\": \"2025-11-28T05:19:50.879+00:00\",\n        \"lastModTime\": \"2025-11-28T05:19:50.879+00:00\"\n    },\n    {\n        \"skillId\": 662,\n        \"skillName\": \"Microsoft12345\",\n        \"creationTime\": \"2025-11-29T20:21:48.375+00:00\",\n        \"lastModTime\": \"2025-11-29T20:21:48.375+00:00\"\n    },\n    {\n        \"skillId\": 525,\n        \"skillName\": \"Advanced Java63\",\n        \"creationTime\": \"2025-11-28T06:24:53.634+00:00\",\n        \"lastModTime\": \"2025-11-28T06:24:53.634+00:00\"\n    },\n    {\n        \"skillId\": 526,\n        \"skillName\": \"Advanced Java631\",\n        \"creationTime\": \"2025-11-28T14:14:58.393+00:00\",\n        \"lastModTime\": \"2025-11-28T14:14:58.393+00:00\"\n    },\n    {\n        \"skillId\": 527,\n        \"skillName\": \"Advanced Java6311\",\n        \"creationTime\": \"2025-11-28T14:16:56.587+00:00\",\n        \"lastModTime\": \"2025-11-28T14:16:56.587+00:00\"\n    },\n    {\n        \"skillId\": 528,\n        \"skillName\": \"Advanced Java63111\",\n        \"creationTime\": \"2025-11-28T14:18:06.984+00:00\",\n        \"lastModTime\": \"2025-11-28T14:18:06.984+00:00\"\n    },\n    {\n        \"skillId\": 529,\n        \"skillName\": \"Advanced Java631111\",\n        \"creationTime\": \"2025-11-28T14:24:34.828+00:00\",\n        \"lastModTime\": \"2025-11-28T14:24:34.828+00:00\"\n    },\n    {\n        \"skillId\": 734,\n        \"skillName\": \"Korean13\",\n        \"creationTime\": \"2025-11-30T03:58:50.209+00:00\",\n        \"lastModTime\": \"2025-11-30T03:58:50.209+00:00\"\n    },\n    {\n        \"skillId\": 531,\n        \"skillName\": \"ooo\",\n        \"creationTime\": \"2025-11-28T14:39:23.030+00:00\",\n        \"lastModTime\": \"2025-11-28T14:39:23.030+00:00\"\n    },\n    {\n        \"skillId\": 33,\n        \"skillName\": \"string\",\n        \"creationTime\": \"2025-11-28T19:39:39.762+00:00\",\n        \"lastModTime\": \"2025-11-28T19:39:39.762+00:00\"\n    },\n    {\n        \"skillId\": 552,\n        \"skillName\": \"math\",\n        \"creationTime\": \"2025-11-28T20:28:21.394+00:00\",\n        \"lastModTime\": \"2025-11-28T20:28:21.394+00:00\"\n    },\n    {\n        \"skillId\": 553,\n        \"skillName\": \"Java Basics\",\n        \"creationTime\": \"2025-11-28T20:28:22.164+00:00\",\n        \"lastModTime\": \"2025-11-28T20:28:22.164+00:00\"\n    },\n    {\n        \"skillId\": 554,\n        \"skillName\": \"Advanced Python\",\n        \"creationTime\": \"2025-11-28T20:28:22.277+00:00\",\n        \"lastModTime\": \"2025-11-28T20:28:22.277+00:00\"\n    },\n    {\n        \"skillId\": 555,\n        \"skillName\": \"Database SQL\",\n        \"creationTime\": \"2025-11-28T20:28:22.397+00:00\",\n        \"lastModTime\": \"2025-11-28T20:28:22.397+00:00\"\n    },\n    {\n        \"skillId\": 556,\n        \"skillName\": \"Selenium Automation,\",\n        \"creationTime\": \"2025-11-28T20:28:22.450+00:00\",\n        \"lastModTime\": \"2025-11-28T20:28:22.450+00:00\"\n    },\n    {\n        \"skillId\": 558,\n        \"skillName\": \"DevOps Tools\",\n        \"creationTime\": \"2025-11-28T20:28:22.689+00:00\",\n        \"lastModTime\": \"2025-11-28T20:28:22.689+00:00\"\n    },\n    {\n        \"skillId\": 559,\n        \"skillName\": \"Cloud Computing\",\n        \"creationTime\": \"2025-11-28T20:28:22.746+00:00\",\n        \"lastModTime\": \"2025-11-28T20:28:22.746+00:00\"\n    },\n    {\n        \"skillId\": 560,\n        \"skillName\": \"Cyber Security\",\n        \"creationTime\": \"2025-11-28T20:28:22.810+00:00\",\n        \"lastModTime\": \"2025-11-28T20:28:22.810+00:00\"\n    },\n    {\n        \"skillId\": 561,\n        \"skillName\": \"React Frontend\",\n        \"creationTime\": \"2025-11-28T20:28:22.981+00:00\",\n        \"lastModTime\": \"2025-11-28T20:28:22.981+00:00\"\n    },\n    {\n        \"skillId\": 693,\n        \"skillName\": \"SCDFnewversion\",\n        \"creationTime\": \"2025-11-20T19:39:39.762+00:00\",\n        \"lastModTime\": \"2025-11-20T19:39:39.762+00:00\"\n    },\n    {\n        \"skillId\": 694,\n        \"skillName\": \"SCDnewversion\",\n        \"creationTime\": \"2025-11-20T19:39:39.762+00:00\",\n        \"lastModTime\": \"2025-11-20T19:39:39.762+00:00\"\n    },\n    {\n        \"skillId\": 567,\n        \"skillName\": \"{{skillName}}\",\n        \"creationTime\": \"2025-11-28T21:03:18.790+00:00\",\n        \"lastModTime\": \"2025-11-28T21:03:18.790+00:00\"\n    },\n    {\n        \"skillId\": 568,\n        \"skillName\": \"SCDversion\",\n        \"creationTime\": \"2025-11-20T19:39:39.762+00:00\",\n        \"lastModTime\": \"2025-11-20T19:39:39.762+00:00\"\n    },\n    {\n        \"skillId\": 569,\n        \"skillName\": \"Selenium\",\n        \"creationTime\": \"2025-11-28T22:26:58.778+00:00\",\n        \"lastModTime\": \"2025-11-28T22:26:58.778+00:00\"\n    },\n    {\n        \"skillId\": 570,\n        \"skillName\": \"skill1\",\n        \"creationTime\": \"2025-11-28T22:26:58.778+00:00\",\n        \"lastModTime\": \"2025-11-28T22:26:58.778+00:00\"\n    },\n    {\n        \"skillId\": 571,\n        \"skillName\": \"santhana\",\n        \"creationTime\": \"2025-11-28T23:37:26.145+00:00\",\n        \"lastModTime\": \"2025-11-28T23:37:26.145+00:00\"\n    },\n    {\n        \"skillId\": 611,\n        \"skillName\": \"{{randomString}}\",\n        \"creationTime\": \"2025-11-28T23:41:36.411+00:00\",\n        \"lastModTime\": \"2025-11-28T23:41:36.411+00:00\"\n    },\n    {\n        \"skillId\": 613,\n        \"skillName\": \"{{$randomString}}\",\n        \"creationTime\": \"2025-11-28T23:41:36.411+00:00\",\n        \"lastModTime\": \"2025-11-28T23:41:36.411+00:00\"\n    },\n    {\n        \"skillId\": 615,\n        \"skillName\": \"Gk8pXq6MwuPY\",\n        \"creationTime\": \"2025-11-28T23:41:36.411+00:00\",\n        \"lastModTime\": \"2025-11-28T23:41:36.411+00:00\"\n    },\n    {\n        \"skillId\": 616,\n        \"skillName\": \"XgrcNoKtgB\",\n        \"creationTime\": \"2025-11-28T22:26:58.778+00:00\",\n        \"lastModTime\": \"2025-11-28T22:26:58.778+00:00\"\n    },\n    {\n        \"skillId\": 617,\n        \"skillName\": \"VcuHC4ogQ5\",\n        \"creationTime\": \"2025-11-28T22:26:58.778+00:00\",\n        \"lastModTime\": \"2025-11-28T22:26:58.778+00:00\"\n    },\n    {\n        \"skillId\": 618,\n        \"skillName\": \"WTdcbvaLZm\",\n        \"creationTime\": \"2025-11-28T22:26:58.778+00:00\",\n        \"lastModTime\": \"2025-11-28T22:26:58.778+00:00\"\n    },\n    {\n        \"skillId\": 755,\n        \"skillName\": \"Microsoft12345678\",\n        \"creationTime\": \"2025-11-30T05:05:47.859+00:00\",\n        \"lastModTime\": \"2025-11-30T05:05:47.859+00:00\"\n    },\n    {\n        \"skillId\": 750,\n        \"skillName\": \"Microsoft1234567\",\n        \"creationTime\": \"2025-11-30T04:07:20.140+00:00\",\n        \"lastModTime\": \"2025-11-30T04:07:20.140+00:00\"\n    },\n    {\n        \"skillId\": 756,\n        \"skillName\": \"Korean14\",\n        \"creationTime\": \"2025-11-30T05:05:48.145+00:00\",\n        \"lastModTime\": \"2025-11-30T05:05:48.145+00:00\"\n    },\n    {\n        \"skillId\": 907,\n        \"skillName\": \"Python\",\n        \"creationTime\": \"2025-12-01T01:59:18.453+00:00\",\n        \"lastModTime\": \"2025-12-01T01:59:18.453+00:00\"\n    },\n    {\n        \"skillId\": 908,\n        \"skillName\": \"DevOps\",\n        \"creationTime\": \"2025-12-01T01:59:18.704+00:00\",\n        \"lastModTime\": \"2025-12-01T01:59:18.704+00:00\"\n    },\n    {\n        \"skillId\": 909,\n        \"skillName\": \"Advanced Java123\",\n        \"creationTime\": \"2025-12-01T01:59:19.079+00:00\",\n        \"lastModTime\": \"2025-12-01T01:59:19.079+00:00\"\n    },\n    {\n        \"skillId\": 910,\n        \"skillName\": \"Python Basics\",\n        \"creationTime\": \"2025-12-01T01:59:19.205+00:00\",\n        \"lastModTime\": \"2025-12-01T01:59:19.205+00:00\"\n    },\n    {\n        \"skillId\": 911,\n        \"skillName\": \"Selenium WebDriver\",\n        \"creationTime\": \"2025-12-01T01:59:19.338+00:00\",\n        \"lastModTime\": \"2025-12-01T01:59:19.338+00:00\"\n    },\n    {\n        \"skillId\": 917,\n        \"skillName\": \"\",\n        \"creationTime\": \"2025-12-01T03:21:39.258+00:00\",\n        \"lastModTime\": \"2025-12-01T03:21:39.258+00:00\"\n    },\n    {\n        \"skillId\": 887,\n        \"skillName\": \"PHP\",\n        \"creationTime\": \"2025-11-27T06:31:04.579+00:00\",\n        \"lastModTime\": \"2025-11-27T06:31:04.579+00:00\"\n    },\n    {\n        \"skillId\": 888,\n        \"skillName\": \"T\",\n        \"creationTime\": \"2025-11-27T06:31:04.579+00:00\",\n        \"lastModTime\": \"2025-11-27T06:31:04.579+00:00\"\n    },\n    {\n        \"skillId\": 889,\n        \"skillName\": \"C#\",\n        \"creationTime\": \"2025-11-27T06:31:04.579+00:00\",\n        \"lastModTime\": \"2025-11-27T06:31:04.579+00:00\"\n    },\n    {\n        \"skillId\": 890,\n        \"skillName\": \"HL7\",\n        \"creationTime\": \"2025-11-27T06:31:04.579+00:00\",\n        \"lastModTime\": \"2025-11-27T06:31:04.579+00:00\"\n    }\n]"
+								}
+							]
 						},
 						{
 							"name": "Get Skill by skill name",
@@ -6437,7 +6762,7 @@
 									"variable": [
 										{
 											"key": "skillMasterName",
-											"value": "Python class2"
+											"value": "Java Basics"
 										}
 									]
 								}
@@ -6506,8 +6831,8 @@
 									"listen": "test",
 									"script": {
 										"exec": [
-											"pm.test(\"Status code is not 200\", function () {\r",
-											"    pm.expect(pm.response.code).to.not.equal(200);\r",
+											"pm.test(\"Status code is 400\", function () {\r",
+											"\tpm.response.to.have.status(400);\r",
 											"});"
 										],
 										"type": "text/javascript",
@@ -6569,8 +6894,9 @@
 									"listen": "test",
 									"script": {
 										"exec": [
-											"pm.test(\"Status code is not 200\", function () {\r",
-											"    pm.expect(pm.response.code).to.not.equal(200);\r",
+											"\r",
+											"pm.test(\"Status code is 400\", function () {\r",
+											"\tpm.response.to.have.status(400);\r",
 											"});"
 										],
 										"type": "text/javascript",
@@ -6637,8 +6963,8 @@
 									"listen": "test",
 									"script": {
 										"exec": [
-											"pm.test(\"Status code is not 200\", function () {\r",
-											"    pm.expect(pm.response.code).to.not.equal(200);\r",
+											"pm.test(\"Status code is 400\", function () {\r",
+											"\tpm.response.to.have.status(400);\r",
 											"});"
 										],
 										"type": "text/javascript",
@@ -6685,7 +7011,119 @@
 									]
 								}
 							},
-							"response": []
+							"response": [
+								{
+									"name": "Create New Skill - Duplicate Skill Name",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{authToken}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n \r\n  \"skillName\": \"reading\"\r\n  \r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/SaveSkillMaster",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"SaveSkillMaster"
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "",
+									"header": [
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, no-store, max-age=0, must-revalidate"
+										},
+										{
+											"key": "Content-Length",
+											"value": "0"
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 01 Dec 2025 04:47:50 GMT"
+										},
+										{
+											"key": "Expires",
+											"value": "0"
+										},
+										{
+											"key": "Nel",
+											"value": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Report-To",
+											"value": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=x3SPs1AIKsAg9UKRWh9Lplj5F6aS1kKrfv4qajymTNk%3D\\u0026sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add\\u0026ts=1764564470\"}],\"max_age\":3600}"
+										},
+										{
+											"key": "Reporting-Endpoints",
+											"value": "heroku-nel=\"https://nel.heroku.com/reports?s=x3SPs1AIKsAg9UKRWh9Lplj5F6aS1kKrfv4qajymTNk%3D&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&ts=1764564470\""
+										},
+										{
+											"key": "Server",
+											"value": "Heroku"
+										},
+										{
+											"key": "Strict-Transport-Security",
+											"value": "max-age=31536000 ; includeSubDomains"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Vary",
+											"value": "Access-Control-Request-Method"
+										},
+										{
+											"key": "Vary",
+											"value": "Access-Control-Request-Headers"
+										},
+										{
+											"key": "Via",
+											"value": "1.1 heroku-router"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "X-Xss-Protection",
+											"value": "0"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
 						},
 						{
 							"name": "Update Skill by skill id - Non existent Id",
