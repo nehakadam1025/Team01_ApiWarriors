@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "883efc25-642f-46d8-b6db-10d1ba8e72e5",
+		"_postman_id": "ab004f9f-3e11-4616-9f8f-43a482c17c72",
 		"name": "LMS Hackathon",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "50023977",
-		"_collection_link": "https://padmajak-suryawanshi-4740333.postman.co/workspace/APIHackathon2025~40dd4d3b-bb3b-44dc-ad96-b3070ee0869a/collection/50023977-883efc25-642f-46d8-b6db-10d1ba8e72e5?action=share&source=collection_link&creator=50023977"
+		"_exporter_id": "49904469",
+		"_collection_link": "https://dishagupta1411-536017.postman.co/workspace/Disha_WS~b9d4ec54-c0e1-4413-8613-4d7fb2a0ba52/collection/49904469-ab004f9f-3e11-4616-9f8f-43a482c17c72?action=share&source=collection_link&creator=49904469"
 	},
 	"item": [
 		{
@@ -1219,6 +1219,388 @@
 			"name": "Program Batch Module",
 			"item": [
 				{
+					"name": "Positive Tests",
+					"item": [
+						{
+							"name": "Get All Batches",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"const response = pm.response.json();\r",
+											"\r",
+											"// Test for response body structure\r",
+											"pm.test(\"Response is an array\", function () {\r",
+											"    pm.expect(response).to.be.an('array');\r",
+											"});\r",
+											"\r",
+											"// Loop through each batch and check properties\r",
+											"response.forEach(batch => {\r",
+											"    pm.test(`Batch ID ${batch.batchId} has required fields`, function () {\r",
+											"        pm.expect(batch).to.have.all.keys('batchId', 'batchName', 'batchDescription', 'batchStatus', 'batchNoOfClasses', 'programId', 'programName');\r",
+											"    });\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/batches",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"batches"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Batch by BatchID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response contains required batch fields\", function () {\r",
+											"    const jsonData = pm.response.json();\r",
+											"\r",
+											"    pm.expect(jsonData).to.have.property(\"batchId\");\r",
+											"    pm.expect(jsonData).to.have.property(\"batchName\");\r",
+											"    pm.expect(jsonData).to.have.property(\"batchDescription\");\r",
+											"    pm.expect(jsonData).to.have.property(\"batchNoOfClasses\");\r",
+											"    pm.expect(jsonData).to.have.property(\"batchStatus\");\r",
+											"    pm.expect(jsonData).to.have.property(\"programId\");\r",
+											"    pm.expect(jsonData).to.have.property(\"programName\");\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/batches/batchId/24",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"batches",
+										"batchId",
+										"24"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Batch by Batch Name",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response contains required batch fields\", function () {\r",
+											"    const jsonData = pm.response.json();\r",
+											"\r",
+											"    pm.expect(jsonData).to.have.property(\"batchId\");\r",
+											"    pm.expect(jsonData).to.have.property(\"batchName\");\r",
+											"    pm.expect(jsonData).to.have.property(\"batchDescription\");\r",
+											"    pm.expect(jsonData).to.have.property(\"batchNoOfClasses\");\r",
+											"    pm.expect(jsonData).to.have.property(\"batchStatus\");\r",
+											"    pm.expect(jsonData).to.have.property(\"programId\");\r",
+											"    pm.expect(jsonData).to.have.property(\"programName\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/batches/batchName/SDET226",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"batches",
+										"batchName",
+										"SDET226"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Batch by Program ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response contains required batch fields\", function () {\r",
+											"    const jsonData = pm.response.json();\r",
+											"\r",
+											"    pm.expect(jsonData).to.have.property(\"batchId\");\r",
+											"    pm.expect(jsonData).to.have.property(\"batchName\");\r",
+											"    pm.expect(jsonData).to.have.property(\"batchDescription\");\r",
+											"    pm.expect(jsonData).to.have.property(\"batchNoOfClasses\");\r",
+											"    pm.expect(jsonData).to.have.property(\"batchStatus\");\r",
+											"    pm.expect(jsonData).to.have.property(\"programId\");\r",
+											"    pm.expect(jsonData).to.have.property(\"programName\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/batches/program/13",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"batches",
+										"program",
+										"13"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create New Batch",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const response = pm.response.json();\r",
+											"\r",
+											"// Assert status code\r",
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.expect(pm.response.code).to.equal(201);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Response contains created batch fields\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"\r",
+											"    pm.expect(jsonData).to.have.property('batchId');\r",
+											"    pm.expect(jsonData).to.have.property('batchName');\r",
+											"    pm.expect(jsonData).to.have.property('batchDescription');\r",
+											"    pm.expect(jsonData).to.have.property('batchNoOfClasses');\r",
+											"    pm.expect(jsonData).to.have.property('batchStatus');\r",
+											"    pm.expect(jsonData).to.have.property('programId');\r",
+											"    pm.expect(jsonData).to.have.property('programName');\r",
+											"});\r",
+											"\r",
+											"\r",
+											"// Validate response headers\r",
+											"pm.test(\"Content-Type is application/json\", function () {\r",
+											"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.equal(\"application/json\");\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"batchDescription\": \"Automation batch\",\r\n  \"batchName\": \"SDET227\",\r\n  \"batchNoOfClasses\": 25,\r\n  \"batchStatus\": \"Active\",\r\n  \"programId\": 3\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/batches",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"batches"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update by Batch ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response contains required batch fields\", function () {\r",
+											"    const jsonData = pm.response.json();\r",
+											"\r",
+											"    pm.expect(jsonData).to.have.property(\"batchId\");\r",
+											"    pm.expect(jsonData).to.have.property(\"batchName\");\r",
+											"    pm.expect(jsonData).to.have.property(\"batchDescription\");\r",
+											"    pm.expect(jsonData).to.have.property(\"batchNoOfClasses\");\r",
+											"    pm.expect(jsonData).to.have.property(\"batchStatus\");\r",
+											"    pm.expect(jsonData).to.have.property(\"programId\");\r",
+											"    pm.expect(jsonData).to.have.property(\"programName\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\"batchDescription\": \"SDET TOPPERS\",   \r\n\"batchName\": \"B2CBatch\",\r\n\"batchNoOfClasses\": 59,\r\n\"batchStatus\": \"INACTIVE\",\r\n\"programId\": 3,\r\n\"programName\": \"Testing1\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/batches/38",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"batches",
+										"38"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete by Batch ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Deletion success message is correct\", function () {\r",
+											"    let jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData).to.have.property('message');\r",
+											"    pm.expect(jsonData.message).to.include(\"deleted Successfully\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/batches/65",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"batches",
+										"65"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
 					"name": "Negative Tests",
 					"item": [
 						{
@@ -1926,519 +2308,6 @@
 							"response": []
 						}
 					]
-				},
-				{
-					"name": "Positive Tests",
-					"item": [
-						{
-							"name": "Get All Batches",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 200\", function () {\r",
-											"    pm.response.to.have.status(200);\r",
-											"});\r",
-											"const response = pm.response.json();\r",
-											"\r",
-											"// Test for response body structure\r",
-											"pm.test(\"Response is an array\", function () {\r",
-											"    pm.expect(response).to.be.an('array');\r",
-											"});\r",
-											"\r",
-											"// Loop through each batch and check properties\r",
-											"response.forEach(batch => {\r",
-											"    pm.test(`Batch ID ${batch.batchId} has required fields`, function () {\r",
-											"        pm.expect(batch).to.have.all.keys('batchId', 'batchName', 'batchDescription', 'batchStatus', 'batchNoOfClasses', 'programId', 'programName');\r",
-											"    });\r",
-											"});\r",
-											"\r",
-											"const jsonData = pm.response.json();\r",
-											"const batches = jsonData || [];\r",
-											"\r",
-											"// Helper function to generate random letters\r",
-											"function randomLetters(len) {\r",
-											"    const letters = \"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz\";\r",
-											"    let s = \"\";\r",
-											"    for (let i = 0; i < len; i++) {\r",
-											"        s += letters.charAt(Math.floor(Math.random() * letters.length));\r",
-											"    }\r",
-											"    return s;\r",
-											"}\r",
-											"\r",
-											"// Helper function to generate random numbers (1-99)\r",
-											"function randomBatchNumber() {\r",
-											"    return Math.floor(Math.random() * 99) + 1;\r",
-											"}\r",
-											"\r",
-											"if (batches && batches.length > 0) {\r",
-											"    // Filter active batches\r",
-											"    const activeBatches = batches.filter(batch => \r",
-											"        batch.batchStatus && batch.batchStatus.toLowerCase() === 'active'\r",
-											"    );\r",
-											"\r",
-											"    if (activeBatches && activeBatches.length > 0) {\r",
-											"        // Sort by batchId\r",
-											"        const sorted = activeBatches.sort((a, b) => a.batchId - b.batchId);\r",
-											"        \r",
-											"        const timestamp = Date.now();\r",
-											"        \r",
-											"        // For GET operations - use first batch\r",
-											"        pm.environment.set(\"getBatchId\", sorted[0].batchId);\r",
-											"        pm.environment.set(\"getBatchName\", sorted[0].batchName);\r",
-											"        \r",
-											"        // For GET by Program ID\r",
-											"        if (sorted[0].programId) {\r",
-											"            pm.environment.set(\"getProgramIdForBatch\", sorted[0].programId);\r",
-											"        }\r",
-											"        \r",
-											"        // Store program name for creating batch names\r",
-											"        if (sorted[0].programName) {\r",
-											"            pm.environment.set(\"programNameForBatch\", sorted[0].programName);\r",
-											"            const batchSeq = randomBatchNumber();\r",
-											"            pm.environment.set(\"newBatchName\", `${sorted[0].programName}${batchSeq}`);\r",
-											"        }\r",
-											"        \r",
-											"        // For CREATE - generate unique batch data\r",
-											"        pm.environment.set(\"newBatchDescription\", `Batch-${randomLetters(4)}`);\r",
-											"        pm.environment.set(\"newBatchNoOfClasses\", Math.floor(Math.random() * 50) + 10); // 10-59 classes\r",
-											"        pm.environment.set(\"newBatchStatus\", \"Active\");\r",
-											"        pm.environment.set(\"newProgramId\", sorted[0].programId);\r",
-											"        \r",
-											"        // For UPDATE operations - use second batch\r",
-											"        if (sorted.length > 1) {\r",
-											"            pm.environment.set(\"updateByBatchId\", sorted[1].batchId);\r",
-											"            pm.environment.set(\"updateByBatchName\", sorted[1].batchName);\r",
-											"            pm.environment.set(\"updatedBatchDescription\", `Updated-${timestamp}`);\r",
-											"            pm.environment.set(\"updatedBatchNoOfClasses\", Math.floor(Math.random() * 50) + 10);\r",
-											"            pm.environment.set(\"updateBatchStatus\", \"Active\");\r",
-											"            pm.environment.set(\"updateProgramId\", sorted[1].programId);\r",
-											"            pm.environment.set(\"updateProgramName\", sorted[1].programName);\r",
-											"        }\r",
-											"        \r",
-											"        // For DELETE operations - use last batch\r",
-											"        if (sorted.length > 2) {\r",
-											"            pm.environment.set(\"deleteBatchId\", sorted[sorted.length - 1].batchId);\r",
-											"        }\r",
-											"        \r",
-											"        console.log(\"✅ Batch test data setup complete!\");\r",
-											"        console.log(\"Total batches:\", batches.length);\r",
-											"        console.log(\"Active batches:\", activeBatches.length);\r",
-											"        console.log(\"New batch name:\", pm.environment.get(\"newBatchName\"));\r",
-											"    } else {\r",
-											"        console.log(\"⚠️ No active batches found!\");\r",
-											"    }\r",
-											"} else {\r",
-											"    console.log(\"⚠️ No batches returned in response!\");\r",
-											"}\r",
-											"\r",
-											"// Test assertions\r",
-											"pm.test(\"Status code is 200\", function () {\r",
-											"    pm.response.to.have.status(200);\r",
-											"});\r",
-											"\r",
-											"pm.test(\"Response is an array\", function () {\r",
-											"    pm.expect(batches).to.be.an('array');\r",
-											"});\r",
-											"\r",
-											"pm.test(\"Batches contain required fields\", function () {\r",
-											"    if (batches.length > 0) {\r",
-											"        pm.expect(batches[0]).to.have.property('batchId');\r",
-											"        pm.expect(batches[0]).to.have.property('batchName');\r",
-											"        pm.expect(batches[0]).to.have.property('programId');\r",
-											"        pm.expect(batches[0]).to.have.property('batchStatus');\r",
-											"    }\r",
-											"});\r",
-											"\r",
-											""
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{authToken}}",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{baseUrl}}/batches",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"batches"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Get Batch by BatchID",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 200\", function () {\r",
-											"    pm.response.to.have.status(200);\r",
-											"});\r",
-											"\r",
-											"pm.test(\"Response contains required batch fields\", function () {\r",
-											"    const jsonData = pm.response.json();\r",
-											"\r",
-											"    pm.expect(jsonData).to.have.property(\"batchId\");\r",
-											"    pm.expect(jsonData).to.have.property(\"batchName\");\r",
-											"    pm.expect(jsonData).to.have.property(\"batchDescription\");\r",
-											"    pm.expect(jsonData).to.have.property(\"batchNoOfClasses\");\r",
-											"    pm.expect(jsonData).to.have.property(\"batchStatus\");\r",
-											"    pm.expect(jsonData).to.have.property(\"programId\");\r",
-											"    pm.expect(jsonData).to.have.property(\"programName\");\r",
-											"});\r",
-											""
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{authToken}}",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{baseUrl}}/batches/batchId/{{getBatchId}}",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"batches",
-										"batchId",
-										"{{getBatchId}}"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Get Batch by Batch Name",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 200\", function () {\r",
-											"    pm.response.to.have.status(200);\r",
-											"});\r",
-											"\r",
-											"pm.test(\"Response contains required batch fields\", function () {\r",
-											"    const jsonData = pm.response.json();\r",
-											"jsonData.forEach(batch => {\r",
-											"    pm.expect(batch).to.have.property(\"batchId\");\r",
-											"    pm.expect(batch).to.have.property(\"batchName\");\r",
-											"    pm.expect(batch).to.have.property(\"batchDescription\");\r",
-											"    pm.expect(batch).to.have.property(\"batchNoOfClasses\");\r",
-											"    pm.expect(batch).to.have.property(\"batchStatus\");\r",
-											"    pm.expect(batch).to.have.property(\"programId\");\r",
-											"    pm.expect(batch).to.have.property(\"programName\");\r",
-											"});\r",
-											"});"
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{authToken}}",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{baseUrl}}/batches/batchName/{{getBatchName}}",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"batches",
-										"batchName",
-										"{{getBatchName}}"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Get Batch by Program ID",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 200\", function () {\r",
-											"    pm.response.to.have.status(200);\r",
-											"});\r",
-											"\r",
-											"pm.test(\"Response contains required batch fields\", function () {\r",
-											"    const jsonData = pm.response.json();\r",
-											"jsonData.forEach(batch => {\r",
-											"    pm.expect(batch).to.have.property(\"batchId\");\r",
-											"    pm.expect(batch).to.have.property(\"batchName\");\r",
-											"    pm.expect(batch).to.have.property(\"batchDescription\");\r",
-											"    pm.expect(batch).to.have.property(\"batchNoOfClasses\");\r",
-											"    pm.expect(batch).to.have.property(\"batchStatus\");\r",
-											"    pm.expect(batch).to.have.property(\"programId\");\r",
-											"    pm.expect(batch).to.have.property(\"programName\");\r",
-											"});\r",
-											"});"
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{authToken}}",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{baseUrl}}/batches/program/{{getProgramIdForBatch}}",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"batches",
-										"program",
-										"{{getProgramIdForBatch}}"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Create New Batch",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"const jsonData = pm.response.json();\r",
-											"\r",
-											"pm.test(\"Status code is 201 or 400\", function () {\r",
-											"    pm.expect([201, 400]).to.include(pm.response.code);\r",
-											"});\r",
-											"\r",
-											"if (pm.response.code === 201) {\r",
-											"    pm.test(\"Batch created successfully\", function () {\r",
-											"        pm.expect(jsonData).to.have.property('batchId');\r",
-											"        pm.expect(jsonData.batchId).to.be.a('number');\r",
-											"    });\r",
-											"    \r",
-											"    pm.test(\"Response contains all fields\", function () {\r",
-											"        pm.expect(jsonData).to.have.property('batchName');\r",
-											"        pm.expect(jsonData).to.have.property('batchDescription');\r",
-											"        pm.expect(jsonData).to.have.property('batchNoOfClasses');\r",
-											"        pm.expect(jsonData).to.have.property('batchStatus');\r",
-											"        pm.expect(jsonData).to.have.property('programId');\r",
-											"        pm.expect(jsonData).to.have.property('programName');\r",
-											"    });\r",
-											"    \r",
-											"    pm.test(\"Batch ID is auto-generated\", function () {\r",
-											"        pm.expect(jsonData.batchId).to.be.greaterThan(0);\r",
-											"    });\r",
-											"    \r",
-											"    pm.test(\"Batch name follows naming convention\", function () {\r",
-											"        // Should be: ProgramName + Number(1-99)\r",
-											"        const batchName = jsonData.batchName;\r",
-											"        const programName = jsonData.programName;\r",
-											"        pm.expect(batchName).to.include(programName);\r",
-											"    });\r",
-											"    \r",
-											"    pm.test(\"Description length is valid (4-25 chars)\", function () {\r",
-											"        const descLength = jsonData.batchDescription.length;\r",
-											"        pm.expect(descLength).to.be.within(4, 25);\r",
-											"    });\r",
-											"    \r",
-											"    // Store created batch ID for further tests\r",
-											"    pm.environment.set(\"createdBatchId\", jsonData.batchId);\r",
-											"    pm.environment.set(\"createdBatchName\", jsonData.batchName);\r",
-											"    \r",
-											"    console.log(\"✅ Batch created successfully!\");\r",
-											"    console.log(\"Batch ID:\", jsonData.batchId);\r",
-											"    console.log(\"Batch Name:\", jsonData.batchName);\r",
-											"}\r",
-											"\r",
-											"if (pm.response.code === 400) {\r",
-											"    pm.test(\"Error response contains message\", function () {\r",
-											"        pm.expect(jsonData).to.have.property('message');\r",
-											"        pm.expect(jsonData).to.have.property('success');\r",
-											"        pm.expect(jsonData.success).to.be.false;\r",
-											"    });\r",
-											"    \r",
-											"    console.log(\"❌ Batch creation failed:\", jsonData.message);\r",
-											"}\r",
-											""
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{authToken}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n  \"batchDescription\": \"{{newBatchDescription}}\",\r\n  \"batchName\": \"{{newBatchName}}\",\r\n  \"batchNoOfClasses\": {{newBatchNoOfClasses}},\r\n  \"batchStatus\": \"{{newBatchStatus}}\",\r\n  \"programId\": {{newProgramId}}\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{baseUrl}}/batches",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"batches"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Update by Batch ID",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 200\", function () {\r",
-											"    pm.response.to.have.status(200);\r",
-											"});\r",
-											"\r",
-											"pm.test(\"Response contains required batch fields\", function () {\r",
-											"    const jsonData = pm.response.json();\r",
-											"\r",
-											"    pm.expect(jsonData).to.have.property(\"batchId\");\r",
-											"    pm.expect(jsonData).to.have.property(\"batchName\");\r",
-											"    pm.expect(jsonData).to.have.property(\"batchDescription\");\r",
-											"    pm.expect(jsonData).to.have.property(\"batchNoOfClasses\");\r",
-											"    pm.expect(jsonData).to.have.property(\"batchStatus\");\r",
-											"    pm.expect(jsonData).to.have.property(\"programId\");\r",
-											"    pm.expect(jsonData).to.have.property(\"programName\");\r",
-											"});"
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								}
-							],
-							"request": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{authToken}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"batchDescription\": \"{{updatedBatchDescription}}\",\r\n    \"batchId\": {{updateByBatchId}},\r\n    \"batchName\": \"{{updateByBatchName}}\",\r\n    \"batchNoOfClasses\": {{updatedBatchNoOfClasses}},\r\n    \"batchStatus\": \"{{updateBatchStatus}}\",\r\n    \"programId\": {{updateProgramId}},\r\n    \"programName\": \"{{updateProgramName}}\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{baseUrl}}/batches/{{updateByBatchId}}",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"batches",
-										"{{updateByBatchId}}"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Delete by Batch ID",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 200\", function () {\r",
-											"    pm.response.to.have.status(200);\r",
-											"});\r",
-											"\r",
-											"pm.test(\"Deletion success message is correct\", function () {\r",
-											"    let jsonData = pm.response.text();\r",
-											"    console.log(jsonData);\r",
-											"    pm.expect(jsonData).to.include('Message:');\r",
-											"    pm.expect(jsonData).to.include(\"deleted Successfully\");\r",
-											"});"
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								}
-							],
-							"request": {
-								"method": "DELETE",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{authToken}}",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{baseUrl}}/batches/{{deleteBatchId}}",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"batches",
-										"{{deleteBatchId}}"
-									]
-								}
-							},
-							"response": []
-						}
-					]
 				}
 			]
 		},
@@ -2464,14 +2333,6 @@
 											"    pm.expect(jsonData).to.have.property('userId');\r",
 											"    pm.environment.set(\"userId\",jsonData.user.userId);\r",
 											"})\r",
-											"//var jsonData=pm.response.json();\r",
-											"//if(jsonData)\r",
-											"//{\r",
-											"    //console.log(jsonData.user.userId);\r",
-											"    //pm.collectionVariables.set(\"userId\",jsonData.user.userId);or\r",
-											"    //pm.enviornmentVariables.set(\"userId\",jsonData.user.userId);\r",
-											"   // console.log(pm.collectionVariables.get(\"userId\"));\r",
-											"//}\r",
 											"\r",
 											"// Parse the JSON response\r",
 											"let res = pm.response.json();\r",
@@ -2522,7 +2383,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{ \r\n\"userComments\": \"APHackathons\",\r\n\"userEduPg\": \"Msc\",\r\n\"userEduUg\": \"Bsc\",\r\n\"userFirstName\": \"Vikas\",\r\n\"userLastName\": \"Kumar\",\r\n\"userLinkedinUrl\": \"https://www.linkedin.com/in/Kumar3400/\",\r\n\"userLocation\": \"USA\",\r\n\"userMiddleName\": \"Rajan\",\r\n\"userPhoneNumber\": \"+91 6786467059\",\r\n\"userRoleMaps\": [\r\n{\r\n\"roleId\": \"R02\",\r\n\"userRoleStatus\": \"Active\"\r\n}\r\n],\r\n\"userTimeZone\": \"EST\",\r\n\"userVisaStatus\": \"H1B\",\r\n\"userLogin\": {\r\n\"userLoginEmail\": \"rjham3400@gmail.com\",\r\n\"loginStatus\" : \"Active\",\r\n\"status\": \"Active\"\r\n} \r\n}",
+									"raw": "{ \r\n\"userComments\": \"APHackathons\",\r\n\"userEduPg\": \"Msc\",\r\n\"userEduUg\": \"Bsc\",\r\n\"userFirstName\": \"Rohit\",\r\n\"userLastName\": \"Sharma\",\r\n\"userLinkedinUrl\": \"https://www.linkedin.com/in/sharma3400/\",\r\n\"userLocation\": \"USA\",\r\n\"userMiddleName\": \"Rajan\",\r\n\"userPhoneNumber\": \"+91 4216467059\",\r\n\"userRoleMaps\": [\r\n{\r\n\"roleId\": \"R02\",\r\n\"userRoleStatus\": \"Active\"\r\n}\r\n],\r\n\"userTimeZone\": \"EST\",\r\n\"userVisaStatus\": \"H1B\",\r\n\"userLogin\": {\r\n\"userLoginEmail\": \"sharma3400@gmail.com\",\r\n\"loginStatus\" : \"Active\",\r\n\"status\": \"Active\"\r\n} \r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -2967,8 +2828,7 @@
 											"});"
 										],
 										"type": "text/javascript",
-										"packages": {},
-										"requests": {}
+										"packages": {}
 									}
 								}
 							],
@@ -2994,14 +2854,14 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/users/programBatch/1",
+									"raw": "{{baseUrl}}/users/programBatch/{{getBatchId}}",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"users",
 										"programBatch",
-										"1"
+										"{{getBatchId}}"
 									]
 								}
 							},
@@ -3119,7 +2979,111 @@
 									]
 								}
 							},
-							"response": []
+							"response": [
+								{
+									"name": "Get Users by ProgramID",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{authToken}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/users/programs/2",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												"programs",
+												"2"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, no-store, max-age=0, must-revalidate"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 01 Dec 2025 03:18:58 GMT"
+										},
+										{
+											"key": "Expires",
+											"value": "0"
+										},
+										{
+											"key": "Nel",
+											"value": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Report-To",
+											"value": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=IkhxdizySvpCntEMP5LTyCJqT61CDv6HIm1VtguUqqM%3D\\u0026sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add\\u0026ts=1764559138\"}],\"max_age\":3600}"
+										},
+										{
+											"key": "Reporting-Endpoints",
+											"value": "heroku-nel=\"https://nel.heroku.com/reports?s=IkhxdizySvpCntEMP5LTyCJqT61CDv6HIm1VtguUqqM%3D&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&ts=1764559138\""
+										},
+										{
+											"key": "Server",
+											"value": "Heroku"
+										},
+										{
+											"key": "Strict-Transport-Security",
+											"value": "max-age=31536000 ; includeSubDomains"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Vary",
+											"value": "Access-Control-Request-Method"
+										},
+										{
+											"key": "Vary",
+											"value": "Access-Control-Request-Headers"
+										},
+										{
+											"key": "Via",
+											"value": "1.1 heroku-router"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "X-Xss-Protection",
+											"value": "0"
+										},
+										{
+											"key": "Content-Length",
+											"value": "1683"
+										}
+									],
+									"cookie": [],
+									"body": "[\n    {\n        \"userId\": \"U06\",\n        \"userFirstName\": \"Sylvia\",\n        \"userLastName\": \"Rajan\",\n        \"userPhoneNumber\": \"9562009911\",\n        \"userLocation\": \"India\",\n        \"userTimeZone\": \"IST\",\n        \"userLinkedinUrl\": \"https://www.linkedin.com/in/SyliviaRajan/\",\n        \"userEduUg\": \"Electronics and Electrical Engineering\",\n        \"userEduPg\": \" Computer Technology\",\n        \"userVisaStatus\": \"H4-EAD\",\n        \"userLoginEmail\": null\n    },\n    {\n        \"userId\": \"U08\",\n        \"userFirstName\": \"Maria\",\n        \"userLastName\": \"Peterson\",\n        \"userPhoneNumber\": \"6512391300\",\n        \"userLocation\": \"Ontario\",\n        \"userTimeZone\": \"CST\",\n        \"userLinkedinUrl\": \"https://www.linkedin.com/in/MariaPeterson/\",\n        \"userEduUg\": \"Information Sciences\",\n        \"userEduPg\": \" MBA\",\n        \"userVisaStatus\": \"Canada-Citizen\",\n        \"userLoginEmail\": null\n    },\n    {\n        \"userId\": \"U02\",\n        \"userFirstName\": \"Steve\",\n        \"userLastName\": \"Job\",\n        \"userPhoneNumber\": \"879123456\",\n        \"userLocation\": \"Idaho\",\n        \"userTimeZone\": \"PST\",\n        \"userLinkedinUrl\": \"https://www.linkedin.com/in/Steve Job/\",\n        \"userEduUg\": \"Mechanical Engineering\",\n        \"userEduPg\": \" Computer Science Engineering\",\n        \"userVisaStatus\": \"H4\",\n        \"userLoginEmail\": null\n    },\n    {\n        \"userId\": \"U155\",\n        \"userFirstName\": \"Ram\",\n        \"userLastName\": \"Palash\",\n        \"userMiddleName\": \"M\",\n        \"userPhoneNumber\": \"+91 8512457201\",\n        \"userLocation\": \"Connecticut\",\n        \"userTimeZone\": \"PST\",\n        \"userLinkedinUrl\": \"www.linkedin.com/jram\",\n        \"userEduUg\": \"Diploma\",\n        \"userEduPg\": \"BE Electrical\",\n        \"userComments\": \"Updated the User\",\n        \"userVisaStatus\": \"US-Citizen\",\n        \"userLoginEmail\": null\n    },\n    {\n        \"userId\": \"U150\",\n        \"userFirstName\": \"Swarna\",\n        \"userLastName\": \"Senthil\",\n        \"userMiddleName\": \"S\",\n        \"userPhoneNumber\": \"+1 8276882929\",\n        \"userLocation\": \"Chicago\",\n        \"userTimeZone\": \"CST\",\n        \"userLinkedinUrl\": \"https://www.linkedin.com/in/Swarna Senthil\",\n        \"userEduUg\": \"BSC\",\n        \"userEduPg\": \"MCA\",\n        \"userComments\": \"Update User for API Hackathon\",\n        \"userVisaStatus\": \"H4\",\n        \"userLoginEmail\": null\n    }\n]"
+								}
+							]
 						},
 						{
 							"name": "Get Users By roleID",
@@ -3233,14 +3197,14 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/users/roles/R03",
+									"raw": "{{baseUrl}}/users/roles/R02",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"users",
 										"roles",
-										"R03"
+										"R02"
 									]
 								}
 							},
@@ -3360,31 +3324,6 @@
 							"response": []
 						},
 						{
-							"name": ".Get User BatchId by User Id",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{authToken}}",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{baseUrl}}/users/user/{{userId}}",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"users",
-										"user",
-										"{{userId}}"
-									]
-								}
-							},
-							"response": []
-						},
-						{
 							"name": "Get User Details by Id",
 							"event": [
 								{
@@ -3491,7 +3430,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\"userComments\": \"na\",\n\"userEduPg\": \"ME\",\n\"userEduUg\": \"BE\",\n\"userFirstName\": \"Shreya\",\n\"userId\": \"String\",\n\"userLastName\": \"Ghoshal\",\n\"userMiddleName\": \"Singh\",\n\"userLinkedinUrl\": \"https://www.linkedin.com/in/shreyaghoshal4/\",\n\"userLocation\": \"Dallas\",\n\"userLoginEmail\": \"Robert.Louis@gmail.com\" ,\n\"userPhoneNumber\": \"+91 2314568899\",\n\"userTimeZone\": \"CST\",\n\"userVisaStatus\": \"H4-EAD\"\n}",
+									"raw": "{\n\"userComments\": \"na\",\n\"userEduPg\": \"ME\",\n\"userEduUg\": \"BE\",\n\"userFirstName\": \"Shreya\",\n\"userId\": \"U435\",\n\"userLastName\": \"Ghoshal\",\n\"userMiddleName\": \"Singh\",\n\"userLinkedinUrl\": \"https://www.linkedin.com/in/shreyaghoshal4/\",\n\"userLocation\": \"Dallas\",\n\"userLoginEmail\": \"Robert.Louis@gmail.com\" ,\n\"userPhoneNumber\": \"+91 4214568899\",\n\"userTimeZone\": \"CST\",\n\"userVisaStatus\": \"H4-EAD\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -3549,7 +3488,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\"userRoleList\": [\n{\n\"roleId\": \"R01\",\n\"userRoleStatus\": \"Active\"\n}\n]\n}",
+									"raw": "{\n\"userRoleList\": [\n{\n\"roleId\": \"R02\",\n\"userRoleStatus\": \"Active\"\n}\n]\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -3568,7 +3507,120 @@
 									]
 								}
 							},
-							"response": []
+							"response": [
+								{
+									"name": "Update User RoleID",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{authToken}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\"userRoleList\": [\n{\n\"roleId\": \"R01\",\n\"userRoleStatus\": \"Active\"\n}\n]\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/users/roleId/{{userId}}",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												"roleId",
+												"{{userId}}"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "plain",
+									"header": [
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, no-store, max-age=0, must-revalidate"
+										},
+										{
+											"key": "Content-Length",
+											"value": "30"
+										},
+										{
+											"key": "Content-Type",
+											"value": "text/plain;charset=UTF-8"
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 01 Dec 2025 03:06:40 GMT"
+										},
+										{
+											"key": "Expires",
+											"value": "0"
+										},
+										{
+											"key": "Nel",
+											"value": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Report-To",
+											"value": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=CfOqVJG1B2gFwzFyHHlLYlCK1iLutAO1Ns6MNaIYbxY%3D\\u0026sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add\\u0026ts=1764558400\"}],\"max_age\":3600}"
+										},
+										{
+											"key": "Reporting-Endpoints",
+											"value": "heroku-nel=\"https://nel.heroku.com/reports?s=CfOqVJG1B2gFwzFyHHlLYlCK1iLutAO1Ns6MNaIYbxY%3D&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&ts=1764558400\""
+										},
+										{
+											"key": "Server",
+											"value": "Heroku"
+										},
+										{
+											"key": "Strict-Transport-Security",
+											"value": "max-age=31536000 ; includeSubDomains"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Vary",
+											"value": "Access-Control-Request-Method"
+										},
+										{
+											"key": "Vary",
+											"value": "Access-Control-Request-Headers"
+										},
+										{
+											"key": "Via",
+											"value": "1.1 heroku-router"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "X-Xss-Protection",
+											"value": "0"
+										}
+									],
+									"cookie": [],
+									"body": "Role Id Updated for User: U479"
+								}
+							]
 						},
 						{
 							"name": "Assign Update User Role Program Batch Status",
@@ -3617,7 +3669,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\"programId\": 1,\n\"roleId\": \"R01\",\n\"userId\": \"U02\",\n\"userRoleProgramBatches\": [\n{\n\"batchId\":1,\n\"userRoleProgramBatchStatus\":\n\"Active\"\n}\n]\n}",
+									"raw": "{\n\"programId\": 1,\n\"roleId\": \"R02\",\n\"userId\": \"U678\",\n\"userRoleProgramBatches\": [\n{\n\"batchId\":1,\n\"userRoleProgramBatchStatus\":\n\"Active\"\n}\n]\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -3639,6 +3691,31 @@
 							"response": []
 						},
 						{
+							"name": "Get User BatchId by User Id",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/users/user/{{userId}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"user",
+										"{{userId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "Update User Login Status",
 							"request": {
 								"method": "PUT",
@@ -3651,7 +3728,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\"loginStatus\": \"Active\",\n\"roleIds\": [\n\"R01\"\n],\n\"status\": \"Active\",\n\"userLoginEmail\": \"xyzabc123@gmail.com\"\n}",
+									"raw": "{\n\"loginStatus\": \"Active\",\n\"roleIds\": [\n\"R01\"\n],\n\"status\": \"Active\",\n\"userLoginEmail\": \"xyzabc1123@gmail.com\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -3670,7 +3747,120 @@
 									]
 								}
 							},
-							"response": []
+							"response": [
+								{
+									"name": "Update User Login Status",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{authToken}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\"loginStatus\": \"Active\",\n\"password\": \"Passo7*word\",\n\"roleIds\": [\n\"R01\"\n],\n\"status\": \"Active\",\n\"userLoginEmail\": \"xyzabc023@gmail.com\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/users/userLogin/{{userId}}",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												"userLogin",
+												"{{userId}}"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, no-store, max-age=0, must-revalidate"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 01 Dec 2025 03:16:35 GMT"
+										},
+										{
+											"key": "Expires",
+											"value": "0"
+										},
+										{
+											"key": "Nel",
+											"value": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Report-To",
+											"value": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=MgWpOVZPWqjYTuSYZErSOex%2FTK1QOT8ISUSE%2B0xr1O4%3D\\u0026sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add\\u0026ts=1764558995\"}],\"max_age\":3600}"
+										},
+										{
+											"key": "Reporting-Endpoints",
+											"value": "heroku-nel=\"https://nel.heroku.com/reports?s=MgWpOVZPWqjYTuSYZErSOex%2FTK1QOT8ISUSE%2B0xr1O4%3D&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&ts=1764558995\""
+										},
+										{
+											"key": "Server",
+											"value": "Heroku"
+										},
+										{
+											"key": "Strict-Transport-Security",
+											"value": "max-age=31536000 ; includeSubDomains"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Vary",
+											"value": "Access-Control-Request-Method"
+										},
+										{
+											"key": "Vary",
+											"value": "Access-Control-Request-Headers"
+										},
+										{
+											"key": "Via",
+											"value": "1.1 heroku-router"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "X-Xss-Protection",
+											"value": "0"
+										},
+										{
+											"key": "Content-Length",
+											"value": "148"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"JSON parse error: Unrecognized field \\\"password\\\" (class com.numpyninja.lms.dto.UserLoginDto), not marked as ignorable\",\n    \"success\": false\n}"
+								}
+							]
 						},
 						{
 							"name": "Delete User",
@@ -5665,14 +5855,14 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/users/details/U99",
+									"raw": "{{baseUrl}}/users/details/U99999999999",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"users",
 										"details",
-										"U99"
+										"U99999999999"
 									]
 								}
 							},
@@ -5734,13 +5924,13 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/users/U05",
+									"raw": "{{baseUrl}}/users/U09999999",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"users",
-										"U05"
+										"U09999999"
 									]
 								}
 							},
@@ -5914,14 +6104,14 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/users/roleProgramBatchStatus/U99",
+									"raw": "{{baseUrl}}/users/roleProgramBatchStatus/U999999999",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"users",
 										"roleProgramBatchStatus",
-										"U99"
+										"U999999999"
 									]
 								}
 							},
@@ -6015,14 +6205,14 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/users/userLogin/U999",
+									"raw": "{{baseUrl}}/users/userLogin/U9999999",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"users",
 										"userLogin",
-										"U999"
+										"U9999999"
 									]
 								}
 							},
@@ -6183,108 +6373,7 @@
 									]
 								}
 							},
-							"response": [
-								{
-									"name": "Create New Skill",
-									"originalRequest": {
-										"method": "POST",
-										"header": [],
-										"body": {
-											"mode": "raw",
-											"raw": "{\r\n   \"skillName\": \"reading\"\r\n}",
-											"options": {
-												"raw": {
-													"language": "json"
-												}
-											}
-										},
-										"url": {
-											"raw": "{{baseUrl}}/SaveSkillMaster",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"SaveSkillMaster"
-											]
-										}
-									},
-									"status": "Unauthorized",
-									"code": 401,
-									"_postman_previewlanguage": "",
-									"header": [
-										{
-											"key": "Cache-Control",
-											"value": "no-cache, no-store, max-age=0, must-revalidate"
-										},
-										{
-											"key": "Content-Length",
-											"value": "0"
-										},
-										{
-											"key": "Date",
-											"value": "Mon, 01 Dec 2025 04:49:20 GMT"
-										},
-										{
-											"key": "Expires",
-											"value": "0"
-										},
-										{
-											"key": "Nel",
-											"value": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}"
-										},
-										{
-											"key": "Pragma",
-											"value": "no-cache"
-										},
-										{
-											"key": "Report-To",
-											"value": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=NBRf84PEgOtIOplT1RnRhL12ojT%2BUGYiSK8HYu11ex0%3D\\u0026sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add\\u0026ts=1764564560\"}],\"max_age\":3600}"
-										},
-										{
-											"key": "Reporting-Endpoints",
-											"value": "heroku-nel=\"https://nel.heroku.com/reports?s=NBRf84PEgOtIOplT1RnRhL12ojT%2BUGYiSK8HYu11ex0%3D&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&ts=1764564560\""
-										},
-										{
-											"key": "Server",
-											"value": "Heroku"
-										},
-										{
-											"key": "Strict-Transport-Security",
-											"value": "max-age=31536000 ; includeSubDomains"
-										},
-										{
-											"key": "Vary",
-											"value": "Origin"
-										},
-										{
-											"key": "Vary",
-											"value": "Access-Control-Request-Method"
-										},
-										{
-											"key": "Vary",
-											"value": "Access-Control-Request-Headers"
-										},
-										{
-											"key": "Via",
-											"value": "1.1 heroku-router"
-										},
-										{
-											"key": "X-Content-Type-Options",
-											"value": "nosniff"
-										},
-										{
-											"key": "X-Frame-Options",
-											"value": "DENY"
-										},
-										{
-											"key": "X-Xss-Protection",
-											"value": "0"
-										}
-									],
-									"cookie": [],
-									"body": ""
-								}
-							]
+							"response": []
 						},
 						{
 							"name": "Update Skill by skill id",
@@ -6359,125 +6448,7 @@
 									]
 								}
 							},
-							"response": [
-								{
-									"name": "Update Skill by skill id",
-									"originalRequest": {
-										"method": "PUT",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "Bearer {{authToken}}",
-												"type": "text"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\r\n \r\n  \"skillName\": \"writing\"\r\n  \r\n}",
-											"options": {
-												"raw": {
-													"language": "json"
-												}
-											}
-										},
-										"url": {
-											"raw": "{{baseUrl}}/updateSkills/:id",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"updateSkills",
-												":id"
-											],
-											"variable": [
-												{
-													"key": "id",
-													"value": "{{skillId}}"
-												}
-											]
-										}
-									},
-									"status": "Not Found",
-									"code": 404,
-									"_postman_previewlanguage": "",
-									"header": [
-										{
-											"key": "Cache-Control",
-											"value": "no-cache, no-store, max-age=0, must-revalidate"
-										},
-										{
-											"key": "Content-Length",
-											"value": "16"
-										},
-										{
-											"key": "Content-Type",
-											"value": "text/plain;charset=UTF-8"
-										},
-										{
-											"key": "Date",
-											"value": "Mon, 01 Dec 2025 04:49:31 GMT"
-										},
-										{
-											"key": "Expires",
-											"value": "0"
-										},
-										{
-											"key": "Nel",
-											"value": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}"
-										},
-										{
-											"key": "Pragma",
-											"value": "no-cache"
-										},
-										{
-											"key": "Report-To",
-											"value": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=tscvqwAg2zBs6uTEkKaZ5bE%2BMyKXbkcgxCSmQiXLrsU%3D\\u0026sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add\\u0026ts=1764564571\"}],\"max_age\":3600}"
-										},
-										{
-											"key": "Reporting-Endpoints",
-											"value": "heroku-nel=\"https://nel.heroku.com/reports?s=tscvqwAg2zBs6uTEkKaZ5bE%2BMyKXbkcgxCSmQiXLrsU%3D&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&ts=1764564571\""
-										},
-										{
-											"key": "Server",
-											"value": "Heroku"
-										},
-										{
-											"key": "Strict-Transport-Security",
-											"value": "max-age=31536000 ; includeSubDomains"
-										},
-										{
-											"key": "Vary",
-											"value": "Origin"
-										},
-										{
-											"key": "Vary",
-											"value": "Access-Control-Request-Method"
-										},
-										{
-											"key": "Vary",
-											"value": "Access-Control-Request-Headers"
-										},
-										{
-											"key": "Via",
-											"value": "1.1 heroku-router"
-										},
-										{
-											"key": "X-Content-Type-Options",
-											"value": "nosniff"
-										},
-										{
-											"key": "X-Frame-Options",
-											"value": "DENY"
-										},
-										{
-											"key": "X-Xss-Protection",
-											"value": "0"
-										}
-									],
-									"cookie": [],
-									"body": "Invalid endpoint"
-								}
-							]
+							"response": []
 						},
 						{
 							"name": "Get All Skill Master",
@@ -6559,113 +6530,7 @@
 									]
 								}
 							},
-							"response": [
-								{
-									"name": "Get All Skill Master",
-									"originalRequest": {
-										"method": "GET",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "Bearer {{authToken}}",
-												"type": "text"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": ""
-										},
-										"url": {
-											"raw": "{{baseUrl}}/allSkillMaster",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"allSkillMaster"
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "",
-									"header": [
-										{
-											"key": "Cache-Control",
-											"value": "no-cache, no-store, max-age=0, must-revalidate"
-										},
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										},
-										{
-											"key": "Date",
-											"value": "Mon, 01 Dec 2025 04:49:44 GMT"
-										},
-										{
-											"key": "Expires",
-											"value": "0"
-										},
-										{
-											"key": "Nel",
-											"value": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}"
-										},
-										{
-											"key": "Pragma",
-											"value": "no-cache"
-										},
-										{
-											"key": "Report-To",
-											"value": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=SUSc%2BOYdN8anDNTC29Zbyj1fIjnvzlvWQqe3MIj2A8g%3D\\u0026sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add\\u0026ts=1764564584\"}],\"max_age\":3600}"
-										},
-										{
-											"key": "Reporting-Endpoints",
-											"value": "heroku-nel=\"https://nel.heroku.com/reports?s=SUSc%2BOYdN8anDNTC29Zbyj1fIjnvzlvWQqe3MIj2A8g%3D&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&ts=1764564584\""
-										},
-										{
-											"key": "Server",
-											"value": "Heroku"
-										},
-										{
-											"key": "Strict-Transport-Security",
-											"value": "max-age=31536000 ; includeSubDomains"
-										},
-										{
-											"key": "Vary",
-											"value": "Origin"
-										},
-										{
-											"key": "Vary",
-											"value": "Access-Control-Request-Method"
-										},
-										{
-											"key": "Vary",
-											"value": "Access-Control-Request-Headers"
-										},
-										{
-											"key": "Via",
-											"value": "1.1 heroku-router"
-										},
-										{
-											"key": "X-Content-Type-Options",
-											"value": "nosniff"
-										},
-										{
-											"key": "X-Frame-Options",
-											"value": "DENY"
-										},
-										{
-											"key": "X-Xss-Protection",
-											"value": "0"
-										},
-										{
-											"key": "Transfer-Encoding",
-											"value": "chunked"
-										}
-									],
-									"cookie": [],
-									"body": "[\n    {\n        \"skillId\": 892,\n        \"skillName\": \"AgroCD\",\n        \"creationTime\": \"2025-11-27T06:31:04.579+00:00\",\n        \"lastModTime\": \"2025-11-27T06:31:04.579+00:00\"\n    },\n    {\n        \"skillId\": 895,\n        \"skillName\": \"        \",\n        \"creationTime\": \"2025-11-27T06:31:04.579+00:00\",\n        \"lastModTime\": \"2025-11-27T06:31:04.579+00:00\"\n    },\n    {\n        \"skillId\": 896,\n        \"skillName\": \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWWWWWWWWWWWWWWWWWWWWWWWWSWWWWWWWWWWWWWWWWWWWWWWWWWWWEEeeeeeeeeeeewwwwwwwwwwwwwwwwwwwwwwwwwerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr\",\n        \"creationTime\": \"2025-11-27T06:31:04.579+00:00\",\n        \"lastModTime\": \"2025-11-27T06:31:04.579+00:00\"\n    },\n    {\n        \"skillId\": 897,\n        \"skillName\": \"     Docker123           \",\n        \"creationTime\": \"2025-11-27T06:31:04.579+00:00\",\n        \"lastModTime\": \"2025-11-27T06:31:04.579+00:00\"\n    },\n    {\n        \"skillId\": 898,\n        \"skillName\": \"' OR '1'='1\",\n        \"creationTime\": \"2025-11-27T06:31:04.579+00:00\",\n        \"lastModTime\": \"2025-11-27T06:31:04.579+00:00\"\n    },\n    {\n        \"skillId\": 899,\n        \"skillName\": \"<script>console.log('SafeTest')</script>\",\n        \"creationTime\": \"2025-11-27T06:31:04.579+00:00\",\n        \"lastModTime\": \"2025-11-27T06:31:04.579+00:00\"\n    },\n    {\n        \"skillId\": 657,\n        \"skillName\": \"Java Basics1234\",\n        \"creationTime\": \"2025-11-29T20:14:04.953+00:00\",\n        \"lastModTime\": \"2025-11-29T20:14:04.953+00:00\"\n    },\n    {\n        \"skillId\": 175,\n        \"skillName\": \"Advanced Java\",\n        \"creationTime\": \"2025-11-24T22:34:35.429+00:00\",\n        \"lastModTime\": \"2025-11-24T22:34:35.429+00:00\"\n    },\n    {\n        \"skillId\": 902,\n        \"skillName\": \"!@#$%^&*\",\n        \"creationTime\": \"2025-11-20T19:39:39.762+00:00\",\n        \"lastModTime\": \"2025-11-20T19:39:39.762+00:00\"\n    },\n    {\n        \"skillId\": 1,\n        \"skillName\": \"Advanced Java\",\n        \"creationTime\": \"2025-11-25T01:18:38.503+00:00\",\n        \"lastModTime\": \"2025-11-25T01:18:38.503+00:00\"\n    },\n    {\n        \"skillId\": 235,\n        \"skillName\": \"MachineLearning\",\n        \"creationTime\": \"2021-10-04T18:14:01.957+00:00\",\n        \"lastModTime\": \"2021-10-04T18:14:01.957+00:00\"\n    },\n    {\n        \"skillId\": 237,\n        \"skillName\": \"Machine Learning\",\n        \"creationTime\": \"2021-10-04T18:14:01.957+00:00\",\n        \"lastModTime\": \"2021-10-04T18:14:01.957+00:00\"\n    },\n    {\n        \"skillId\": 264,\n        \"skillName\": \"Advanced Java5\",\n        \"creationTime\": \"2025-11-25T21:17:48.639+00:00\",\n        \"lastModTime\": \"2025-11-25T21:17:48.639+00:00\"\n    },\n    {\n        \"skillId\": 266,\n        \"skillName\": \"Machine Learning1\",\n        \"creationTime\": \"2021-10-04T18:14:01.957+00:00\",\n        \"lastModTime\": \"2021-10-04T18:14:01.957+00:00\"\n    },\n    {\n        \"skillId\": 267,\n        \"skillName\": \"Machine Learning81\",\n        \"creationTime\": \"2021-10-04T18:14:01.957+00:00\",\n        \"lastModTime\": \"2021-10-04T18:14:01.957+00:00\"\n    },\n    {\n        \"skillId\": 294,\n        \"skillName\": \"gola\",\n        \"creationTime\": \"2025-11-26T16:56:41.784+00:00\",\n        \"lastModTime\": \"2025-11-26T16:56:41.784+00:00\"\n    },\n    {\n        \"skillId\": 299,\n        \"skillName\": \"golajava\",\n        \"creationTime\": \"2025-11-26T17:08:51.708+00:00\",\n        \"lastModTime\": \"2025-11-26T17:08:51.708+00:00\"\n    },\n    {\n        \"skillId\": 300,\n        \"skillName\": \"golaccc\",\n        \"creationTime\": \"2025-11-26T17:08:51.708+00:00\",\n        \"lastModTime\": \"2025-11-26T17:08:51.708+00:00\"\n    },\n    {\n        \"skillId\": 302,\n        \"skillName\": \"golajava333\",\n        \"creationTime\": \"2025-11-26T17:08:51.708+00:00\",\n        \"lastModTime\": \"2025-11-26T17:08:51.708+00:00\"\n    },\n    {\n        \"skillId\": 658,\n        \"skillName\": \"Microsoft\",\n        \"creationTime\": \"2025-11-29T20:14:05.186+00:00\",\n        \"lastModTime\": \"2025-11-29T20:14:05.186+00:00\"\n    },\n    {\n        \"skillId\": 903,\n        \"skillName\": \"Telugu!@#$%^&*\",\n        \"creationTime\": \"2025-11-20T19:39:39.762+00:00\",\n        \"lastModTime\": \"2025-11-20T19:39:39.762+00:00\"\n    },\n    {\n        \"skillId\": 904,\n        \"skillName\": \"Telugu+++++++++------\",\n        \"creationTime\": \"2025-11-20T19:39:39.762+00:00\",\n        \"lastModTime\": \"2025-11-20T19:39:39.762+00:00\"\n    },\n    {\n        \"skillId\": 660,\n        \"skillName\": \"Microsoft1234\",\n        \"creationTime\": \"2025-11-29T20:19:17.219+00:00\",\n        \"lastModTime\": \"2025-11-29T20:19:17.219+00:00\"\n    },\n    {\n        \"skillId\": 661,\n        \"skillName\": \"Java Basics12344566\",\n        \"creationTime\": \"2025-11-29T20:21:48.144+00:00\",\n        \"lastModTime\": \"2025-11-29T20:21:48.144+00:00\"\n    },\n    {\n        \"skillId\": 432,\n        \"skillName\": \"French\",\n        \"creationTime\": \"2025-11-27T20:47:31.341+00:00\",\n        \"lastModTime\": \"2025-11-27T20:47:31.341+00:00\"\n    },\n    {\n        \"skillId\": 619,\n        \"skillName\": \"xjq9K7Z57u\",\n        \"creationTime\": \"2025-11-28T23:41:36.411+00:00\",\n        \"lastModTime\": \"2025-11-28T23:41:36.411+00:00\"\n    },\n    {\n        \"skillId\": 914,\n        \"skillName\": \"SCDWTversion\",\n        \"creationTime\": \"2025-11-20T19:39:39.762+00:00\",\n        \"lastModTime\": \"2025-11-20T19:39:39.762+00:00\"\n    },\n    {\n        \"skillId\": 620,\n        \"skillName\": \"My2puMRyeb\",\n        \"creationTime\": \"2025-11-28T22:26:58.778+00:00\",\n        \"lastModTime\": \"2025-11-28T22:26:58.778+00:00\"\n    },\n    {\n        \"skillId\": 621,\n        \"skillName\": \"p6HwPpvUlh\",\n        \"creationTime\": \"2025-11-28T22:26:58.778+00:00\",\n        \"lastModTime\": \"2025-11-28T22:26:58.778+00:00\"\n    },\n    {\n        \"skillId\": 627,\n        \"skillName\": \"7kzIcSoYzq\",\n        \"creationTime\": \"2025-11-28T22:26:58.778+00:00\",\n        \"lastModTime\": \"2025-11-28T22:26:58.778+00:00\"\n    },\n    {\n        \"skillId\": 628,\n        \"skillName\": \"70jp6FdjLY\",\n        \"creationTime\": \"2025-11-28T22:26:58.778+00:00\",\n        \"lastModTime\": \"2025-11-28T22:26:58.778+00:00\"\n    },\n    {\n        \"skillId\": 630,\n        \"skillName\": \"tYVG5QVCTe\",\n        \"creationTime\": \"2025-11-28T22:26:58.778+00:00\",\n        \"lastModTime\": \"2025-11-28T22:26:58.778+00:00\"\n    },\n    {\n        \"skillId\": 455,\n        \"skillName\": \"Mic@rosoft\",\n        \"creationTime\": \"2025-11-20T19:39:39.762+00:00\",\n        \"lastModTime\": \"2025-11-20T19:39:39.762+00:00\"\n    },\n    {\n        \"skillId\": 456,\n        \"skillName\": \"Mic@r@@osoft\",\n        \"creationTime\": \"2025-11-20T19:39:39.762+00:00\",\n        \"lastModTime\": \"2025-11-20T19:39:39.762+00:00\"\n    },\n    {\n        \"skillId\": 457,\n        \"skillName\": \"Mic@r@@osoft admin\",\n        \"creationTime\": \"2025-11-20T19:39:39.762+00:00\",\n        \"lastModTime\": \"2025-11-20T19:39:39.762+00:00\"\n    },\n    {\n        \"skillId\": 458,\n        \"skillName\": \"Java\",\n        \"creationTime\": \"2025-11-20T19:39:39.762+00:00\",\n        \"lastModTime\": \"2025-11-20T19:39:39.762+00:00\"\n    },\n    {\n        \"skillId\": 757,\n        \"skillName\": \"564757\",\n        \"creationTime\": \"2025-11-27T06:31:04.579+00:00\",\n        \"lastModTime\": \"2025-11-27T06:31:04.579+00:00\"\n    },\n    {\n        \"skillId\": 926,\n        \"skillName\": \"B1EMNxE90r\",\n        \"creationTime\": \"2025-11-28T22:26:58.778+00:00\",\n        \"lastModTime\": \"2025-11-28T22:26:58.778+00:00\"\n    },\n    {\n        \"skillId\": 711,\n        \"skillName\": \"pam\",\n        \"creationTime\": \"2025-11-30T06:08:48.521+00:00\",\n        \"lastModTime\": \"2025-11-30T06:08:48.521+00:00\"\n    },\n    {\n        \"skillId\": 637,\n        \"skillName\": \"check\",\n        \"creationTime\": \"2025-11-28T23:41:36.411+00:00\",\n        \"lastModTime\": \"2025-11-28T23:41:36.411+00:00\"\n    },\n    {\n        \"skillId\": 727,\n        \"skillName\": \"French1\",\n        \"creationTime\": \"2025-11-30T03:04:29.837+00:00\",\n        \"lastModTime\": \"2025-11-30T03:04:29.837+00:00\"\n    },\n    {\n        \"skillId\": 728,\n        \"skillName\": \"French11\",\n        \"creationTime\": \"2025-11-30T03:05:53.777+00:00\",\n        \"lastModTime\": \"2025-11-30T03:05:53.777+00:00\"\n    },\n    {\n        \"skillId\": 730,\n        \"skillName\": \"pam1\",\n        \"creationTime\": \"2025-11-30T06:08:48.521+00:00\",\n        \"lastModTime\": \"2025-11-30T06:08:48.521+00:00\"\n    },\n    {\n        \"skillId\": 729,\n        \"skillName\": \"French111\",\n        \"creationTime\": \"2025-11-12T03:05:53.777+00:00\",\n        \"lastModTime\": \"2025-11-30T03:05:53.777+00:00\"\n    },\n    {\n        \"skillId\": 640,\n        \"skillName\": \"iHqx09X5Xu\",\n        \"creationTime\": \"2025-11-28T22:26:58.778+00:00\",\n        \"lastModTime\": \"2025-11-28T22:26:58.778+00:00\"\n    },\n    {\n        \"skillId\": 712,\n        \"skillName\": \"Spanish1\",\n        \"creationTime\": \"2025-11-24T22:42:18.160+00:00\",\n        \"lastModTime\": \"2025-11-24T22:42:18.160+00:00\"\n    },\n    {\n        \"skillId\": 642,\n        \"skillName\": \"ut8fSCAZxC\",\n        \"creationTime\": \"2025-11-28T22:26:58.778+00:00\",\n        \"lastModTime\": \"2025-11-28T22:26:58.778+00:00\"\n    },\n    {\n        \"skillId\": 731,\n        \"skillName\": \"French11111\",\n        \"creationTime\": \"2025-11-12T03:05:53.777+00:00\",\n        \"lastModTime\": \"2025-11-11T03:05:53.777+00:00\"\n    },\n    {\n        \"skillId\": 732,\n        \"skillName\": \"Korean123\",\n        \"creationTime\": \"2025-11-30T03:58:49.621+00:00\",\n        \"lastModTime\": \"2025-11-30T03:58:49.621+00:00\"\n    },\n    {\n        \"skillId\": 643,\n        \"skillName\": \"bfk4eedFSy\",\n        \"creationTime\": \"2025-11-28T22:26:58.778+00:00\",\n        \"lastModTime\": \"2025-11-28T22:26:58.778+00:00\"\n    },\n    {\n        \"skillId\": 524,\n        \"skillName\": \"Advanced Java6\",\n        \"creationTime\": \"2025-11-28T05:19:50.879+00:00\",\n        \"lastModTime\": \"2025-11-28T05:19:50.879+00:00\"\n    },\n    {\n        \"skillId\": 662,\n        \"skillName\": \"Microsoft12345\",\n        \"creationTime\": \"2025-11-29T20:21:48.375+00:00\",\n        \"lastModTime\": \"2025-11-29T20:21:48.375+00:00\"\n    },\n    {\n        \"skillId\": 525,\n        \"skillName\": \"Advanced Java63\",\n        \"creationTime\": \"2025-11-28T06:24:53.634+00:00\",\n        \"lastModTime\": \"2025-11-28T06:24:53.634+00:00\"\n    },\n    {\n        \"skillId\": 526,\n        \"skillName\": \"Advanced Java631\",\n        \"creationTime\": \"2025-11-28T14:14:58.393+00:00\",\n        \"lastModTime\": \"2025-11-28T14:14:58.393+00:00\"\n    },\n    {\n        \"skillId\": 527,\n        \"skillName\": \"Advanced Java6311\",\n        \"creationTime\": \"2025-11-28T14:16:56.587+00:00\",\n        \"lastModTime\": \"2025-11-28T14:16:56.587+00:00\"\n    },\n    {\n        \"skillId\": 528,\n        \"skillName\": \"Advanced Java63111\",\n        \"creationTime\": \"2025-11-28T14:18:06.984+00:00\",\n        \"lastModTime\": \"2025-11-28T14:18:06.984+00:00\"\n    },\n    {\n        \"skillId\": 529,\n        \"skillName\": \"Advanced Java631111\",\n        \"creationTime\": \"2025-11-28T14:24:34.828+00:00\",\n        \"lastModTime\": \"2025-11-28T14:24:34.828+00:00\"\n    },\n    {\n        \"skillId\": 734,\n        \"skillName\": \"Korean13\",\n        \"creationTime\": \"2025-11-30T03:58:50.209+00:00\",\n        \"lastModTime\": \"2025-11-30T03:58:50.209+00:00\"\n    },\n    {\n        \"skillId\": 531,\n        \"skillName\": \"ooo\",\n        \"creationTime\": \"2025-11-28T14:39:23.030+00:00\",\n        \"lastModTime\": \"2025-11-28T14:39:23.030+00:00\"\n    },\n    {\n        \"skillId\": 33,\n        \"skillName\": \"string\",\n        \"creationTime\": \"2025-11-28T19:39:39.762+00:00\",\n        \"lastModTime\": \"2025-11-28T19:39:39.762+00:00\"\n    },\n    {\n        \"skillId\": 552,\n        \"skillName\": \"math\",\n        \"creationTime\": \"2025-11-28T20:28:21.394+00:00\",\n        \"lastModTime\": \"2025-11-28T20:28:21.394+00:00\"\n    },\n    {\n        \"skillId\": 553,\n        \"skillName\": \"Java Basics\",\n        \"creationTime\": \"2025-11-28T20:28:22.164+00:00\",\n        \"lastModTime\": \"2025-11-28T20:28:22.164+00:00\"\n    },\n    {\n        \"skillId\": 554,\n        \"skillName\": \"Advanced Python\",\n        \"creationTime\": \"2025-11-28T20:28:22.277+00:00\",\n        \"lastModTime\": \"2025-11-28T20:28:22.277+00:00\"\n    },\n    {\n        \"skillId\": 555,\n        \"skillName\": \"Database SQL\",\n        \"creationTime\": \"2025-11-28T20:28:22.397+00:00\",\n        \"lastModTime\": \"2025-11-28T20:28:22.397+00:00\"\n    },\n    {\n        \"skillId\": 556,\n        \"skillName\": \"Selenium Automation,\",\n        \"creationTime\": \"2025-11-28T20:28:22.450+00:00\",\n        \"lastModTime\": \"2025-11-28T20:28:22.450+00:00\"\n    },\n    {\n        \"skillId\": 558,\n        \"skillName\": \"DevOps Tools\",\n        \"creationTime\": \"2025-11-28T20:28:22.689+00:00\",\n        \"lastModTime\": \"2025-11-28T20:28:22.689+00:00\"\n    },\n    {\n        \"skillId\": 559,\n        \"skillName\": \"Cloud Computing\",\n        \"creationTime\": \"2025-11-28T20:28:22.746+00:00\",\n        \"lastModTime\": \"2025-11-28T20:28:22.746+00:00\"\n    },\n    {\n        \"skillId\": 560,\n        \"skillName\": \"Cyber Security\",\n        \"creationTime\": \"2025-11-28T20:28:22.810+00:00\",\n        \"lastModTime\": \"2025-11-28T20:28:22.810+00:00\"\n    },\n    {\n        \"skillId\": 561,\n        \"skillName\": \"React Frontend\",\n        \"creationTime\": \"2025-11-28T20:28:22.981+00:00\",\n        \"lastModTime\": \"2025-11-28T20:28:22.981+00:00\"\n    },\n    {\n        \"skillId\": 693,\n        \"skillName\": \"SCDFnewversion\",\n        \"creationTime\": \"2025-11-20T19:39:39.762+00:00\",\n        \"lastModTime\": \"2025-11-20T19:39:39.762+00:00\"\n    },\n    {\n        \"skillId\": 694,\n        \"skillName\": \"SCDnewversion\",\n        \"creationTime\": \"2025-11-20T19:39:39.762+00:00\",\n        \"lastModTime\": \"2025-11-20T19:39:39.762+00:00\"\n    },\n    {\n        \"skillId\": 567,\n        \"skillName\": \"{{skillName}}\",\n        \"creationTime\": \"2025-11-28T21:03:18.790+00:00\",\n        \"lastModTime\": \"2025-11-28T21:03:18.790+00:00\"\n    },\n    {\n        \"skillId\": 568,\n        \"skillName\": \"SCDversion\",\n        \"creationTime\": \"2025-11-20T19:39:39.762+00:00\",\n        \"lastModTime\": \"2025-11-20T19:39:39.762+00:00\"\n    },\n    {\n        \"skillId\": 569,\n        \"skillName\": \"Selenium\",\n        \"creationTime\": \"2025-11-28T22:26:58.778+00:00\",\n        \"lastModTime\": \"2025-11-28T22:26:58.778+00:00\"\n    },\n    {\n        \"skillId\": 570,\n        \"skillName\": \"skill1\",\n        \"creationTime\": \"2025-11-28T22:26:58.778+00:00\",\n        \"lastModTime\": \"2025-11-28T22:26:58.778+00:00\"\n    },\n    {\n        \"skillId\": 571,\n        \"skillName\": \"santhana\",\n        \"creationTime\": \"2025-11-28T23:37:26.145+00:00\",\n        \"lastModTime\": \"2025-11-28T23:37:26.145+00:00\"\n    },\n    {\n        \"skillId\": 611,\n        \"skillName\": \"{{randomString}}\",\n        \"creationTime\": \"2025-11-28T23:41:36.411+00:00\",\n        \"lastModTime\": \"2025-11-28T23:41:36.411+00:00\"\n    },\n    {\n        \"skillId\": 613,\n        \"skillName\": \"{{$randomString}}\",\n        \"creationTime\": \"2025-11-28T23:41:36.411+00:00\",\n        \"lastModTime\": \"2025-11-28T23:41:36.411+00:00\"\n    },\n    {\n        \"skillId\": 615,\n        \"skillName\": \"Gk8pXq6MwuPY\",\n        \"creationTime\": \"2025-11-28T23:41:36.411+00:00\",\n        \"lastModTime\": \"2025-11-28T23:41:36.411+00:00\"\n    },\n    {\n        \"skillId\": 616,\n        \"skillName\": \"XgrcNoKtgB\",\n        \"creationTime\": \"2025-11-28T22:26:58.778+00:00\",\n        \"lastModTime\": \"2025-11-28T22:26:58.778+00:00\"\n    },\n    {\n        \"skillId\": 617,\n        \"skillName\": \"VcuHC4ogQ5\",\n        \"creationTime\": \"2025-11-28T22:26:58.778+00:00\",\n        \"lastModTime\": \"2025-11-28T22:26:58.778+00:00\"\n    },\n    {\n        \"skillId\": 618,\n        \"skillName\": \"WTdcbvaLZm\",\n        \"creationTime\": \"2025-11-28T22:26:58.778+00:00\",\n        \"lastModTime\": \"2025-11-28T22:26:58.778+00:00\"\n    },\n    {\n        \"skillId\": 755,\n        \"skillName\": \"Microsoft12345678\",\n        \"creationTime\": \"2025-11-30T05:05:47.859+00:00\",\n        \"lastModTime\": \"2025-11-30T05:05:47.859+00:00\"\n    },\n    {\n        \"skillId\": 750,\n        \"skillName\": \"Microsoft1234567\",\n        \"creationTime\": \"2025-11-30T04:07:20.140+00:00\",\n        \"lastModTime\": \"2025-11-30T04:07:20.140+00:00\"\n    },\n    {\n        \"skillId\": 756,\n        \"skillName\": \"Korean14\",\n        \"creationTime\": \"2025-11-30T05:05:48.145+00:00\",\n        \"lastModTime\": \"2025-11-30T05:05:48.145+00:00\"\n    },\n    {\n        \"skillId\": 907,\n        \"skillName\": \"Python\",\n        \"creationTime\": \"2025-12-01T01:59:18.453+00:00\",\n        \"lastModTime\": \"2025-12-01T01:59:18.453+00:00\"\n    },\n    {\n        \"skillId\": 908,\n        \"skillName\": \"DevOps\",\n        \"creationTime\": \"2025-12-01T01:59:18.704+00:00\",\n        \"lastModTime\": \"2025-12-01T01:59:18.704+00:00\"\n    },\n    {\n        \"skillId\": 909,\n        \"skillName\": \"Advanced Java123\",\n        \"creationTime\": \"2025-12-01T01:59:19.079+00:00\",\n        \"lastModTime\": \"2025-12-01T01:59:19.079+00:00\"\n    },\n    {\n        \"skillId\": 910,\n        \"skillName\": \"Python Basics\",\n        \"creationTime\": \"2025-12-01T01:59:19.205+00:00\",\n        \"lastModTime\": \"2025-12-01T01:59:19.205+00:00\"\n    },\n    {\n        \"skillId\": 911,\n        \"skillName\": \"Selenium WebDriver\",\n        \"creationTime\": \"2025-12-01T01:59:19.338+00:00\",\n        \"lastModTime\": \"2025-12-01T01:59:19.338+00:00\"\n    },\n    {\n        \"skillId\": 917,\n        \"skillName\": \"\",\n        \"creationTime\": \"2025-12-01T03:21:39.258+00:00\",\n        \"lastModTime\": \"2025-12-01T03:21:39.258+00:00\"\n    },\n    {\n        \"skillId\": 887,\n        \"skillName\": \"PHP\",\n        \"creationTime\": \"2025-11-27T06:31:04.579+00:00\",\n        \"lastModTime\": \"2025-11-27T06:31:04.579+00:00\"\n    },\n    {\n        \"skillId\": 888,\n        \"skillName\": \"T\",\n        \"creationTime\": \"2025-11-27T06:31:04.579+00:00\",\n        \"lastModTime\": \"2025-11-27T06:31:04.579+00:00\"\n    },\n    {\n        \"skillId\": 889,\n        \"skillName\": \"C#\",\n        \"creationTime\": \"2025-11-27T06:31:04.579+00:00\",\n        \"lastModTime\": \"2025-11-27T06:31:04.579+00:00\"\n    },\n    {\n        \"skillId\": 890,\n        \"skillName\": \"HL7\",\n        \"creationTime\": \"2025-11-27T06:31:04.579+00:00\",\n        \"lastModTime\": \"2025-11-27T06:31:04.579+00:00\"\n    }\n]"
-								}
-							]
+							"response": []
 						},
 						{
 							"name": "Get Skill by skill name",
@@ -6762,7 +6627,7 @@
 									"variable": [
 										{
 											"key": "skillMasterName",
-											"value": "Java Basics"
+											"value": "Python class2"
 										}
 									]
 								}
@@ -6831,8 +6696,8 @@
 									"listen": "test",
 									"script": {
 										"exec": [
-											"pm.test(\"Status code is 400\", function () {\r",
-											"\tpm.response.to.have.status(400);\r",
+											"pm.test(\"Status code is not 200\", function () {\r",
+											"    pm.expect(pm.response.code).to.not.equal(200);\r",
 											"});"
 										],
 										"type": "text/javascript",
@@ -6894,9 +6759,8 @@
 									"listen": "test",
 									"script": {
 										"exec": [
-											"\r",
-											"pm.test(\"Status code is 400\", function () {\r",
-											"\tpm.response.to.have.status(400);\r",
+											"pm.test(\"Status code is not 200\", function () {\r",
+											"    pm.expect(pm.response.code).to.not.equal(200);\r",
 											"});"
 										],
 										"type": "text/javascript",
@@ -6963,8 +6827,8 @@
 									"listen": "test",
 									"script": {
 										"exec": [
-											"pm.test(\"Status code is 400\", function () {\r",
-											"\tpm.response.to.have.status(400);\r",
+											"pm.test(\"Status code is not 200\", function () {\r",
+											"    pm.expect(pm.response.code).to.not.equal(200);\r",
 											"});"
 										],
 										"type": "text/javascript",
@@ -7011,119 +6875,7 @@
 									]
 								}
 							},
-							"response": [
-								{
-									"name": "Create New Skill - Duplicate Skill Name",
-									"originalRequest": {
-										"method": "POST",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "Bearer {{authToken}}",
-												"type": "text"
-											},
-											{
-												"key": "Content-Type",
-												"value": "application/json",
-												"type": "text"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\r\n \r\n  \"skillName\": \"reading\"\r\n  \r\n}",
-											"options": {
-												"raw": {
-													"language": "json"
-												}
-											}
-										},
-										"url": {
-											"raw": "{{baseUrl}}/SaveSkillMaster",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"SaveSkillMaster"
-											]
-										}
-									},
-									"status": "Unauthorized",
-									"code": 401,
-									"_postman_previewlanguage": "",
-									"header": [
-										{
-											"key": "Cache-Control",
-											"value": "no-cache, no-store, max-age=0, must-revalidate"
-										},
-										{
-											"key": "Content-Length",
-											"value": "0"
-										},
-										{
-											"key": "Date",
-											"value": "Mon, 01 Dec 2025 04:47:50 GMT"
-										},
-										{
-											"key": "Expires",
-											"value": "0"
-										},
-										{
-											"key": "Nel",
-											"value": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}"
-										},
-										{
-											"key": "Pragma",
-											"value": "no-cache"
-										},
-										{
-											"key": "Report-To",
-											"value": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=x3SPs1AIKsAg9UKRWh9Lplj5F6aS1kKrfv4qajymTNk%3D\\u0026sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add\\u0026ts=1764564470\"}],\"max_age\":3600}"
-										},
-										{
-											"key": "Reporting-Endpoints",
-											"value": "heroku-nel=\"https://nel.heroku.com/reports?s=x3SPs1AIKsAg9UKRWh9Lplj5F6aS1kKrfv4qajymTNk%3D&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&ts=1764564470\""
-										},
-										{
-											"key": "Server",
-											"value": "Heroku"
-										},
-										{
-											"key": "Strict-Transport-Security",
-											"value": "max-age=31536000 ; includeSubDomains"
-										},
-										{
-											"key": "Vary",
-											"value": "Origin"
-										},
-										{
-											"key": "Vary",
-											"value": "Access-Control-Request-Method"
-										},
-										{
-											"key": "Vary",
-											"value": "Access-Control-Request-Headers"
-										},
-										{
-											"key": "Via",
-											"value": "1.1 heroku-router"
-										},
-										{
-											"key": "X-Content-Type-Options",
-											"value": "nosniff"
-										},
-										{
-											"key": "X-Frame-Options",
-											"value": "DENY"
-										},
-										{
-											"key": "X-Xss-Protection",
-											"value": "0"
-										}
-									],
-									"cookie": [],
-									"body": ""
-								}
-							]
+							"response": []
 						},
 						{
 							"name": "Update Skill by skill id - Non existent Id",
