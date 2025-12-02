@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "51a3183b-ea6b-4aad-a011-346c0a11feb1",
+		"_postman_id": "e1139adc-df5c-45fc-9f7f-779078efa200",
 		"name": "LMS Hackathon",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "50244332",
-		"_collection_link": "https://saloniranka0303-4395223.postman.co/workspace/Saloni's-Workspace~c508e76f-3bd3-423c-8be0-4fb6ac1551a7/collection/50244332-51a3183b-ea6b-4aad-a011-346c0a11feb1?action=share&source=collection_link&creator=50244332"
+		"_exporter_id": "49904469",
+		"_collection_link": "https://dishagupta1411-536017.postman.co/workspace/Disha_WS~b9d4ec54-c0e1-4413-8613-4d7fb2a0ba52/collection/49904469-e1139adc-df5c-45fc-9f7f-779078efa200?action=share&source=collection_link&creator=49904469"
 	},
 	"item": [
 		{
@@ -4915,6 +4915,26 @@
 										"type": "text/javascript",
 										"packages": {}
 									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// Generate random 10-digit phone number",
+											"let random10Digit = Math.floor(1000000000 + Math.random() * 9000000000);",
+											"",
+											"// Add +91 prefix with space",
+											"let formattedPhone = `+91 ${random10Digit}`;",
+											"",
+											"// Save to environment",
+											"pm.environment.set(\"randomPhoneNumber\", formattedPhone);",
+											"",
+											"console.log(\"Generated Phone:\", formattedPhone);",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
 								}
 							],
 							"request": {
@@ -4928,7 +4948,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\"userComments\": \"na\",\n\"userEduPg\": \"ME\",\n\"userEduUg\": \"BE\",\n\"userFirstName\": \"Shreya\",\n\"userId\": \"U435\",\n\"userLastName\": \"Ghoshal\",\n\"userMiddleName\": \"Singh\",\n\"userLinkedinUrl\": \"https://www.linkedin.com/in/shreyaghoshal4/\",\n\"userLocation\": \"Dallas\",\n\"userLoginEmail\": \"Robert.Louis@gmail.com\" ,\n\"userPhoneNumber\": \"+91 4214568899\",\n\"userTimeZone\": \"CST\",\n\"userVisaStatus\": \"H4-EAD\"\n}",
+									"raw": "{\n\"userComments\": \"na\",\n\"userEduPg\": \"ME\",\n\"userEduUg\": \"BE\",\n\"userFirstName\": \"Shreya\",\n\"userId\": \"U435\",\n\"userLastName\": \"Ghoshal\",\n\"userMiddleName\": \"Singh\",\n\"userLinkedinUrl\": \"https://www.linkedin.com/in/shreyaghoshal4/\",\n\"userLocation\": \"Dallas\",\n\"userLoginEmail\": \"Robert.Louis@gmail.com\" ,\n\"userPhoneNumber\": \"{{randomPhoneNumber}}\",\n\"userTimeZone\": \"CST\",\n\"userVisaStatus\": \"H4-EAD\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -5215,6 +5235,38 @@
 						},
 						{
 							"name": "Update User Login Status",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// Generate random 6-letter string",
+											"function randomLetters(length) {",
+											"    const chars = \"abcdefghijklmnopqrstuvwxyz\";",
+											"    let result = \"\";",
+											"    for (let i = 0; i < length; i++) {",
+											"        result += chars.charAt(Math.floor(Math.random() * chars.length));",
+											"    }",
+											"    return result;",
+											"}",
+											"",
+											"// Generate random 4-digit number",
+											"let randomDigits = Math.floor(1000 + Math.random() * 9000);",
+											"",
+											"// Combine to form email",
+											"let email = `${randomLetters(6)}${randomDigits}@gmail.com`;",
+											"",
+											"// Save email to environment",
+											"pm.environment.set(\"randomUserEmail\", email);",
+											"",
+											"console.log(\"Generated Email:\", email);",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
 							"request": {
 								"method": "PUT",
 								"header": [
@@ -5226,7 +5278,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\"loginStatus\": \"Active\",\n\"roleIds\": [\n\"R01\"\n],\n\"status\": \"Active\",\n\"userLoginEmail\": \"xyzabc1123@gmail.com\"\n}",
+									"raw": "{\n\"loginStatus\": \"Active\",\n\"roleIds\": [\n\"R01\"\n],\n\"status\": \"Active\",\n\"userLoginEmail\": \"{{randomUserEmail}}\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"

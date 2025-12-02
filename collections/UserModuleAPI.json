@@ -1,9 +1,10 @@
 {
 	"info": {
-		"_postman_id": "d9651883-1c11-49da-96de-51ee819c744f",
+		"_postman_id": "16d40470-edfd-441f-8811-6ae607556f71",
 		"name": "LMSUserModule",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "25015237"
+		"_exporter_id": "49904469",
+		"_collection_link": "https://dishagupta1411-536017.postman.co/workspace/Disha_WS~b9d4ec54-c0e1-4413-8613-4d7fb2a0ba52/collection/49904469-16d40470-edfd-441f-8811-6ae607556f71?action=share&source=collection_link&creator=49904469"
 	},
 	"item": [
 		{
@@ -25,20 +26,27 @@
 									"    pm.expect(jsonData).to.have.property('userId');\r",
 									"    pm.environment.set(\"userId\",jsonData.user.userId);\r",
 									"})\r",
-									"//var jsonData=pm.response.json();\r",
-									"//if(jsonData)\r",
-									"//{\r",
-									"    //console.log(jsonData.user.userId);\r",
-									"    //pm.collectionVariables.set(\"userId\",jsonData.user.userId);or\r",
-									"    //pm.enviornmentVariables.set(\"userId\",jsonData.user.userId);\r",
-									"   // console.log(pm.collectionVariables.get(\"userId\"));\r",
-									"//}\r",
 									"\r",
+									"// Parse the JSON response\r",
+									"let res = pm.response.json();\r",
+									"\r",
+									"// Defensive check and save\r",
+									"if (res && res.user && res.user.userId) {\r",
+									"  let userId = res.user.userId;\r",
+									"  pm.environment.set(\"userId\", userId); // saves to current environment\r",
+									"  console.log(\"Saved userId:\", userId);\r",
+									"  pm.test(\"userId saved to environment\", function () {\r",
+									"    pm.expect(pm.environment.get(\"userId\")).to.eql(userId);\r",
+									"  });\r",
+									"} else {\r",
+									"  pm.test(\"userId exists in response\", function () {\r",
+									"    pm.expect.fail(\"userId not found in response.\");\r",
+									"  });\r",
+									"}\r",
 									""
 								],
 								"type": "text/javascript",
-								"packages": {},
-								"requests": {}
+								"packages": {}
 							}
 						},
 						{
@@ -48,8 +56,7 @@
 									""
 								],
 								"type": "text/javascript",
-								"packages": {},
-								"requests": {}
+								"packages": {}
 							}
 						}
 					],
@@ -69,7 +76,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{ \r\n\"userComments\": \"APHackathons\",\r\n\"userEduPg\": \"Msc\",\r\n\"userEduUg\": \"Bsc\",\r\n\"userFirstName\": \"Virat\",\r\n\"userLastName\": \"Kumar\",\r\n\"userLinkedinUrl\": \"https://www.linkedin.com/in/Kumar33/\",\r\n\"userLocation\": \"USA\",\r\n\"userMiddleName\": \"Rajan\",\r\n\"userPhoneNumber\": \"+91 804647459\",\r\n\"userRoleMaps\": [\r\n{\r\n\"roleId\": \"R02\",\r\n\"userRoleStatus\": \"Active\"\r\n}\r\n],\r\n\"userTimeZone\": \"EST\",\r\n\"userVisaStatus\": \"H1B\",\r\n\"userLogin\": {\r\n\"userLoginEmail\": \"rdham34@gmail.com\",\r\n\"loginStatus\" : \"Active\",\r\n\"status\": \"Active\"\r\n} \r\n}",
+							"raw": "{ \r\n\"userComments\": \"APHackathons\",\r\n\"userEduPg\": \"Msc\",\r\n\"userEduUg\": \"Bsc\",\r\n\"userFirstName\": \"Rohit\",\r\n\"userLastName\": \"Sharma\",\r\n\"userLinkedinUrl\": \"https://www.linkedin.com/in/sharma3400/\",\r\n\"userLocation\": \"USA\",\r\n\"userMiddleName\": \"Rajan\",\r\n\"userPhoneNumber\": \"+91 4216467059\",\r\n\"userRoleMaps\": [\r\n{\r\n\"roleId\": \"R02\",\r\n\"userRoleStatus\": \"Active\"\r\n}\r\n],\r\n\"userTimeZone\": \"EST\",\r\n\"userVisaStatus\": \"H1B\",\r\n\"userLogin\": {\r\n\"userLoginEmail\": \"sharma3400@gmail.com\",\r\n\"loginStatus\" : \"Active\",\r\n\"status\": \"Active\"\r\n} \r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -98,11 +105,71 @@
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
-									"});"
+									"});\r",
+									"pm.test(\"Response is an array\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.be.an('array');\r",
+									"});\r",
+									"\r",
+									"var users = pm.response.json();\r",
+									"pm.test(\"Each user contains required fields\", function () {\r",
+									"    \r",
+									"    users.forEach(function(users) {\r",
+									"        pm.expect(users).to.have.property('userId');\r",
+									"        pm.expect(users).to.have.property('userComments');\r",
+									"        pm.expect(users).to.have.property('userEduPg');\r",
+									"        pm.expect(users).to.have.property('userEduUg');\r",
+									"        pm.expect(users).to.have.property('userFirstName'); \r",
+									"        pm.expect(users).to.have.property('userLastName');\r",
+									"        pm.expect(users).to.have.property('userLinkedinUrl');\r",
+									"        pm.expect(users).to.have.property('userLocation');\r",
+									"        pm.expect(users).to.have.property('userMiddleName'); \r",
+									"        pm.expect(users).to.have.property('userPhoneNumber'); \r",
+									"        pm.expect(users).to.have.property('userTimeZone'); \r",
+									"        pm.expect(users).to.have.property('userVisaStatus');\r",
+									"        pm.expect(users).to.have.property('userLoginEmail');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"function randomLetters(len) {\r",
+									"    const letters = \"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz\";\r",
+									"    let s = \"\";\r",
+									"    for (let i = 0; i < len; i++) {\r",
+									"        s += letters.charAt(Math.floor(Math.random() * letters.length));\r",
+									"    }\r",
+									"    pm.collectionVariables.set(\"randomLetters\", s);\r",
+									"}\r",
+									"\r",
+									"if (users && users.length > 0) {\r",
+									"    const activeUsers = users.filter(user => \r",
+									"        user.userStatus && user.userStatus.toLowerCase() === 'active'\r",
+									"    );\r",
+									"\r",
+									"    if (activeUsers && activeUsers.length > 0) {\r",
+									"        const sorted = activeUsers.sort((a, b) => a.userId - b.userId);\r",
+									"        \r",
+									"        // For GET operations\r",
+									"        pm.environment.set(\"getUserId\", sorted[0].userId);\r",
+									"        \r",
+									"            \r",
+									"        const timestamp = Date.now();\r",
+									"\r",
+									"        // For UPDATE operations\r",
+									"        if (sorted.length > 1) {\r",
+									"            pm.environment.set(\"updateByUserId\", sorted[1].userId);\r",
+									"         \r",
+									"        }\r",
+									"        \r",
+									"        // For DELETE operations\r",
+									"        if (sorted.length > 2) {\r",
+									"            pm.environment.set(\"deleteUserId\", sorted[2].UserId);\r",
+									"        }\r",
+									"        console.log(\"Test data setup complete!\");\r",
+									"    }\r",
+									"}"
 								],
 								"type": "text/javascript",
-								"packages": {},
-								"requests": {}
+								"packages": {}
 							}
 						}
 					],
@@ -302,8 +369,7 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"packages": {},
-								"requests": {}
+								"packages": {}
 							}
 						}
 					],
@@ -329,13 +395,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/users/U61",
+							"raw": "{{baseUrl}}/users/{{userId}}",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"users",
-								"U61"
+								"{{userId}}"
 							]
 						}
 					},
@@ -455,8 +521,7 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"packages": {},
-								"requests": {}
+								"packages": {}
 							}
 						}
 					],
@@ -482,14 +547,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/users/programBatch/1",
+							"raw": "{{baseUrl}}/users/programBatch/{{getBatchId}}",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"users",
 								"programBatch",
-								"1"
+								"{{getBatchId}}"
 							]
 						}
 					},
@@ -579,12 +644,10 @@
 									"    } else {",
 									"        console.warn(\"Phone number not provided, skipping validation.\");",
 									"    }",
-									"});",
-									""
+									"});"
 								],
 								"type": "text/javascript",
-								"packages": {},
-								"requests": {}
+								"packages": {}
 							}
 						}
 					],
@@ -598,18 +661,122 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/users/programs/7",
+							"raw": "{{baseUrl}}/users/programs/{{getProgramIdForBatch}}",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"users",
 								"programs",
-								"7"
+								"{{getProgramIdForBatch}}"
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Get Users by ProgramID",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/users/programs/2",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"programs",
+										"2"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 01 Dec 2025 03:18:58 GMT"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "Nel",
+									"value": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Report-To",
+									"value": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=IkhxdizySvpCntEMP5LTyCJqT61CDv6HIm1VtguUqqM%3D\\u0026sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add\\u0026ts=1764559138\"}],\"max_age\":3600}"
+								},
+								{
+									"key": "Reporting-Endpoints",
+									"value": "heroku-nel=\"https://nel.heroku.com/reports?s=IkhxdizySvpCntEMP5LTyCJqT61CDv6HIm1VtguUqqM%3D&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&ts=1764559138\""
+								},
+								{
+									"key": "Server",
+									"value": "Heroku"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=31536000 ; includeSubDomains"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 heroku-router"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "X-Xss-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1683"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"userId\": \"U06\",\n        \"userFirstName\": \"Sylvia\",\n        \"userLastName\": \"Rajan\",\n        \"userPhoneNumber\": \"9562009911\",\n        \"userLocation\": \"India\",\n        \"userTimeZone\": \"IST\",\n        \"userLinkedinUrl\": \"https://www.linkedin.com/in/SyliviaRajan/\",\n        \"userEduUg\": \"Electronics and Electrical Engineering\",\n        \"userEduPg\": \" Computer Technology\",\n        \"userVisaStatus\": \"H4-EAD\",\n        \"userLoginEmail\": null\n    },\n    {\n        \"userId\": \"U08\",\n        \"userFirstName\": \"Maria\",\n        \"userLastName\": \"Peterson\",\n        \"userPhoneNumber\": \"6512391300\",\n        \"userLocation\": \"Ontario\",\n        \"userTimeZone\": \"CST\",\n        \"userLinkedinUrl\": \"https://www.linkedin.com/in/MariaPeterson/\",\n        \"userEduUg\": \"Information Sciences\",\n        \"userEduPg\": \" MBA\",\n        \"userVisaStatus\": \"Canada-Citizen\",\n        \"userLoginEmail\": null\n    },\n    {\n        \"userId\": \"U02\",\n        \"userFirstName\": \"Steve\",\n        \"userLastName\": \"Job\",\n        \"userPhoneNumber\": \"879123456\",\n        \"userLocation\": \"Idaho\",\n        \"userTimeZone\": \"PST\",\n        \"userLinkedinUrl\": \"https://www.linkedin.com/in/Steve Job/\",\n        \"userEduUg\": \"Mechanical Engineering\",\n        \"userEduPg\": \" Computer Science Engineering\",\n        \"userVisaStatus\": \"H4\",\n        \"userLoginEmail\": null\n    },\n    {\n        \"userId\": \"U155\",\n        \"userFirstName\": \"Ram\",\n        \"userLastName\": \"Palash\",\n        \"userMiddleName\": \"M\",\n        \"userPhoneNumber\": \"+91 8512457201\",\n        \"userLocation\": \"Connecticut\",\n        \"userTimeZone\": \"PST\",\n        \"userLinkedinUrl\": \"www.linkedin.com/jram\",\n        \"userEduUg\": \"Diploma\",\n        \"userEduPg\": \"BE Electrical\",\n        \"userComments\": \"Updated the User\",\n        \"userVisaStatus\": \"US-Citizen\",\n        \"userLoginEmail\": null\n    },\n    {\n        \"userId\": \"U150\",\n        \"userFirstName\": \"Swarna\",\n        \"userLastName\": \"Senthil\",\n        \"userMiddleName\": \"S\",\n        \"userPhoneNumber\": \"+1 8276882929\",\n        \"userLocation\": \"Chicago\",\n        \"userTimeZone\": \"CST\",\n        \"userLinkedinUrl\": \"https://www.linkedin.com/in/Swarna Senthil\",\n        \"userEduUg\": \"BSC\",\n        \"userEduPg\": \"MCA\",\n        \"userComments\": \"Update User for API Hackathon\",\n        \"userVisaStatus\": \"H4\",\n        \"userLoginEmail\": null\n    }\n]"
+						}
+					]
 				},
 				{
 					"name": "Get Users By roleID",
@@ -723,14 +890,14 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/users/roles/R03",
+							"raw": "{{baseUrl}}/users/roles/R02",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"users",
 								"roles",
-								"R03"
+								"R02"
 							]
 						}
 					},
@@ -850,31 +1017,6 @@
 					"response": []
 				},
 				{
-					"name": ".Get User BatchId by User Id",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{authToken}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{baseUrl}}/users/user/U04",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"users",
-								"user",
-								"U04"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Get User Details by Id",
 					"event": [
 						{
@@ -926,14 +1068,14 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/users/details/U10",
+							"raw": "{{baseUrl}}/users/details/{{userId}}",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"users",
 								"details",
-								"U10"
+								"{{userId}}"
 							]
 						}
 					},
@@ -968,6 +1110,26 @@
 								"type": "text/javascript",
 								"packages": {}
 							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Generate random 10-digit phone number",
+									"let random10Digit = Math.floor(1000000000 + Math.random() * 9000000000);",
+									"",
+									"// Add +91 prefix with space",
+									"let formattedPhone = `+91 ${random10Digit}`;",
+									"",
+									"// Save to environment",
+									"pm.environment.set(\"randomPhoneNumber\", formattedPhone);",
+									"",
+									"console.log(\"Generated Phone:\", formattedPhone);",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
 						}
 					],
 					"request": {
@@ -981,7 +1143,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\"userComments\": \"na\",\n\"userEduPg\": \"ME\",\n\"userEduUg\": \"BE\",\n\"userFirstName\": \"Shreya\",\n\"userId\": \"String\",\n\"userLastName\": \"Ghoshal\",\n\"userMiddleName\": \"Singh\",\n\"userLinkedinUrl\": \"https://www.linkedin.com/in/shreyaghoshal4/\",\n\"userLocation\": \"Dallas\",\n\"userLoginEmail\": \"Robert.Louis@gmail.com\" ,\n\"userPhoneNumber\": \"+91 3214568899\",\n\"userTimeZone\": \"CST\",\n\"userVisaStatus\": \"H4-EAD\"\n}",
+							"raw": "{\n\"userComments\": \"na\",\n\"userEduPg\": \"ME\",\n\"userEduUg\": \"BE\",\n\"userFirstName\": \"Shreya\",\n\"userId\": \"U435\",\n\"userLastName\": \"Ghoshal\",\n\"userMiddleName\": \"Singh\",\n\"userLinkedinUrl\": \"https://www.linkedin.com/in/shreyaghoshal4/\",\n\"userLocation\": \"Dallas\",\n\"userLoginEmail\": \"Robert.Louis@gmail.com\" ,\n\"userPhoneNumber\": \"{{randomPhoneNumber}}\",\n\"userTimeZone\": \"CST\",\n\"userVisaStatus\": \"H4-EAD\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -989,13 +1151,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/users/U05",
+							"raw": "{{baseUrl}}/users/{{userId}}",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"users",
-								"U05"
+								"{{userId}}"
 							]
 						}
 					},
@@ -1039,7 +1201,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\"userRoleList\": [\n{\n\"roleId\": \"R01\",\n\"userRoleStatus\": \"Active\"\n}\n]\n}",
+							"raw": "{\n\"userRoleList\": [\n{\n\"roleId\": \"R02\",\n\"userRoleStatus\": \"Active\"\n}\n]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1047,18 +1209,131 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/users/roleId/U08",
+							"raw": "{{baseUrl}}/users/roleId/{{userId}}",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"users",
 								"roleId",
-								"U08"
+								"{{userId}}"
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Update User RoleID",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\"userRoleList\": [\n{\n\"roleId\": \"R01\",\n\"userRoleStatus\": \"Active\"\n}\n]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/users/roleId/{{userId}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"roleId",
+										"{{userId}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Content-Length",
+									"value": "30"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/plain;charset=UTF-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 01 Dec 2025 03:06:40 GMT"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "Nel",
+									"value": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Report-To",
+									"value": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=CfOqVJG1B2gFwzFyHHlLYlCK1iLutAO1Ns6MNaIYbxY%3D\\u0026sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add\\u0026ts=1764558400\"}],\"max_age\":3600}"
+								},
+								{
+									"key": "Reporting-Endpoints",
+									"value": "heroku-nel=\"https://nel.heroku.com/reports?s=CfOqVJG1B2gFwzFyHHlLYlCK1iLutAO1Ns6MNaIYbxY%3D&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&ts=1764558400\""
+								},
+								{
+									"key": "Server",
+									"value": "Heroku"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=31536000 ; includeSubDomains"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 heroku-router"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "X-Xss-Protection",
+									"value": "0"
+								}
+							],
+							"cookie": [],
+							"body": "Role Id Updated for User: U479"
+						}
+					]
 				},
 				{
 					"name": "Assign Update User Role Program Batch Status",
@@ -1107,7 +1382,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\"programId\": 1,\n\"roleId\": \"R01\",\n\"userId\": \"U02\",\n\"userRoleProgramBatches\": [\n{\n\"batchId\":1,\n\"userRoleProgramBatchStatus\":\n\"Active\"\n}\n]\n}",
+							"raw": "{\n\"programId\": 1,\n\"roleId\": \"R02\",\n\"userId\": \"U678\",\n\"userRoleProgramBatches\": [\n{\n\"batchId\":1,\n\"userRoleProgramBatchStatus\":\n\"Active\"\n}\n]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1115,14 +1390,39 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/users/roleProgramBatchStatus/U02",
+							"raw": "{{baseUrl}}/users/roleProgramBatchStatus/{{userId}}",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"users",
 								"roleProgramBatchStatus",
-								"U02"
+								"{{userId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User BatchId by User Id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/users/user/{{userId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"user",
+								"{{userId}}"
 							]
 						}
 					},
@@ -1130,6 +1430,38 @@
 				},
 				{
 					"name": "Update User Login Status",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Generate random 6-letter string",
+									"function randomLetters(length) {",
+									"    const chars = \"abcdefghijklmnopqrstuvwxyz\";",
+									"    let result = \"\";",
+									"    for (let i = 0; i < length; i++) {",
+									"        result += chars.charAt(Math.floor(Math.random() * chars.length));",
+									"    }",
+									"    return result;",
+									"}",
+									"",
+									"// Generate random 4-digit number",
+									"let randomDigits = Math.floor(1000 + Math.random() * 9000);",
+									"",
+									"// Combine to form email",
+									"let email = `${randomLetters(6)}${randomDigits}@gmail.com`;",
+									"",
+									"// Save email to environment",
+									"pm.environment.set(\"randomUserEmail\", email);",
+									"",
+									"console.log(\"Generated Email:\", email);",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "PUT",
 						"header": [
@@ -1141,7 +1473,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\"loginStatus\": \"Active\",\n\"roleIds\": [\n\"R01\"\n],\n\"status\": \"Active\",\n\"userLoginEmail\": \"xyzabc@gmail.com\"\n}",
+							"raw": "{\n\"loginStatus\": \"Active\",\n\"roleIds\": [\n\"R01\"\n],\n\"status\": \"Active\",\n\"userLoginEmail\": \"{{randomUserEmail}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1149,18 +1481,131 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/users/userLogin/U03",
+							"raw": "{{baseUrl}}/users/userLogin/{{userId}}",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"users",
 								"userLogin",
-								"U03"
+								"{{userId}}"
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Update User Login Status",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\"loginStatus\": \"Active\",\n\"password\": \"Passo7*word\",\n\"roleIds\": [\n\"R01\"\n],\n\"status\": \"Active\",\n\"userLoginEmail\": \"xyzabc023@gmail.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/users/userLogin/{{userId}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"userLogin",
+										"{{userId}}"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 01 Dec 2025 03:16:35 GMT"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "Nel",
+									"value": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Report-To",
+									"value": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=MgWpOVZPWqjYTuSYZErSOex%2FTK1QOT8ISUSE%2B0xr1O4%3D\\u0026sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add\\u0026ts=1764558995\"}],\"max_age\":3600}"
+								},
+								{
+									"key": "Reporting-Endpoints",
+									"value": "heroku-nel=\"https://nel.heroku.com/reports?s=MgWpOVZPWqjYTuSYZErSOex%2FTK1QOT8ISUSE%2B0xr1O4%3D&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&ts=1764558995\""
+								},
+								{
+									"key": "Server",
+									"value": "Heroku"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=31536000 ; includeSubDomains"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 heroku-router"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "X-Xss-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Content-Length",
+									"value": "148"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"JSON parse error: Unrecognized field \\\"password\\\" (class com.numpyninja.lms.dto.UserLoginDto), not marked as ignorable\",\n    \"success\": false\n}"
+						}
+					]
 				},
 				{
 					"name": "Delete User",
@@ -1199,13 +1644,13 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{baseUrl}}/users/U101",
+							"raw": "{{baseUrl}}/users/{{userId}}",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"users",
-								"U101"
+								"{{userId}}"
 							]
 						}
 					},
