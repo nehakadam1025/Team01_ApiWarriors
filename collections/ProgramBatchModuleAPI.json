@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "db1cf5fc-ec13-48ca-b7ff-c70fbc5a4c30",
+		"_postman_id": "96ca8228-b65f-4129-abd3-9d1a5a4a9370",
 		"name": "LMS Program Batch Module",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "50024072",
-		"_collection_link": "https://nehak2025-2536606.postman.co/workspace/Neha's-Workspace~bd961bac-afb6-4a46-85fb-ee5e6c14829e/collection/50024072-db1cf5fc-ec13-48ca-b7ff-c70fbc5a4c30?action=share&source=collection_link&creator=50024072"
+		"_collection_link": "https://nehak2025-2536606.postman.co/workspace/Neha's-Workspace~bd961bac-afb6-4a46-85fb-ee5e6c14829e/collection/50024072-96ca8228-b65f-4129-abd3-9d1a5a4a9370?action=share&source=collection_link&creator=50024072"
 	},
 	"item": [
 		{
@@ -17,124 +17,113 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});\r",
-									"const response = pm.response.json();\r",
-									"\r",
-									"// Test for response body structure\r",
-									"pm.test(\"Response is an array\", function () {\r",
-									"    pm.expect(response).to.be.an('array');\r",
-									"});\r",
-									"\r",
-									"// Loop through each batch and check properties\r",
-									"response.forEach(batch => {\r",
-									"    pm.test(`Batch ID ${batch.batchId} has required fields`, function () {\r",
-									"        pm.expect(batch).to.have.all.keys('batchId', 'batchName', 'batchDescription', 'batchStatus', 'batchNoOfClasses', 'programId', 'programName');\r",
-									"    });\r",
-									"});\r",
-									"\r",
-									"const jsonData = pm.response.json();\r",
-									"const batches = jsonData || [];\r",
-									"\r",
-									"// Helper function to generate random letters\r",
-									"function randomLetters(len) {\r",
-									"    const letters = \"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz\";\r",
-									"    let s = \"\";\r",
-									"    for (let i = 0; i < len; i++) {\r",
-									"        s += letters.charAt(Math.floor(Math.random() * letters.length));\r",
-									"    }\r",
-									"    return s;\r",
-									"}\r",
-									"\r",
-									"// Helper function to generate random numbers (1-99)\r",
-									"function randomBatchNumber() {\r",
-									"    return Math.floor(Math.random() * 99) + 1;\r",
-									"}\r",
-									"\r",
-									"if (batches && batches.length > 0) {\r",
-									"    // Filter active batches\r",
-									"    const activeBatches = batches.filter(batch => \r",
-									"        batch.batchStatus && batch.batchStatus.toLowerCase() === 'active'\r",
-									"    );\r",
-									"\r",
-									"    if (activeBatches && activeBatches.length > 0) {\r",
-									"        // Sort by batchId\r",
-									"        const sorted = activeBatches.sort((a, b) => a.batchId - b.batchId);\r",
-									"        \r",
-									"        const timestamp = Date.now();\r",
-									"        \r",
-									"        // For GET operations - use first batch\r",
-									"        pm.environment.set(\"getBatchId\", sorted[0].batchId);\r",
-									"        pm.environment.set(\"getBatchName\", sorted[0].batchName);\r",
-									"        \r",
-									"        // For GET by Program ID\r",
-									"        if (sorted[0].programId) {\r",
-									"            pm.environment.set(\"getProgramIdForBatch\", sorted[0].programId);\r",
-									"        }\r",
-									"        \r",
-									"        // Store program name for creating batch names\r",
-									"        if (sorted[0].programName) {\r",
-									"            pm.environment.set(\"programNameForBatch\", sorted[0].programName);\r",
-									"            const batchSeq = randomBatchNumber();\r",
-									"            pm.environment.set(\"newBatchName\", `${sorted[0].programName}${batchSeq}`);\r",
-									"        }\r",
-									"        \r",
-									"        // For CREATE - generate unique batch data\r",
-									"        pm.environment.set(\"newBatchDescription\", `Batch-${randomLetters(4)}`);\r",
-									"        pm.environment.set(\"newBatchNoOfClasses\", Math.floor(Math.random() * 50) + 10); // 10-59 classes\r",
-									"        pm.environment.set(\"newBatchStatus\", \"Active\");\r",
-									"        pm.environment.set(\"newProgramId\", sorted[0].programId);\r",
-									"        \r",
-									"        // For UPDATE operations - use second batch\r",
-									"        if (sorted.length > 1) {\r",
-									"            pm.environment.set(\"updateByBatchId\", sorted[1].batchId);\r",
-									"            pm.environment.set(\"updateByBatchName\", sorted[1].batchName);\r",
-									"            pm.environment.set(\"updatedBatchDescription\", `Updated-${timestamp}`);\r",
-									"            pm.environment.set(\"updatedBatchNoOfClasses\", Math.floor(Math.random() * 50) + 10);\r",
-									"            pm.environment.set(\"updateBatchStatus\", \"Active\");\r",
-									"            pm.environment.set(\"updateProgramId\", sorted[1].programId);\r",
-									"            pm.environment.set(\"updateProgramName\", sorted[1].programName);\r",
-									"        }\r",
-									"        \r",
-									"        // For DELETE operations - use last batch\r",
-									"        if (sorted.length > 2) {\r",
-									"            pm.environment.set(\"deleteBatchId\", sorted[sorted.length - 1].batchId);\r",
-									"        }\r",
-									"        \r",
-									"        console.log(\"✅ Batch test data setup complete!\");\r",
-									"        console.log(\"Total batches:\", batches.length);\r",
-									"        console.log(\"Active batches:\", activeBatches.length);\r",
-									"        console.log(\"New batch name:\", pm.environment.get(\"newBatchName\"));\r",
-									"    } else {\r",
-									"        console.log(\"⚠️ No active batches found!\");\r",
-									"    }\r",
-									"} else {\r",
-									"    console.log(\"⚠️ No batches returned in response!\");\r",
-									"}\r",
-									"\r",
-									"// Test assertions\r",
-									"pm.test(\"Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Response is an array\", function () {\r",
-									"    pm.expect(batches).to.be.an('array');\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Batches contain required fields\", function () {\r",
-									"    if (batches.length > 0) {\r",
-									"        pm.expect(batches[0]).to.have.property('batchId');\r",
-									"        pm.expect(batches[0]).to.have.property('batchName');\r",
-									"        pm.expect(batches[0]).to.have.property('programId');\r",
-									"        pm.expect(batches[0]).to.have.property('batchStatus');\r",
-									"    }\r",
-									"});\r",
-									"\r",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"const response = pm.response.json();",
+									"",
+									"// Test for response body structure",
+									"pm.test(\"Response is an array\", function () {",
+									"    pm.expect(response).to.be.an('array');",
+									"});",
+									"",
+									"// Loop through each batch and check properties",
+									"response.forEach(batch => {",
+									"    pm.test(`Batch ID ${batch.batchId} has required fields`, function () {",
+									"        pm.expect(batch).to.have.all.keys('batchId', 'batchName', 'batchDescription', 'batchStatus', 'batchNoOfClasses', 'programId', 'programName');",
+									"    });",
+									"});",
+									"",
+									"const jsonData = pm.response.json();",
+									"const batches = jsonData || [];",
+									"",
+									"// Helper function to generate random letters",
+									"function randomLetters(len) {",
+									"    const letters = \"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz\";",
+									"    let s = \"\";",
+									"    for (let i = 0; i < len; i++) {",
+									"        s += letters.charAt(Math.floor(Math.random() * letters.length));",
+									"    }",
+									"    return s;",
+									"}",
+									"",
+									"// Helper function to generate random numbers (1-99)",
+									"function randomBatchNumber() {",
+									"    return Math.floor(Math.random() * 99) + 1;",
+									"}",
+									"",
+									"if (batches && batches.length > 0) {",
+									"    // Filter active batches",
+									"    const activeBatches = batches.filter(batch => ",
+									"        batch.batchStatus && batch.batchStatus.toLowerCase() === 'active'",
+									"    );",
+									"",
+									"    if (activeBatches && activeBatches.length > 0) {",
+									"        // Sort by batchId",
+									"        const sorted = activeBatches.sort((a, b) => a.batchId - b.batchId);",
+									"        ",
+									"        const timestamp = Date.now();",
+									"        ",
+									"        // For GET operations - use first batch",
+									"        pm.environment.set(\"getBatchId\", sorted[0].batchId);",
+									"        pm.environment.set(\"getBatchName\", sorted[0].batchName);",
+									"        ",
+									"        // For GET by Program ID",
+									"        if (sorted[0].programId) {",
+									"            pm.environment.set(\"getProgramIdForBatch\", sorted[0].programId);",
+									"        }",
+									"        ",
+									"        // Store program name for creating batch names",
+									"        if (sorted[0].programName) {",
+									"            pm.environment.set(\"programNameForBatch\", sorted[0].programName);",
+									"            const batchSeq = randomBatchNumber();",
+									"            pm.environment.set(\"newBatchName\", `${sorted[0].programName}${batchSeq}`);",
+									"            batchSeq1 = randomBatchNumber();",
+									"            pm.environment.set(\"newBatchName4DescShort\", `${sorted[0].programName}${batchSeq1}`);",
+									"            batchSeq2 = randomBatchNumber();",
+									"            pm.environment.set(\"newBatchName4DescLong\", `${sorted[0].programName}${batchSeq2}`);",
+									"        }",
+									"        ",
+									"        // For CREATE - generate unique batch data",
+									"        pm.environment.set(\"newBatchDescription\", `Batch-${randomLetters(4)}`);",
+									"        pm.environment.set(\"newBatchNoOfClasses\", Math.floor(Math.random() * 50) + 10); // 10-59 classes",
+									"        pm.environment.set(\"newBatchStatus\", \"Active\");",
+									"        pm.environment.set(\"newProgramId\", sorted[0].programId);",
+									"        ",
+									"        pm.environment.set(\"updatedBatchDescription\", `Updated-${timestamp}`);",
+									"         console.log(\"✅ Batch test data setup complete!\");",
+									"        console.log(\"Total batches:\", batches.length);",
+									"        console.log(\"Active batches:\", activeBatches.length);",
+									"        console.log(\"New batch name:\", pm.environment.get(\"newBatchName\"));",
+									"    } else {",
+									"        console.log(\"⚠️ No active batches found!\");",
+									"    }",
+									"} else {",
+									"    console.log(\"⚠️ No batches returned in response!\");",
+									"}",
+									"",
+									"// Test assertions",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response is an array\", function () {",
+									"    pm.expect(batches).to.be.an('array');",
+									"});",
+									"",
+									"pm.test(\"Batches contain required fields\", function () {",
+									"    if (batches.length > 0) {",
+									"        pm.expect(batches[0]).to.have.property('batchId');",
+									"        pm.expect(batches[0]).to.have.property('batchName');",
+									"        pm.expect(batches[0]).to.have.property('programId');",
+									"        pm.expect(batches[0]).to.have.property('batchStatus');",
+									"    }",
+									"});",
 									""
 								],
 								"type": "text/javascript",
-								"packages": {}
+								"packages": {},
+								"requests": {}
 							}
 						}
 					],
@@ -184,7 +173,8 @@
 									""
 								],
 								"type": "text/javascript",
-								"packages": {}
+								"packages": {},
+								"requests": {}
 							}
 						}
 					],
@@ -222,20 +212,33 @@
 									"    pm.response.to.have.status(200);\r",
 									"});\r",
 									"\r",
-									"pm.test(\"Response contains required batch fields\", function () {\r",
-									"    const jsonData = pm.response.json();\r",
+									"const jsonData = pm.response.json();\r",
 									"\r",
-									"    pm.expect(jsonData).to.have.property(\"batchId\");\r",
-									"    pm.expect(jsonData).to.have.property(\"batchName\");\r",
-									"    pm.expect(jsonData).to.have.property(\"batchDescription\");\r",
-									"    pm.expect(jsonData).to.have.property(\"batchNoOfClasses\");\r",
-									"    pm.expect(jsonData).to.have.property(\"batchStatus\");\r",
-									"    pm.expect(jsonData).to.have.property(\"programId\");\r",
-									"    pm.expect(jsonData).to.have.property(\"programName\");\r",
-									"});"
+									"pm.test(\"Response is an array\", function () {\r",
+									"    pm.expect(jsonData).to.be.an('array');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response contains batches\", function () {\r",
+									"    pm.expect(jsonData.length).to.be.greaterThan(0);\r",
+									"});\r",
+									"\r",
+									"// Individual test for each batch\r",
+									"jsonData.forEach((batch, index) => {\r",
+									"    pm.test(`Batch ${index + 1} (ID: ${batch.batchId}) has all required fields`, function () {\r",
+									"        pm.expect(batch).to.have.property(\"batchId\");\r",
+									"        pm.expect(batch).to.have.property(\"batchName\");\r",
+									"        pm.expect(batch).to.have.property(\"batchDescription\");\r",
+									"        pm.expect(batch).to.have.property(\"batchNoOfClasses\");\r",
+									"        pm.expect(batch).to.have.property(\"batchStatus\");\r",
+									"        pm.expect(batch).to.have.property(\"programId\");\r",
+									"        pm.expect(batch).to.have.property(\"programName\");\r",
+									"    });\r",
+									"});\r",
+									""
 								],
 								"type": "text/javascript",
-								"packages": {}
+								"packages": {},
+								"requests": {}
 							}
 						}
 					],
@@ -273,20 +276,29 @@
 									"    pm.response.to.have.status(200);\r",
 									"});\r",
 									"\r",
-									"pm.test(\"Response contains required batch fields\", function () {\r",
+									"pm.test(\"Response is an array of batches\", function () {\r",
 									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.be.an('array');\r",
+									"    pm.expect(jsonData.length).to.be.greaterThan(0);\r",
+									"});\r",
 									"\r",
-									"    pm.expect(jsonData).to.have.property(\"batchId\");\r",
-									"    pm.expect(jsonData).to.have.property(\"batchName\");\r",
-									"    pm.expect(jsonData).to.have.property(\"batchDescription\");\r",
-									"    pm.expect(jsonData).to.have.property(\"batchNoOfClasses\");\r",
-									"    pm.expect(jsonData).to.have.property(\"batchStatus\");\r",
-									"    pm.expect(jsonData).to.have.property(\"programId\");\r",
-									"    pm.expect(jsonData).to.have.property(\"programName\");\r",
+									"pm.test(\"Each batch contains required fields\", function () {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    \r",
+									"    jsonData.forEach(batch => {\r",
+									"        pm.expect(batch).to.have.property(\"batchId\");\r",
+									"        pm.expect(batch).to.have.property(\"batchName\");\r",
+									"        pm.expect(batch).to.have.property(\"batchDescription\");\r",
+									"        pm.expect(batch).to.have.property(\"batchNoOfClasses\");\r",
+									"        pm.expect(batch).to.have.property(\"batchStatus\");\r",
+									"        pm.expect(batch).to.have.property(\"programId\");\r",
+									"        pm.expect(batch).to.have.property(\"programName\");\r",
+									"    });\r",
 									"});"
 								],
 								"type": "text/javascript",
-								"packages": {}
+								"packages": {},
+								"requests": {}
 							}
 						}
 					],
@@ -322,11 +334,12 @@
 								"exec": [
 									"const jsonData = pm.response.json();\r",
 									"\r",
-									"pm.test(\"Status code is 201 or 400\", function () {\r",
-									"    pm.expect([201, 400]).to.include(pm.response.code);\r",
+									"// Test 1: Status Code\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
 									"});\r",
 									"\r",
-									"if (pm.response.code === 201) {\r",
+									"\r",
 									"    pm.test(\"Batch created successfully\", function () {\r",
 									"        pm.expect(jsonData).to.have.property('batchId');\r",
 									"        pm.expect(jsonData.batchId).to.be.a('number');\r",
@@ -364,21 +377,16 @@
 									"    console.log(\"✅ Batch created successfully!\");\r",
 									"    console.log(\"Batch ID:\", jsonData.batchId);\r",
 									"    console.log(\"Batch Name:\", jsonData.batchName);\r",
-									"}\r",
 									"\r",
-									"if (pm.response.code === 400) {\r",
-									"    pm.test(\"Error response contains message\", function () {\r",
-									"        pm.expect(jsonData).to.have.property('message');\r",
-									"        pm.expect(jsonData).to.have.property('success');\r",
-									"        pm.expect(jsonData.success).to.be.false;\r",
-									"    });\r",
+									"\r",
+									"\r",
 									"    \r",
-									"    console.log(\"❌ Batch creation failed:\", jsonData.message);\r",
-									"}\r",
+									" \r",
 									""
 								],
 								"type": "text/javascript",
-								"packages": {}
+								"packages": {},
+								"requests": {}
 							}
 						}
 					],
@@ -419,24 +427,64 @@
 							"listen": "test",
 							"script": {
 								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"\r",
+									"// Test 1: Status Code\r",
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
 									"});\r",
 									"\r",
-									"pm.test(\"Response contains required batch fields\", function () {\r",
-									"    const jsonData = pm.response.json();\r",
 									"\r",
-									"    pm.expect(jsonData).to.have.property(\"batchId\");\r",
-									"    pm.expect(jsonData).to.have.property(\"batchName\");\r",
-									"    pm.expect(jsonData).to.have.property(\"batchDescription\");\r",
-									"    pm.expect(jsonData).to.have.property(\"batchNoOfClasses\");\r",
-									"    pm.expect(jsonData).to.have.property(\"batchStatus\");\r",
-									"    pm.expect(jsonData).to.have.property(\"programId\");\r",
-									"    pm.expect(jsonData).to.have.property(\"programName\");\r",
-									"});"
+									"    // Test 2: Response structure\r",
+									"    pm.test(\"Batch updated successfully\", function () {\r",
+									"        pm.expect(jsonData).to.have.property('batchId');\r",
+									"    });\r",
+									"    \r",
+									"    pm.test(\"Response contains all mandatory fields\", function () {\r",
+									"        pm.expect(jsonData).to.have.property('batchName');\r",
+									"        pm.expect(jsonData).to.have.property('batchDescription');\r",
+									"        pm.expect(jsonData).to.have.property('batchStatus');\r",
+									"        pm.expect(jsonData).to.have.property('batchNoOfClasses');\r",
+									"        pm.expect(jsonData).to.have.property('programId');\r",
+									"        pm.expect(jsonData).to.have.property('programName');\r",
+									"    });\r",
+									"    \r",
+									"    \r",
+									"    \r",
+									"    // 🆕 Test 3: Description was actually CHANGED\r",
+									"    pm.test(\"✅ Description was updated (different from original)\", function () {\r",
+									"        const originalDesc = pm.environment.get(\"newBatchDescription\");\r",
+									"        const updatedDesc = jsonData.batchDescription;\r",
+									"        pm.expect(updatedDesc).to.not.eql(originalDesc);\r",
+									"    });\r",
+									"    \r",
+									"    // 🆕 Test 4: Description matches what we sent\r",
+									"    pm.test(\"✅ Description matches expected value\", function () {\r",
+									"        const expectedDesc = pm.environment.get(\"updatedBatchDescription\");\r",
+									"        pm.expect(jsonData.batchDescription).to.eql(expectedDesc);\r",
+									"    });\r",
+									"    \r",
+									"   \r",
+									"    \r",
+									"    // 🆕 Console: BEFORE vs AFTER comparison\r",
+									"    console.log(\"\\n🔄 UPDATE VERIFICATION - BEFORE vs AFTER:\");\r",
+									"    console.log(\"=\" .repeat(60));\r",
+									"    console.log(\"Batch ID:\", jsonData.batchId, \"(unchanged ✓)\");\r",
+									"    console.log(\"\\nDescription:\");\r",
+									"    console.log(\"  BEFORE:\", pm.environment.get(\"newBatchDescription\"));\r",
+									"    console.log(\"  AFTER: \", jsonData.batchDescription);\r",
+									"    console.log(\"  CHANGED:\", pm.environment.get(\"newBatchDescription\") !== jsonData.batchDescription ? \"✅ YES\" : \"❌ NO\");\r",
+									"    console.log(\"\\n\" + \"=\" .repeat(60));\r",
+									"    console.log(\"✅ Update verified successfully!\");\r",
+									"    console.log(\"=\" .repeat(60));\r",
+									"\r",
+									"\r",
+									"\r",
+									""
 								],
 								"type": "text/javascript",
-								"packages": {}
+								"packages": {},
+								"requests": {}
 							}
 						}
 					],
@@ -451,7 +499,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"batchDescription\": \"{{updatedBatchDescription}}\",\r\n    \"batchId\": {{updateByBatchId}},\r\n    \"batchName\": \"{{updateByBatchName}}\",\r\n    \"batchNoOfClasses\": {{updatedBatchNoOfClasses}},\r\n    \"batchStatus\": \"{{updateBatchStatus}}\",\r\n    \"programId\": {{updateProgramId}},\r\n    \"programName\": \"{{updateProgramName}}\"\r\n}",
+							"raw": "{\r\n  \"batchDescription\": \"{{updatedBatchDescription}}\",\r\n  \"batchName\": \"{{newBatchName}}\",\r\n  \"batchNoOfClasses\": {{newBatchNoOfClasses}},\r\n  \"batchStatus\": \"{{newBatchStatus}}\",\r\n  \"programId\": {{newProgramId}},\r\n  \"batchId\": {{createdBatchId}}\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -459,13 +507,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/batches/{{updateByBatchId}}",
+							"raw": "{{baseUrl}}/batches/{{createdBatchId}}",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"batches",
-								"{{updateByBatchId}}"
+								"{{createdBatchId}}"
 							]
 						}
 					},
@@ -483,13 +531,14 @@
 									"});\r",
 									"\r",
 									"pm.test(\"Deletion success message is correct\", function () {\r",
-									"    let jsonData = pm.response.json();\r",
-									"    pm.expect(jsonData).to.have.property('message');\r",
-									"    pm.expect(jsonData.message).to.include(\"deleted Successfully\");\r",
+									"    let responseText = pm.response.text();\r",
+									"    pm.expect(responseText).to.include(\"Message: Batch with Id-\");\r",
+									"    pm.expect(responseText).to.include(\"deleted Successfully!\");\r",
 									"});"
 								],
 								"type": "text/javascript",
-								"packages": {}
+								"packages": {},
+								"requests": {}
 							}
 						}
 					],
@@ -503,13 +552,13 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/batches/{{deleteBatchId}}",
+							"raw": "{{baseUrl}}/batches/{{createdBatchId}}",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"batches",
-								"{{deleteBatchId}}"
+								"{{createdBatchId}}"
 							]
 						}
 					},
@@ -630,6 +679,37 @@
 				},
 				{
 					"name": "Create Batch-Duplicate Name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"const response = pm.response.json();\r",
+									"pm.test(\"Response has required fields\", function () {\r",
+									"    pm.expect(response).to.have.property('message');\r",
+									"    pm.expect(response).to.have.property('success');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Success field is false for Duplicate Batch Name\", function () {\r",
+									"    pm.expect(response.success).to.be.false;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Error message indicates duplicate or already exists\", function () {\r",
+									"    const message = response.message.toLowerCase();\r",
+									"    pm.expect(message).to.include('already exists');\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -641,7 +721,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"batchDescription\": \"Duplicate Automation batch\",\r\n  \"batchName\": \"SDET226\",\r\n  \"batchNoOfClasses\": 25,\r\n  \"batchStatus\": \"Active\",\r\n  \"programId\": 3\r\n}",
+							"raw": "{\r\n    \"batchName\": \"B2CBatch1\",\r\n    \"batchDescription\": \"string\",\r\n    \"batchStatus\": \"Active\",\r\n    \"batchNoOfClasses\": 25,\r\n    \"programId\": 1 \r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -725,6 +805,37 @@
 				},
 				{
 					"name": "Create Batch-Missing Batch Name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"const response = pm.response.json();\r",
+									"pm.test(\"Response has required fields\", function () {\r",
+									"    pm.expect(response).to.have.property('message');\r",
+									"    pm.expect(response).to.have.property('success');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Success field is false for Missing Batch Name\", function () {\r",
+									"    pm.expect(response.success).to.be.false;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Error message indicates Missing batch name\", function () {\r",
+									"    const message = response.message;\r",
+									"    pm.expect(message).to.include('Batch Name is mandatory');\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -736,7 +847,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"batchDescription\": \"Automation level\",\r\n  \"batchNoOfClasses\": 25,\r\n  \"batchStatus\": \"Active\",\r\n  \"programId\": 3\r\n}",
+							"raw": "{\r\n    \"batchDescription\": \"newbatchdescription\",\r\n    \"batchStatus\": \"Active\",\r\n    \"batchNoOfClasses\": 25,\r\n    \"programId\": 1 \r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -999,27 +1110,27 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const response = pm.response.json();\r",
-									"\r",
 									"pm.test(\"Status code is 400\", function () {\r",
-									"    pm.expect(pm.response.code).to.equal(400);\r",
+									"    pm.response.to.have.status(400);\r",
 									"});\r",
 									"\r",
-									"\r",
-									"pm.test(\"Response contains success = false\", function () {\r",
-									"    let json = pm.response.json();\r",
-									"    pm.expect(json.success).to.eql(false);\r",
+									"let json = pm.response.json();\r",
+									"pm.test(\"Response has required fields\", function () {\r",
+									"    pm.expect(response).to.have.property('message');\r",
+									"    pm.expect(response).to.have.property('success');\r",
 									"});\r",
 									"\r",
-									"pm.test(\"Response contains error message\", function () {\r",
-									"    let json = pm.response.json();\r",
-									"    pm.expect(json).to.have.property(\"message\");\r",
-									"    pm.expect(json.message).to.be.a(\"string\");\r",
+									"pm.test(\"Success field is false for Program description length too short\", function () {\r",
+									"    pm.expect(response.success).to.be.false;\r",
 									"});\r",
-									""
+									"\r",
+									"pm.test(\"Error message indicates description length\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include('min length 4');\r",
+									"});"
 								],
 								"type": "text/javascript",
-								"packages": {}
+								"packages": {},
+								"requests": {}
 							}
 						}
 					],
@@ -1034,7 +1145,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"batchDescription\": \"abc\",\r\n  \"batchName\": \"SDET113\",\r\n  \"batchNoOfClasses\": 20,\r\n  \"batchStatus\": \"Active\",\r\n  \"programId\": 1\r\n}",
+							"raw": "{\r\n  \"batchDescription\": \"abc\",\r\n  \"batchName\": \"{{newBatchName4DescShort}}\",\r\n  \"batchNoOfClasses\": 20,\r\n  \"batchStatus\": \"Active\",\r\n  \"programId\": 1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1060,23 +1171,27 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status code is 400 - Bad Request\", function () {\r",
+									"pm.test(\"Status code is 400\", function () {\r",
 									"    pm.response.to.have.status(400);\r",
 									"});\r",
 									"\r",
-									"pm.test(\"Response contains success = false\", function () {\r",
-									"    let json = pm.response.json();\r",
-									"    pm.expect(json.success).to.eql(false);\r",
+									"let json = pm.response.json();\r",
+									"pm.test(\"Response has required fields\", function () {\r",
+									"    pm.expect(response).to.have.property('message');\r",
+									"    pm.expect(response).to.have.property('success');\r",
 									"});\r",
 									"\r",
-									"pm.test(\"Response contains error message\", function () {\r",
-									"    let json = pm.response.json();\r",
-									"    pm.expect(json).to.have.property(\"message\");\r",
-									"    pm.expect(json.message).to.be.a(\"string\");\r",
+									"pm.test(\"Success field is false for Program description length too long\", function () {\r",
+									"    pm.expect(response.success).to.be.false;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Error message indicates description length\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include('max length 25');\r",
 									"});"
 								],
 								"type": "text/javascript",
-								"packages": {}
+								"packages": {},
+								"requests": {}
 							}
 						}
 					],
@@ -1091,7 +1206,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"batchDescription\": \"ThisIsAVeryLongDescriptionExceedingTwentyFiveCharactersLimit\",\r\n  \"batchName\": \"SDET31\",\r\n  \"batchNoOfClasses\": 25,\r\n  \"batchStatus\": \"Active\",\r\n  \"programId\": 3\r\n}",
+							"raw": "{\r\n  \"batchDescription\": \"ThisIsAVeryLongDescriptionExceedingTwentyFiveCharactersLimit\",\r\n  \"batchName\": \"{{newBatchName4DescLong}}\",\r\n  \"batchNoOfClasses\": 25,\r\n  \"batchStatus\": \"Active\",\r\n  \"programId\": 1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1225,91 +1340,6 @@
 					"response": []
 				}
 			]
-		},
-		{
-			"name": "Login",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"// Status code verification\r",
-							"pm.test(\"Status code is successful\", function () {\r",
-							"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);\r",
-							"});\r",
-							"// Response time check\r",
-							"pm.test(\"Response time is less than 2000ms\", function () {\r",
-							"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
-							"});\r",
-							"// Content-Type verification\r",
-							"pm.test(\"Content-Type is application/json\", function () {\r",
-							"    pm.response.to.have.header(\"Content-Type\");\r",
-							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
-							"});\r",
-							"// Verify response structure\r",
-							"pm.test(\"Response has required fields\", function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData).to.have.property('token');\r",
-							"    pm.expect(jsonData).to.have.property('userId');\r",
-							"    pm.expect(jsonData).to.have.property('email');\r",
-							"    pm.expect(jsonData).to.have.property('roles');\r",
-							"    pm.expect(jsonData).to.have.property('status');\r",
-							"});\r",
-							"// Verify token is not null\r",
-							"pm.test(\"JWT token is present\", function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.token).to.not.be.null;\r",
-							"    pm.expect(jsonData.token).to.be.a('string');\r",
-							"});\r",
-							"// Verify roles array\r",
-							"pm.test(\"Roles array is present\", function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.roles).to.be.an('array');\r",
-							"    pm.expect(jsonData.roles.length).to.be.above(0);\r",
-							"});\r",
-							"// Save token\r",
-							"// Save JWT token to environment\r",
-							"if (pm.response.code === 200) {\r",
-							"    var jsonData = pm.response.json();\r",
-							"    if (jsonData.token) {\r",
-							"        pm.environment.set(\"authToken\", jsonData.token);\r",
-							"        pm.collectionVariables.set(\"authToken\", jsonData.token);\r",
-							"        console.log(\"Token saved: \" + jsonData.token);\r",
-							"    }\r",
-							"}"
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n  \"userLoginEmailId\": \"team1@gmail.com\",\r\n  \"password\": \"ApiHackathon@2025\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "https://lms-hackathon-nov-2025-8dd40899c026.herokuapp.com/lms/login",
-					"protocol": "https",
-					"host": [
-						"lms-hackathon-nov-2025-8dd40899c026",
-						"herokuapp",
-						"com"
-					],
-					"path": [
-						"lms",
-						"login"
-					]
-				}
-			},
-			"response": []
 		}
 	],
 	"auth": {
