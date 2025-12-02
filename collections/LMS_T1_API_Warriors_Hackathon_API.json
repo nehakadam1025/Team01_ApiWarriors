@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "90e2ab3f-19fa-49ae-af03-bfed2be50eac",
+		"_postman_id": "769f7eaf-3d55-4011-af4b-3579ece420d1",
 		"name": "LMS Hackathon",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "50244332",
-		"_collection_link": "https://saloniranka0303-4395223.postman.co/workspace/Saloni's-Workspace~c508e76f-3bd3-423c-8be0-4fb6ac1551a7/collection/50244332-90e2ab3f-19fa-49ae-af03-bfed2be50eac?action=share&source=collection_link&creator=50244332"
+		"_exporter_id": "50024072",
+		"_collection_link": "https://nehak2025-2536606.postman.co/workspace/Neha's-Workspace~bd961bac-afb6-4a46-85fb-ee5e6c14829e/collection/50024072-769f7eaf-3d55-4011-af4b-3579ece420d1?action=share&source=collection_link&creator=50024072"
 	},
 	"item": [
 		{
@@ -2556,23 +2556,8 @@
 											"        pm.environment.set(\"newBatchStatus\", \"Active\");",
 											"        pm.environment.set(\"newProgramId\", sorted[0].programId);",
 											"        ",
-											"        // For UPDATE operations - use second batch",
-											"        if (sorted.length > 1) {",
-											"            pm.environment.set(\"updateByBatchId\", sorted[1].batchId);",
-											"            pm.environment.set(\"updateByBatchName\", sorted[1].batchName);",
-											"            pm.environment.set(\"updatedBatchDescription\", `Updated-${timestamp}`);",
-											"            pm.environment.set(\"updatedBatchNoOfClasses\", Math.floor(Math.random() * 50) + 10);",
-											"            pm.environment.set(\"updateBatchStatus\", \"Active\");",
-											"            pm.environment.set(\"updateProgramId\", sorted[1].programId);",
-											"            pm.environment.set(\"updateProgramName\", sorted[1].programName);",
-											"        }",
-											"        ",
-											"        // For DELETE operations - use last batch",
-											"        if (sorted.length > 2) {",
-											"            pm.environment.set(\"deleteBatchId\", sorted[sorted.length - 1].batchId);",
-											"        }",
-											"        ",
-											"        console.log(\"✅ Batch test data setup complete!\");",
+											"        pm.environment.set(\"updatedBatchDescription\", `Updated-${timestamp}`);",
+											"         console.log(\"✅ Batch test data setup complete!\");",
 											"        console.log(\"Total batches:\", batches.length);",
 											"        console.log(\"Active batches:\", activeBatches.length);",
 											"        console.log(\"New batch name:\", pm.environment.get(\"newBatchName\"));",
@@ -2654,7 +2639,8 @@
 											""
 										],
 										"type": "text/javascript",
-										"packages": {}
+										"packages": {},
+										"requests": {}
 									}
 								}
 							],
@@ -2814,11 +2800,12 @@
 										"exec": [
 											"const jsonData = pm.response.json();\r",
 											"\r",
-											"pm.test(\"Status code is 201 or 400\", function () {\r",
-											"    pm.expect([201, 400]).to.include(pm.response.code);\r",
+											"// Test 1: Status Code\r",
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
 											"});\r",
 											"\r",
-											"if (pm.response.code === 201) {\r",
+											"\r",
 											"    pm.test(\"Batch created successfully\", function () {\r",
 											"        pm.expect(jsonData).to.have.property('batchId');\r",
 											"        pm.expect(jsonData.batchId).to.be.a('number');\r",
@@ -2856,21 +2843,16 @@
 											"    console.log(\"✅ Batch created successfully!\");\r",
 											"    console.log(\"Batch ID:\", jsonData.batchId);\r",
 											"    console.log(\"Batch Name:\", jsonData.batchName);\r",
-											"}\r",
 											"\r",
-											"if (pm.response.code === 400) {\r",
-											"    pm.test(\"Error response contains message\", function () {\r",
-											"        pm.expect(jsonData).to.have.property('message');\r",
-											"        pm.expect(jsonData).to.have.property('success');\r",
-											"        pm.expect(jsonData.success).to.be.false;\r",
-											"    });\r",
+											"\r",
+											"\r",
 											"    \r",
-											"    console.log(\"❌ Batch creation failed:\", jsonData.message);\r",
-											"}\r",
+											" \r",
 											""
 										],
 										"type": "text/javascript",
-										"packages": {}
+										"packages": {},
+										"requests": {}
 									}
 								}
 							],
@@ -2914,11 +2896,11 @@
 											"const jsonData = pm.response.json();\r",
 											"\r",
 											"// Test 1: Status Code\r",
-											"pm.test(\"Status code is 200 or 400\", function () {\r",
-											"    pm.expect([200, 400]).to.include(pm.response.code);\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
 											"});\r",
 											"\r",
-											"if (pm.response.code === 200) {\r",
+											"\r",
 											"    // Test 2: Response structure\r",
 											"    pm.test(\"Batch updated successfully\", function () {\r",
 											"        pm.expect(jsonData).to.have.property('batchId');\r",
@@ -2933,84 +2915,37 @@
 											"        pm.expect(jsonData).to.have.property('programName');\r",
 											"    });\r",
 											"    \r",
-											"    // Test 3: Batch ID didn't change\r",
-											"    pm.test(\"✅ Batch ID remains unchanged\", function () {\r",
-											"        const expectedId = parseInt(pm.environment.get(\"updateByBatchId\"));\r",
-											"        pm.expect(jsonData.batchId).to.eql(expectedId);\r",
-											"    });\r",
 											"    \r",
-											"    // 🆕 Test 4: Description was actually CHANGED\r",
+											"    \r",
+											"    // 🆕 Test 3: Description was actually CHANGED\r",
 											"    pm.test(\"✅ Description was updated (different from original)\", function () {\r",
-											"        const originalDesc = pm.environment.get(\"originalBatchDescription\");\r",
+											"        const originalDesc = pm.environment.get(\"newBatchDescription\");\r",
 											"        const updatedDesc = jsonData.batchDescription;\r",
 											"        pm.expect(updatedDesc).to.not.eql(originalDesc);\r",
 											"    });\r",
 											"    \r",
-											"    // 🆕 Test 5: Description matches what we sent\r",
+											"    // 🆕 Test 4: Description matches what we sent\r",
 											"    pm.test(\"✅ Description matches expected value\", function () {\r",
 											"        const expectedDesc = pm.environment.get(\"updatedBatchDescription\");\r",
 											"        pm.expect(jsonData.batchDescription).to.eql(expectedDesc);\r",
 											"    });\r",
 											"    \r",
-											"    // 🆕 Test 6: Number of classes was updated correctly\r",
-											"    pm.test(\"✅ Number of classes was updated correctly\", function () {\r",
-											"        const expectedClasses = parseInt(pm.environment.get(\"updatedBatchNoOfClasses\"));\r",
-											"        pm.expect(jsonData.batchNoOfClasses).to.eql(expectedClasses);\r",
-											"    });\r",
-											"    \r",
-											"    // 🆕 Test 7: Status was updated correctly\r",
-											"    pm.test(\"✅ Batch status was updated correctly\", function () {\r",
-											"        const expectedStatus = pm.environment.get(\"updateBatchStatus\");\r",
-											"        pm.expect(jsonData.batchStatus).to.eql(expectedStatus);\r",
-											"    });\r",
-											"    \r",
-											"    // 🆕 Test 8: Program details remain unchanged\r",
-											"    pm.test(\"✅ Program ID and Name remain unchanged\", function () {\r",
-											"        const expectedProgramId = parseInt(pm.environment.get(\"updateProgramId\"));\r",
-											"        const expectedProgramName = pm.environment.get(\"updateProgramName\");\r",
-											"        pm.expect(jsonData.programId).to.eql(expectedProgramId);\r",
-											"        pm.expect(jsonData.programName).to.eql(expectedProgramName);\r",
-											"    });\r",
-											"    \r",
-											"    // 🆕 Store updated values for verification GET request\r",
-											"    pm.environment.set(\"lastUpdatedBatchId\", jsonData.batchId);\r",
-											"    pm.environment.set(\"lastUpdatedDescription\", jsonData.batchDescription);\r",
-											"    pm.environment.set(\"lastUpdatedClasses\", jsonData.batchNoOfClasses);\r",
-											"    pm.environment.set(\"lastUpdatedStatus\", jsonData.batchStatus);\r",
+											"   \r",
 											"    \r",
 											"    // 🆕 Console: BEFORE vs AFTER comparison\r",
 											"    console.log(\"\\n🔄 UPDATE VERIFICATION - BEFORE vs AFTER:\");\r",
 											"    console.log(\"=\" .repeat(60));\r",
 											"    console.log(\"Batch ID:\", jsonData.batchId, \"(unchanged ✓)\");\r",
 											"    console.log(\"\\nDescription:\");\r",
-											"    console.log(\"  BEFORE:\", pm.environment.get(\"originalBatchDescription\"));\r",
+											"    console.log(\"  BEFORE:\", pm.environment.get(\"newBatchDescription\"));\r",
 											"    console.log(\"  AFTER: \", jsonData.batchDescription);\r",
-											"    console.log(\"  CHANGED:\", pm.environment.get(\"originalBatchDescription\") !== jsonData.batchDescription ? \"✅ YES\" : \"❌ NO\");\r",
-											"    \r",
-											"    console.log(\"\\nNumber of Classes:\");\r",
-											"    console.log(\"  BEFORE:\", pm.environment.get(\"originalBatchNoOfClasses\"));\r",
-											"    console.log(\"  AFTER: \", jsonData.batchNoOfClasses);\r",
-											"    console.log(\"  CHANGED:\", pm.environment.get(\"originalBatchNoOfClasses\") != jsonData.batchNoOfClasses ? \"✅ YES\" : \"❌ NO\");\r",
-											"    \r",
-											"    console.log(\"\\nBatch Status:\");\r",
-											"    console.log(\"  BEFORE:\", pm.environment.get(\"originalBatchStatus\"));\r",
-											"    console.log(\"  AFTER: \", jsonData.batchStatus);\r",
-											"    console.log(\"  CHANGED:\", pm.environment.get(\"originalBatchStatus\") !== jsonData.batchStatus ? \"✅ YES\" : \"❌ NO\");\r",
-											"    \r",
+											"    console.log(\"  CHANGED:\", pm.environment.get(\"newBatchDescription\") !== jsonData.batchDescription ? \"✅ YES\" : \"❌ NO\");\r",
 											"    console.log(\"\\n\" + \"=\" .repeat(60));\r",
 											"    console.log(\"✅ Update verified successfully!\");\r",
 											"    console.log(\"=\" .repeat(60));\r",
-											"}\r",
 											"\r",
-											"if (pm.response.code === 400) {\r",
-											"    pm.test(\"Error response is valid\", function () {\r",
-											"        pm.expect(jsonData).to.have.property('message');\r",
-											"        pm.expect(jsonData).to.have.property('success');\r",
-											"        pm.expect(jsonData.success).to.be.false;\r",
-											"    });\r",
-											"    \r",
-											"    console.log(\"❌ Batch update failed:\", jsonData.message);\r",
-											"}\r",
+											"\r",
+											"\r",
 											""
 										],
 										"type": "text/javascript",
@@ -3030,7 +2965,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"batchDescription\": \"{{updatedBatchDescription}}\",\r\n    \"batchId\": {{updateByBatchId}},\r\n    \"batchName\": \"{{updateByBatchName}}\",\r\n    \"batchNoOfClasses\": {{updatedBatchNoOfClasses}},\r\n    \"batchStatus\": \"{{updateBatchStatus}}\",\r\n    \"programId\": {{updateProgramId}},\r\n    \"programName\": \"{{updateProgramName}}\"\r\n}",
+									"raw": "{\r\n  \"batchDescription\": \"{{updatedBatchDescription}}\",\r\n  \"batchName\": \"{{newBatchName}}\",\r\n  \"batchNoOfClasses\": {{newBatchNoOfClasses}},\r\n  \"batchStatus\": \"{{newBatchStatus}}\",\r\n  \"programId\": {{newProgramId}},\r\n  \"batchId\": {{createdBatchId}}\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -3038,13 +2973,13 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/batches/{{updateByBatchId}}",
+									"raw": "{{baseUrl}}/batches/{{createdBatchId}}",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"batches",
-										"{{updateByBatchId}}"
+										"{{createdBatchId}}"
 									]
 								}
 							},
@@ -3083,13 +3018,13 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/batches/{{deleteBatchId}}",
+									"raw": "{{baseUrl}}/batches/{{createdBatchId}}",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"batches",
-										"{{deleteBatchId}}"
+										"{{createdBatchId}}"
 									]
 								}
 							},
@@ -3210,6 +3145,37 @@
 						},
 						{
 							"name": "Create Batch-Duplicate Name",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"const response = pm.response.json();\r",
+											"pm.test(\"Response has required fields\", function () {\r",
+											"    pm.expect(response).to.have.property('message');\r",
+											"    pm.expect(response).to.have.property('success');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Success field is false for Duplicate Batch Name\", function () {\r",
+											"    pm.expect(response.success).to.be.false;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Error message indicates duplicate or already exists\", function () {\r",
+											"    const message = response.message.toLowerCase();\r",
+											"    pm.expect(message).to.include('already exists');\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
 							"request": {
 								"method": "POST",
 								"header": [
@@ -3221,7 +3187,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n  \"batchDescription\": \"Duplicate Automation batch\",\r\n  \"batchName\": \"SDET226\",\r\n  \"batchNoOfClasses\": 25,\r\n  \"batchStatus\": \"Active\",\r\n  \"programId\": 3\r\n}",
+									"raw": "{\r\n    \"batchName\": \"B2CBatch1\",\r\n    \"batchDescription\": \"string\",\r\n    \"batchStatus\": \"Active\",\r\n    \"batchNoOfClasses\": 25,\r\n    \"programId\": 1 \r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -3305,6 +3271,37 @@
 						},
 						{
 							"name": "Create Batch-Missing Batch Name",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"const response = pm.response.json();\r",
+											"pm.test(\"Response has required fields\", function () {\r",
+											"    pm.expect(response).to.have.property('message');\r",
+											"    pm.expect(response).to.have.property('success');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Success field is false for Missing Batch Name\", function () {\r",
+											"    pm.expect(response.success).to.be.false;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Error message indicates Missing batch name\", function () {\r",
+											"    const message = response.message;\r",
+											"    pm.expect(message).to.include('Batch Name is mandatory');\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
 							"request": {
 								"method": "POST",
 								"header": [
@@ -3316,7 +3313,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n  \"batchDescription\": \"Automation level\",\r\n  \"batchNoOfClasses\": 25,\r\n  \"batchStatus\": \"Active\",\r\n  \"programId\": 3\r\n}",
+									"raw": "{\r\n    \"batchDescription\": \"newbatchdescription\",\r\n    \"batchStatus\": \"Active\",\r\n    \"batchNoOfClasses\": 25,\r\n    \"programId\": 1 \r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
