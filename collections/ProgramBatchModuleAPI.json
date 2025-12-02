@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "96ca8228-b65f-4129-abd3-9d1a5a4a9370",
+		"_postman_id": "ee1a5048-3a21-4a41-a22b-fab00518ddfe",
 		"name": "LMS Program Batch Module",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "50024072",
-		"_collection_link": "https://nehak2025-2536606.postman.co/workspace/Neha's-Workspace~bd961bac-afb6-4a46-85fb-ee5e6c14829e/collection/50024072-96ca8228-b65f-4129-abd3-9d1a5a4a9370?action=share&source=collection_link&creator=50024072"
+		"_collection_link": "https://nehak2025-2536606.postman.co/workspace/Neha's-Workspace~bd961bac-afb6-4a46-85fb-ee5e6c14829e/collection/50024072-ee1a5048-3a21-4a41-a22b-fab00518ddfe?action=share&source=collection_link&creator=50024072"
 	},
 	"item": [
 		{
@@ -47,10 +47,11 @@
 									"    return s;",
 									"}",
 									"",
-									"// Helper function to generate random numbers (1-99)",
+									"",
 									"function randomBatchNumber() {",
-									"    return Math.floor(Math.random() * 99) + 1;",
+									"    return Math.floor(Math.random() * 1000000) + 500;",
 									"}",
+									"",
 									"",
 									"if (batches && batches.length > 0) {",
 									"    // Filter active batches",
