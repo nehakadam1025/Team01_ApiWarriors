@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "769f7eaf-3d55-4011-af4b-3579ece420d1",
+		"_postman_id": "6d69c9ba-36f8-4441-a845-3e7d4874f2b0",
 		"name": "LMS Hackathon",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "50024072",
-		"_collection_link": "https://nehak2025-2536606.postman.co/workspace/Neha's-Workspace~bd961bac-afb6-4a46-85fb-ee5e6c14829e/collection/50024072-769f7eaf-3d55-4011-af4b-3579ece420d1?action=share&source=collection_link&creator=50024072"
+		"_exporter_id": "50244332",
+		"_collection_link": "https://saloniranka0303-4395223.postman.co/workspace/Saloni's-Workspace~c508e76f-3bd3-423c-8be0-4fb6ac1551a7/collection/50244332-6d69c9ba-36f8-4441-a845-3e7d4874f2b0?action=share&source=collection_link&creator=50244332"
 	},
 	"item": [
 		{
@@ -166,6 +166,23 @@
 										"exec": [
 											"pm.test(\"Status code is 400\", function () {\r",
 											"\tpm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"const response = pm.response.json();\r",
+											"pm.test(\"Response has required fields\", function () {\r",
+											"    pm.expect(response).to.have.property('message');\r",
+											"    pm.expect(response).to.have.property('success');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Error message matches when password is empty\", function () {\r",
+											"    pm.expect(response.message).to.satisfy(function (msg) {\r",
+											"        return msg === \"Password is mandatory\" ||\r",
+											"            msg.includes(\"password must contain\");\r",
+											"    });\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Success field is false for Empty Password\", function () {\r",
+											"    pm.expect(response.success).to.be.false;\r",
 											"});"
 										],
 										"type": "text/javascript",
@@ -213,6 +230,20 @@
 										"exec": [
 											"pm.test(\"Status code is 400\", function () {\r",
 											"\tpm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"const response = pm.response.json();\r",
+											"pm.test(\"Response has required fields\", function () {\r",
+											"    pm.expect(response).to.have.property('message');\r",
+											"    pm.expect(response).to.have.property('success');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Error message matches when Login EmailId id is empty\", function () {\r",
+											"    pm.expect(response.message).to.equal(\"EmailId is mandatory\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Success field is false when Login EmailId is empty\", function () {\r",
+											"    pm.expect(response.success).to.be.false;\r",
 											"});"
 										],
 										"type": "text/javascript",
@@ -260,6 +291,20 @@
 										"exec": [
 											"pm.test(\"Status code is 400\", function () {\r",
 											"\tpm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"const response = pm.response.json();\r",
+											"pm.test(\"Response has required fields\", function () {\r",
+											"    pm.expect(response).to.have.property('message');\r",
+											"    pm.expect(response).to.have.property('success');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Error message matches when password is incorrect\", function () {\r",
+											"    pm.expect(response.message).to.equal(\"password must contain atleast 8 to max 32 characters, a capital letter, a small letter, a special character, a number and no space\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Success field is false when password is incorrect\", function () {\r",
+											"    pm.expect(response.success).to.be.false;\r",
 											"});"
 										],
 										"type": "text/javascript",
@@ -308,7 +353,20 @@
 											"pm.test(\"Status code is 400\", function () {\r",
 											"    pm.response.to.have.status(400);\r",
 											"});\r",
-											""
+											"\r",
+											"const response = pm.response.json();\r",
+											"pm.test(\"Response has required fields\", function () {\r",
+											"    pm.expect(response).to.have.property('message');\r",
+											"    pm.expect(response).to.have.property('success');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Error message matches when passing no body while SignIn\", function () {\r",
+											"    pm.expect(response.message).to.include(\"Required request body is missing\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Success field is false when passing no body while SignIn\", function () {\r",
+											"    pm.expect(response.success).to.be.false;\r",
+											"});"
 										],
 										"type": "text/javascript",
 										"packages": {},
@@ -355,6 +413,20 @@
 										"exec": [
 											"pm.test(\"Status code is 400\", function () {\r",
 											"\tpm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"const response = pm.response.json();\r",
+											"pm.test(\"Response has required fields\", function () {\r",
+											"    pm.expect(response).to.have.property('message');\r",
+											"    pm.expect(response).to.have.property('success');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Error message matches when Login EmailId id is empty\", function () {\r",
+											"    pm.expect(response.message).to.equal(\"EmailId is mandatory\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Success field is false when Login EmailId is empty\", function () {\r",
+											"    pm.expect(response.success).to.be.false;\r",
 											"});"
 										],
 										"type": "text/javascript",
@@ -365,7 +437,13 @@
 							],
 							"request": {
 								"method": "POST",
-								"header": [],
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}",
+										"type": "text"
+									}
+								],
 								"body": {
 									"mode": "raw",
 									"raw": "{\r\n    \"userLoginEmailId\":\"\"\r\n}",
@@ -390,14 +468,28 @@
 							"response": []
 						},
 						{
-							"name": "Forgot Password Confirm Email - Invalid Username",
+							"name": "Forgot Password Confirm Email - Empty Request Body",
 							"event": [
 								{
 									"listen": "test",
 									"script": {
 										"exec": [
 											"pm.test(\"Status code is 400\", function () {\r",
-											"\tpm.response.to.have.status(400);\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"const response = pm.response.json();\r",
+											"pm.test(\"Response has required fields\", function () {\r",
+											"    pm.expect(response).to.have.property('message');\r",
+											"    pm.expect(response).to.have.property('success');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Error message matches when passing no body for Forgot Password confirm email\", function () {\r",
+											"    pm.expect(response.message).to.include(\"Required request body is missing\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Success field is false when passing no body for Forgot Password confirm email\", function () {\r",
+											"    pm.expect(response.success).to.be.false;\r",
 											"});"
 										],
 										"type": "text/javascript",
@@ -408,158 +500,13 @@
 							],
 							"request": {
 								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"userLoginEmailId\":\"invaliduser@email.com\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}",
+										"type": "text"
 									}
-								},
-								"url": {
-									"raw": "{{baseUrl}}/login/forgotpassword/confirmEmail",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"login",
-										"forgotpassword",
-										"confirmEmail"
-									]
-								}
-							},
-							"response": [
-								{
-									"name": "Forgot Password Confirm Email - Invalid Username",
-									"originalRequest": {
-										"method": "POST",
-										"header": [],
-										"body": {
-											"mode": "raw",
-											"raw": "{\r\n    \"userLoginEmailId\":\"invaliduser@email.com\"\r\n}",
-											"options": {
-												"raw": {
-													"language": "json"
-												}
-											}
-										},
-										"url": {
-											"raw": "{{baseUrl}}/login/forgotpassword/confirmEmail",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"login",
-												"forgotpassword",
-												"confirmEmail"
-											]
-										}
-									},
-									"status": "Unauthorized",
-									"code": 401,
-									"_postman_previewlanguage": "Text",
-									"header": [
-										{
-											"key": "Cache-Control",
-											"value": "no-cache, no-store, max-age=0, must-revalidate"
-										},
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										},
-										{
-											"key": "Date",
-											"value": "Fri, 28 Nov 2025 20:32:56 GMT"
-										},
-										{
-											"key": "Expires",
-											"value": "0"
-										},
-										{
-											"key": "Nel",
-											"value": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}"
-										},
-										{
-											"key": "Pragma",
-											"value": "no-cache"
-										},
-										{
-											"key": "Report-To",
-											"value": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=%2FEw9gsirqkfdolRgqAM0ErRl%2BjYtN%2Bg24TpvX8RQXKY%3D\\u0026sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add\\u0026ts=1764361976\"}],\"max_age\":3600}"
-										},
-										{
-											"key": "Reporting-Endpoints",
-											"value": "heroku-nel=\"https://nel.heroku.com/reports?s=%2FEw9gsirqkfdolRgqAM0ErRl%2BjYtN%2Bg24TpvX8RQXKY%3D&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&ts=1764361976\""
-										},
-										{
-											"key": "Server",
-											"value": "Heroku"
-										},
-										{
-											"key": "Strict-Transport-Security",
-											"value": "max-age=31536000 ; includeSubDomains"
-										},
-										{
-											"key": "Vary",
-											"value": "Origin"
-										},
-										{
-											"key": "Vary",
-											"value": "Access-Control-Request-Method"
-										},
-										{
-											"key": "Vary",
-											"value": "Access-Control-Request-Headers"
-										},
-										{
-											"key": "Via",
-											"value": "1.1 heroku-router"
-										},
-										{
-											"key": "X-Content-Type-Options",
-											"value": "nosniff"
-										},
-										{
-											"key": "X-Frame-Options",
-											"value": "DENY"
-										},
-										{
-											"key": "X-Xss-Protection",
-											"value": "0"
-										},
-										{
-											"key": "Content-Length",
-											"value": "140"
-										}
-									],
-									"cookie": [],
-									"body": "{\n    \"token\": \"null\",\n    \"type\": \"Bearer\",\n    \"userId\": null,\n    \"email\": \"invaliduser@email.com\",\n    \"roles\": null,\n    \"status\": \"Invalid Email\",\n    \"passwordExpired\": false\n}"
-								}
-							]
-						},
-						{
-							"name": "Forgot Password Confirm Email - Empty Request Body",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 400\", function () {\r",
-											"    pm.response.to.have.status(400);\r",
-											"});\r",
-											""
-										],
-										"type": "text/javascript",
-										"packages": {},
-										"requests": {}
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [],
+								],
 								"body": {
 									"mode": "raw",
 									"raw": "",
@@ -593,7 +540,23 @@
 											"pm.test(\"Status code is 400\", function () {\r",
 											"\tpm.response.to.have.status(400);\r",
 											"});\r",
-											""
+											"\r",
+											"const response = pm.response.json();\r",
+											"pm.test(\"Response has required fields\", function () {\r",
+											"    pm.expect(response).to.have.property('message');\r",
+											"    pm.expect(response).to.have.property('success');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Error message matches when password is empty\", function () {\r",
+											"    pm.expect(response.message).to.satisfy(function (msg) {\r",
+											"        return msg === \"Password is mandatory\" ||\r",
+											"            msg.includes(\"password must contain\");\r",
+											"    });\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Success field is false for Empty Password\", function () {\r",
+											"    pm.expect(response.success).to.be.false;\r",
+											"});"
 										],
 										"type": "text/javascript",
 										"packages": {},
@@ -603,7 +566,13 @@
 							],
 							"request": {
 								"method": "POST",
-								"header": [],
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}",
+										"type": "text"
+									}
+								],
 								"body": {
 									"mode": "raw",
 									"raw": "{\r\n    \"userLoginEmailId\":\"{{username}}\",\r\n    \"password\":\"\"\r\n}",
@@ -635,7 +604,20 @@
 											"pm.test(\"Status code is 400\", function () {\r",
 											"\tpm.response.to.have.status(400);\r",
 											"});\r",
-											""
+											"\r",
+											"const response = pm.response.json();\r",
+											"pm.test(\"Response has required fields\", function () {\r",
+											"    pm.expect(response).to.have.property('message');\r",
+											"    pm.expect(response).to.have.property('success');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Error message matches when Login EmailId id is empty while resetting password\", function () {\r",
+											"    pm.expect(response.message).to.equal(\"EmailId is mandatory\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Success field is false when Login EmailId is empty while resetting password\", function () {\r",
+											"    pm.expect(response.success).to.be.false;\r",
+											"});"
 										],
 										"type": "text/javascript",
 										"packages": {},
@@ -645,7 +627,13 @@
 							],
 							"request": {
 								"method": "POST",
-								"header": [],
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}",
+										"type": "text"
+									}
+								],
 								"body": {
 									"mode": "raw",
 									"raw": "{\r\n    \"userLoginEmailId\":\"\",\r\n    \"password\":\"{{password}}\"\r\n}",
@@ -676,6 +664,20 @@
 										"exec": [
 											"pm.test(\"Status code is 400\", function () {\r",
 											"\tpm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"const response = pm.response.json();\r",
+											"pm.test(\"Response has required fields\", function () {\r",
+											"    pm.expect(response).to.have.property('message');\r",
+											"    pm.expect(response).to.have.property('success');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Error message matches when sending invalid password\", function () {\r",
+											"     pm.expect(response.message).to.include(\"password must contain\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Success field is false when sending invalid password\", function () {\r",
+											"    pm.expect(response.success).to.be.false;\r",
 											"});"
 										],
 										"type": "text/javascript",
@@ -686,10 +688,16 @@
 							],
 							"request": {
 								"method": "POST",
-								"header": [],
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}",
+										"type": "text"
+									}
+								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"userLoginEmailId\":\"{{username}}\",\r\n    \"password\":\"123\"\r\n}",
+									"raw": "{\r\n    \"userLoginEmailId\":\"{{username}}\",\r\n    \"password\":\"1234567890\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -718,7 +726,20 @@
 											"pm.test(\"Status code is 400\", function () {\r",
 											"    pm.response.to.have.status(400);\r",
 											"});\r",
-											""
+											"\r",
+											"const response = pm.response.json();\r",
+											"pm.test(\"Response has required fields\", function () {\r",
+											"    pm.expect(response).to.have.property('message');\r",
+											"    pm.expect(response).to.have.property('success');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Error message matches when passing no body while resetting password\", function () {\r",
+											"    pm.expect(response.message).to.include(\"Required request body is missing\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Success field is false when passing no body while resetting password\", function () {\r",
+											"    pm.expect(response.success).to.be.false;\r",
+											"});"
 										],
 										"type": "text/javascript",
 										"packages": {},
@@ -728,7 +749,13 @@
 							],
 							"request": {
 								"method": "POST",
-								"header": [],
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}",
+										"type": "text"
+									}
+								],
 								"body": {
 									"mode": "raw",
 									"raw": "",
