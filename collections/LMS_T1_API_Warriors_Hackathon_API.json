@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "1b6159ef-f75d-410a-a72c-2dc58f8f1b59",
+		"_postman_id": "2b953455-db50-40bf-8608-e684253f96f1",
 		"name": "LMS Hackathon",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "50024072",
-		"_collection_link": "https://nehak2025-2536606.postman.co/workspace/Neha's-Workspace~bd961bac-afb6-4a46-85fb-ee5e6c14829e/collection/50024072-1b6159ef-f75d-410a-a72c-2dc58f8f1b59?action=share&source=collection_link&creator=50024072"
+		"_collection_link": "https://nehak2025-2536606.postman.co/workspace/Neha's-Workspace~bd961bac-afb6-4a46-85fb-ee5e6c14829e/collection/50024072-2b953455-db50-40bf-8608-e684253f96f1?action=share&source=collection_link&creator=50024072"
 	},
 	"item": [
 		{
@@ -2513,10 +2513,11 @@
 											"    return s;",
 											"}",
 											"",
-											"// Helper function to generate random numbers (1-99)",
+											"",
 											"function randomBatchNumber() {",
-											"    return Math.floor(Math.random() * 99) + 1;",
+											"    return Math.floor(Math.random() * 1000000) + 500;",
 											"}",
+											"",
 											"",
 											"if (batches && batches.length > 0) {",
 											"    // Filter active batches",
@@ -3661,7 +3662,7 @@
 									},
 									"status": "Created",
 									"code": 201,
-									"_postman_previewlanguage": "",
+									"_postman_previewlanguage": "Text",
 									"header": [
 										{
 											"key": "Cache-Control",
@@ -3833,7 +3834,7 @@
 									},
 									"status": "Created",
 									"code": 201,
-									"_postman_previewlanguage": "",
+									"_postman_previewlanguage": "Text",
 									"header": [
 										{
 											"key": "Cache-Control",
